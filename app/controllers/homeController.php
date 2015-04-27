@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers;
+use core\classes\Cview;
 
 /**
  * Class homeController
@@ -13,6 +14,8 @@ class homeController {
 
     public function actionIndex()
     {
-        echo 'Default action';
+        $view = new Cview();
+        $view->content = 'Добро пожаловать на домашнюю страницу фраемворка lucent';
+        $view->display('home/index.php');
     }
 }

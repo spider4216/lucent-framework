@@ -2,6 +2,7 @@
 namespace core\classes;
 
 use core\classes\Database;
+use core\interfaces\Imodel;
 
 /**
  * Class Cmodel. Системный класс модели.
@@ -10,12 +11,14 @@ use core\classes\Database;
  * @author farZa
  * @copyright 2015
  */
-abstract class Cmodel {
+abstract class Cmodel implements Imodel
+{
 
     /**
      * $table - статическое свойство, которое ожидает заполнения в конечной модели.
-     * Указать наименование таблицы в конечно ймодели для работы с ней
-     * @todo сделать значение $table по умолчанию как название модели
+     * Указать наименование таблицы в конечной модели для работы с ней
+     * По умолчанию данное свойство хранит наменование таблицы в точности повторяющее
+     * наименование вызываемой модели в нижнем регистре
      */
     protected static $table;
 
@@ -24,6 +27,24 @@ abstract class Cmodel {
      * Массив в который записываются и читаются данные при помощи __get и __set
      */
     protected $data = [];
+
+    /**
+     * Конструктор системной модели
+     */
+    public function __construct()
+    {
+        $this->defaultTable();
+    }
+
+    /**
+     * defaultTable() задает свойству $table имя таблицы, идиентичное имени модели
+     */
+    private function defaultTable()
+    {
+        $class_namespace = explode('\\', get_called_class());
+        $class_name = array_pop($class_namespace);
+        self::$table = strtolower($class_name);
+    }
 
     /**
      * @param $key
