@@ -51,8 +51,7 @@ class Cview
      * @return string
      * Создание переменных для view и непосредственно само подключение
      * Также в методе реализована буферизация для дальнейшей обработки данных
-     * @todo реализовать подстановку дериктории в соответствии с наименованием контроллера
-     * @todo реализовать возможность указывать вьюху без указания формата
+     * Метод напрямую работает с layout
      */
     private function render($view)
     {
@@ -60,10 +59,16 @@ class Cview
             $$key = $value;
         }
         ob_start();
-        include __DIR__ . '/../../app/views/' . $view;
+        include __DIR__ . '/../../app/views/' . Ccontroller::$folder . '/' . $view . '.php';
         $content = ob_get_contents();
         ob_end_clean();
-        return $content;
+
+        ob_start();
+        include Ccontroller::$layout;
+        $content_final = ob_get_contents();
+        ob_end_clean();
+
+        return $content_final;
     }
 
     /**
