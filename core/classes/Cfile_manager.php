@@ -57,5 +57,6 @@ class Cfile_manager {
             }
         }
         closedir($dir);
+        return true;
     }
 }

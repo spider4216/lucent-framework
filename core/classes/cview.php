@@ -45,6 +45,8 @@ class Cview
         Casset::setAssets('bootstrap/css/bootstrap.min.css', 'system');
         Casset::setAssets('bootstrap/css/bootstrap-theme.min.css', 'system');
         Casset::setAssets('bootstrap/js/bootstrap.min.js', 'system');
+
+        Casset::setAssets('lucent/css/style.css', 'system');
     }
 
     /**

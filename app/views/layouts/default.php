@@ -17,17 +17,38 @@ use core\classes\Casset;
     <?php echo Casset::getAssets('script'); ?>
 </head>
 <body>
+
+<div class="page">
     <header>
-        <div class="logo">
-            <span>Lucent Framework</span>
-        </div>
+        <nav class="navbar navbar-inverse">
+            <a class="navbar-brand" href="/">
+                <span>Lucent Framework</span>
+            </a>
+
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">Возможности</a>
+                </li>
+
+                <li>
+                    <a href="#">Документация</a>
+                </li>
+
+                <li>
+                    <a href="#">Планы</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
     <section>
-        <div class="main-content">
-            <?php echo $content; ?>
+        <div class="container">
+            <div class="main-content">
+                <?php echo $content; ?>
+            </div>
         </div>
     </section>
+</div>
 
     <footer>
         <div class="copyright">

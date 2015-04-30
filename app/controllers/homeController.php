@@ -1,7 +1,6 @@
 <?php
 
 namespace app\controllers;
-use core\classes\Casset;
 use core\classes\Ccontroller;
 use core\classes\Cview;
 
