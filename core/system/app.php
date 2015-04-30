@@ -1,5 +1,6 @@
 <?php
 namespace core\system;
+use core\classes\Casset;
 
 /**
  * Class App
@@ -13,6 +14,7 @@ class App
     public static function run()
     {
         $config = include __DIR__ . '/../../app/config/main.php';
+        Casset::filesAttach();
         static::semantic_url($config['default_controller'], $config['default_action']);
     }
 

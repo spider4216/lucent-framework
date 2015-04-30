@@ -15,12 +15,37 @@ namespace core\classes;
  * Например: $view = new Cview(); $view->title = 'Hello World'; $view->display('home/index.php');
  * В home/index.php станет доступна переменная $title
  */
-class Cview {
+class Cview
+{
     /**
      * @var array
      * $data - массив, который наполняется данными через магический метод __set
      */
     protected $data = [];
+
+    public function __construct()
+    {
+        $this->initCoreAssets();
+    }
+
+    /**
+     * Данный метод запускается при создании текущего класса.
+     * Подготваливает все системные скрипты и стили для подключения
+     * Подготовленные скрипты в этом методе будут доступны на любой странице
+     * экшена
+     */
+    private function initCoreAssets()
+    {
+        Casset::setAssets('jquery/external/jquery/jquery.js', 'system');
+        Casset::setAssets('jquery/jquery-ui.min.js', 'system');
+        Casset::setAssets('jquery/jquery-ui.theme.min.css', 'system');
+        Casset::setAssets('jquery/jquery-ui.structure.min.css', 'system');
+        Casset::setAssets('jquery/jquery-ui.min.css', 'system');
+
+        Casset::setAssets('bootstrap/css/bootstrap.min.css', 'system');
+        Casset::setAssets('bootstrap/css/bootstrap-theme.min.css', 'system');
+        Casset::setAssets('bootstrap/js/bootstrap.min.js', 'system');
+    }
 
     /**
      * @param $k
@@ -50,8 +75,7 @@ class Cview {
      * @return string
      * Создание переменных для view и непосредственно само подключение
      * Также в методе реализована буферизация для дальнейшей обработки данных
-     * @todo реализовать подстановку дериктории в соответствии с наименованием контроллера
-     * @todo реализовать возможность указывать вьюху без указания формата
+     * Метод напрямую работает с layout
      */
     private function render($view)
     {
@@ -59,10 +83,16 @@ class Cview {
             $$key = $value;
         }
         ob_start();
-        include __DIR__ . '/../../app/views/' . $view;
+        include __DIR__ . '/../../app/views/' . Ccontroller::$folder . '/' . $view . '.php';
         $content = ob_get_contents();
         ob_end_clean();
-        return $content;
+
+        ob_start();
+        include Ccontroller::$layout;
+        $content_final = ob_get_contents();
+        ob_end_clean();
+
+        return $content_final;
     }
 
     /**
