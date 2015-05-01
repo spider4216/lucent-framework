@@ -30,6 +30,8 @@ class Path {
      */
     private static $app;
 
+    private static $views_directory;
+
     /**
      * Инициализация путей
      */
@@ -38,6 +40,7 @@ class Path {
         static::$root = $_SERVER['DOCUMENT_ROOT'];
         static::$core = $_SERVER['DOCUMENT_ROOT'] . '/core';
         static::$app = $_SERVER['DOCUMENT_ROOT'] . '/app';
+        static::setViews();
     }
 
     /**
@@ -65,5 +68,29 @@ class Path {
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $type
+     * @return mixed
+     * Возвращает пути до папки views в зависимости от переданного типа:
+     * default - стандартная директория в /app/views
+     * coreModules - модульная системная директория /core/modules/views
+     * appModules - модульная директория в приложении /app/modules/views
+     */
+    public static function setViews($type = 'default') {
+        switch ($type) {
+            case 'default' :
+                static::$views_directory = $_SERVER['DOCUMENT_ROOT'] . '/app/views';
+                break;
+            case 'coreModules' :
+                static::$views_directory = $_SERVER['DOCUMENT_ROOT'] . '/core/modules/'. Cmodule::$moduleName .'/views/';
+                break;
+            case 'appModules' :
+                static::$views_directory = $_SERVER['DOCUMENT_ROOT'] . '/app/modules/'. Cmodule::$moduleName .'/views';
+                break;
+        }
+
+        return static::$views_directory;
     }
 }

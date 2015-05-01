@@ -84,8 +84,18 @@ class Cview
         foreach ($this->data as $key => $value) {
             $$key = $value;
         }
+
+        $pathView = Path::setViews() . '/' . Ccontroller::$folder . '/' . $view . '.php';
+        if (!file_exists($pathView)) {
+            $pathView = Path::setViews('coreModules') . '/' . Ccontroller::$folder . '/' . $view . '.php';
+            if (!file_exists($pathView)) {
+                $pathView = Path::setViews('appModules') . '/' . Ccontroller::$folder . '/' . $view . '.php';
+            }
+        }
+
         ob_start();
-        include __DIR__ . '/../../app/views/' . Ccontroller::$folder . '/' . $view . '.php';
+        include $pathView;
+
         $content = ob_get_contents();
         ob_end_clean();
 
