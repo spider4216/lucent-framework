@@ -1,9 +1,9 @@
 <?php
 namespace core\modules\page\controllers;
 
-use core\classes\Ccontroller;
-use core\classes\Cview;
-use core\modules\page\models\Page;
+use core\classes\ccontroller;
+use core\classes\cview;
+use core\modules\page\models\page;
 
 class basicController extends Ccontroller{
 

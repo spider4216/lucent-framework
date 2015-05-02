@@ -44,7 +44,9 @@ class Database
     {
         $db_data = include __DIR__ . '/../../app/config/database.php';
         $dsn = 'mysql:dbname=' . $db_data['db_name'] . ';host=' . $db_data['db_host'];
-        $this->pdo = new \PDO($dsn, $db_data['db_username'], $db_data['db_password']);
+        $this->pdo = new \PDO($dsn, $db_data['db_username'], $db_data['db_password'],array(
+            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
+        );
     }
 
     /**

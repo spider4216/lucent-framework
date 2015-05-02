@@ -1,8 +1,8 @@
 <?php
 namespace core\classes;
 
-use core\classes\Database;
-use core\interfaces\Imodel;
+use core\classes\database;
+use core\interfaces\imodel;
 
 /**
  * Class Cmodel. Системный класс модели.

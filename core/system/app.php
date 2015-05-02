@@ -1,8 +1,8 @@
 <?php
 namespace core\system;
-use core\classes\Casset;
-use core\classes\Cmodule;
-use core\classes\Path;
+use core\classes\casset;
+use core\classes\cmodule;
+use core\classes\path;
 
 /**
  * Class App
@@ -31,7 +31,7 @@ class App
      * Сначала модуль ищется в системной папке, если он там отсутствует,
      * приложение пытается найти его в папке /app/modules
      */
-    private function semantic_url($default_ctrl, $default_act)
+    private static function semantic_url($default_ctrl, $default_act)
     {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $pathParts = explode('/', $path);

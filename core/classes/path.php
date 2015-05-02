@@ -35,7 +35,7 @@ class Path {
     /**
      * Инициализация путей
      */
-    private function path_init()
+    private static function path_init()
     {
         static::$root = $_SERVER['DOCUMENT_ROOT'];
         static::$core = $_SERVER['DOCUMENT_ROOT'] . '/core';

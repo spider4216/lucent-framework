@@ -1,8 +1,8 @@
 <?php
 
 namespace app\controllers;
-use core\classes\Ccontroller;
-use core\classes\Cview;
+use core\classes\ccontroller;
+use core\classes\cview;
 
 /**
  * Class homeController

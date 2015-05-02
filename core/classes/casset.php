@@ -2,6 +2,9 @@
 
 namespace core\classes;
 
+use core\classes\cfile_manager;
+use core\classes\path;
+
 /**
  * Class Casset
  * @package core\classes
