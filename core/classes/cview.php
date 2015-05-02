@@ -85,13 +85,7 @@ class Cview
             $$key = $value;
         }
 
-        $pathView = Path::setViews() . '/' . Ccontroller::$folder . '/' . $view . '.php';
-        if (!file_exists($pathView)) {
-            $pathView = Path::setViews('coreModules') . '/' . Ccontroller::$folder . '/' . $view . '.php';
-            if (!file_exists($pathView)) {
-                $pathView = Path::setViews('appModules') . '/' . Ccontroller::$folder . '/' . $view . '.php';
-            }
-        }
+        $pathView = Ccontroller::$path . '/../views/' . Ccontroller::$folder . '/' . $view . '.php';
 
         ob_start();
         include $pathView;
@@ -111,8 +105,12 @@ class Cview
      * @param $view
      * Отображение данных
      */
-    public function display($view)
+    public function display($view, $return = false)
     {
+        if ($return) {
+            return $this->render($view);
+        }
+
         echo $this->render($view);
     }
 }

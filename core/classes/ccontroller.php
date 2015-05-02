@@ -21,6 +21,18 @@ class Ccontroller
     public static $folder;
 
     /**
+     * @var string $name
+     * Полное наименование вызываемого контроллера
+     */
+    public static $name;
+
+    /**
+     * @var string $path
+     * Полный путь до вызываемого котроллера
+     */
+    public static $path;
+
+    /**
      * @var string $layout
      * Свойство с адресом до layout. По умолчанию данное свойство
      * слушает путь до /app/views/layout/default.php
@@ -32,6 +44,32 @@ class Ccontroller
     {
         $this->folder_like_controller_name();
         $this->setLayout();
+        $this->getPathController();
+        $this->getName();
+    }
+
+    /**
+     * Получить поолный путь до вызываемого контроллера
+     */
+    private function getPathController()
+    {
+        $called_class = get_called_class();
+        $reflector = new \ReflectionClass($called_class);
+
+        $fn = $reflector->getFileName();
+        $tt =  dirname($fn);
+
+        static::$path = $tt;
+    }
+
+    /**
+     * Получить полное имя контроллера
+     */
+    private function getName()
+    {
+        $class = get_called_class();
+        $classArr = explode('\\', $class);
+        static::$name = end($classArr);
     }
 
     /**
