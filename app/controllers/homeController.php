@@ -3,6 +3,8 @@
 namespace app\controllers;
 use core\classes\ccontroller;
 use core\classes\cview;
+use core\classes\cwidget;
+use core\modules\page\models\page;
 
 /**
  * Class homeController
@@ -21,13 +23,15 @@ class homeController extends Ccontroller
     public function actionIndex()
     {
         $view = new Cview();
-        $view->content = 'Добро пожаловать на домашнюю страницу фраемворка lucent';
+        $view->title = 'Добро пожаловать';
         $view->display('index');
     }
 
     public function actionDemo()
     {
+        $model = new Page();
         $view = new Cview();
+        $view->model = $model;
         $view->display('demo');
     }
 }

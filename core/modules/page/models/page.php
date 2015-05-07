@@ -7,4 +7,13 @@ class Page extends Cmodel
 {
     //@todo Сделать инициализацию таблиц в БД
     protected static $table = 'pages';
+
+    //@todo Сделать функцию перевода
+    protected static function labels()
+    {
+        return [
+            'title' => 'Заголовок',
+            'content' => 'Содержимое',
+        ];
+    }
 }

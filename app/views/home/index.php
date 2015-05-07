@@ -1,5 +1,11 @@
-<h2>Домашняя страница</h2>
-
 <div class="content">
-    <p><?php echo $content; ?></p>
+    <div class="jumbotron">
+        <h1><?php echo $title; ?></h1>
+        <p></p>
+        <p>
+            Вас привествует чрезвычайно простой, удобный и яркий фраемворк, который готов помочь вам вооплатить
+            все ваши идеи в реальность.
+        </p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Узнать больше</a></p>
+    </div>
 </div>

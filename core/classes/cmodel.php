@@ -3,6 +3,7 @@ namespace core\classes;
 
 use core\classes\database;
 use core\interfaces\imodel;
+use \Iterator;
 
 /**
  * Class Cmodel. Системный класс модели.
@@ -11,7 +12,7 @@ use core\interfaces\imodel;
  * @author farZa
  * @copyright 2015
  */
-abstract class Cmodel implements Imodel
+abstract class Cmodel implements Imodel, Iterator
 {
 
     /**
@@ -34,6 +35,11 @@ abstract class Cmodel implements Imodel
     public function __construct()
     {
         $this->defaultTable();
+    }
+
+    protected static function labels()
+    {
+        return false;
     }
 
     /**
@@ -146,13 +152,22 @@ abstract class Cmodel implements Imodel
      * @return array
      * Возвращает все найденные записи выбранной модели
      */
-    public static function findAll()
+    public static function findAll($condition = [], $columns = [])
     {
         /** @var Database $db */
         $db = Database::getObj();
         $class = get_called_class();
         $db->setClassName($class);
-        $sql = 'SELECT * FROM ' . static::$table;
+
+        $select = ($columns) ? implode(',', $columns) : '*';
+
+        $sql = 'SELECT '. $select .' FROM ' . static::$table;
+
+        if ($condition) {
+            $sql = $sql . ' WHERE ' . $condition[0];
+            return $db->query($sql, $condition[1]);
+        }
+
         return $db->query($sql);
     }
 
@@ -190,4 +205,56 @@ abstract class Cmodel implements Imodel
         }
         return false;
     }
+
+    public function getLabel($name)
+    {
+        $labels = static::labels();
+        if (false != $labels) {
+            if (array_key_exists($name, $labels)) {
+                return $labels[$name];
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Начало группы мктодов, реализующих интерфейс Iterator для
+     * успешного перебора свойств в цикле foreach
+     */
+
+    public function rewind()
+    {
+        reset($this->data);
+    }
+
+    public function current()
+    {
+        $var = current($this->data);
+        return $var;
+    }
+
+    public function key()
+    {
+        $var = key($this->data);
+        return $var;
+    }
+
+    public function next()
+    {
+        $var = next($this->data);
+        return $var;
+    }
+
+    public function valid()
+    {
+        $key = key($this->data);
+        $var = ($key !== NULL && $key !== FALSE);
+        return $var;
+    }
+
+    /**
+     * Конец группы мктодов, реализующих интерфейс Iterator для
+     * успешного перебора свойств в цикле foreach
+     */
 }
