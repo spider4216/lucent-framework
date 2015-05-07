@@ -16,7 +16,19 @@ Casset::setAssets('css/style.css', 'users');
         'columns' => [
             'title',
             'content',
-        ]
+        ],
+
+        'buttons' => [
+            'view' => [
+                'link' => '/view',
+            ],
+            'update' => [
+                'link' => '/update',
+            ],
+            'delete' => [
+                'link' => '/delete',
+            ],
+        ],
     ]);
     ?>
 </div>

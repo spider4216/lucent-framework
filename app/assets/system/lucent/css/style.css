@@ -4,19 +4,27 @@ html, body {
 
 .page {
     min-height: 100%;
-    padding-bottom: 20px;
 }
 
 footer {
-    height: 20px;
     margin-top: -20px;
-    color: #9d9d9d;
+    height: 20px;
+    background: #353535;
+}
 
-    background-image: -webkit-linear-gradient(top,#3c3c3c 0,#222 100%);
-    background-image: -o-linear-gradient(top,#3c3c3c 0,#222 100%);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#3c3c3c),to(#222));
-    background-image: linear-gradient(to bottom,#3c3c3c 0,#222 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    background-repeat: repeat-x;
+footer .copyright {
+    color: #9d9d9d;
+}
+
+.widget-table-buttons-panel {
+    width: 100px;
+    text-align: center;
+}
+
+.widget-table-buttons-panel a {
+    color: #343434;
+}
+
+.widget-table-buttons-panel a:hover {
+    text-decoration: none;
 }

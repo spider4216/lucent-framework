@@ -6,12 +6,12 @@ use core\classes\Path;
 
 class Wtable {
 
-    public function stick($name, $model, $items)
+    public function stick($name, $model, $items, $tools)
     {
-        return $this->render($name, $model, $items);
+        return $this->render($name, $model, $items, $tools);
     }
 
-    private function render($name, $model,  $items)
+    private function render($name, $model, $items, $tools)
     {
         ob_start();
         include Path::directory('core') . '/widgets/templates/_' . strtolower($name) . '.php';

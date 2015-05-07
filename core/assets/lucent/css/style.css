@@ -1,0 +1,30 @@
+html, body {
+    height: 100%;
+}
+
+.page {
+    min-height: 100%;
+}
+
+footer {
+    margin-top: -20px;
+    height: 20px;
+    background: #353535;
+}
+
+footer .copyright {
+    color: #9d9d9d;
+}
+
+.widget-table-buttons-panel {
+    width: 100px;
+    text-align: center;
+}
+
+.widget-table-buttons-panel a {
+    color: #343434;
+}
+
+.widget-table-buttons-panel a:hover {
+    text-decoration: none;
+}
