@@ -13,6 +13,8 @@ use \Iterator;
  * @copyright 2015
  * @todo Сделать метод load для загрузки атрибутов
  * @todo Написать валидатор
+ * @todo Реализовать beforeSave и afterSave
+ * @todo Написать beforeValidate и afterValidate
  */
 abstract class Cmodel implements Imodel, Iterator
 {
@@ -208,6 +210,11 @@ abstract class Cmodel implements Imodel, Iterator
         return false;
     }
 
+    /**
+     * @param $name
+     * @return bool|string
+     * Возвращает наименование атрибута, если его описали в labels в модели
+     */
     public function getLabel($name)
     {
         $labels = static::labels();
