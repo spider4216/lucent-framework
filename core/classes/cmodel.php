@@ -11,6 +11,8 @@ use \Iterator;
  * @version 1.0
  * @author farZa
  * @copyright 2015
+ * @todo Сделать метод load для загрузки атрибутов
+ * @todo Написать валидатор
  */
 abstract class Cmodel implements Imodel, Iterator
 {

@@ -7,3 +7,9 @@ require_once __DIR__ . '/core/system/autoload.php';
 App::run();
 
 ?>
+
+<?php
+/**
+ * @todo Сделать систему отслуживания ошибок
+ */
+?>
