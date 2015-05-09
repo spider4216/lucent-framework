@@ -4,6 +4,7 @@ namespace core\classes;
 use core\classes\database;
 use core\interfaces\imodel;
 use \Iterator;
+use core\classes\cvalidator;
 
 /**
  * Class Cmodel. Системный класс модели.
@@ -12,7 +13,6 @@ use \Iterator;
  * @author farZa
  * @copyright 2015
  * @todo Сделать метод load для загрузки атрибутов
- * @todo Написать валидатор
  * @todo Реализовать beforeSave и afterSave
  * @todo Написать beforeValidate и afterValidate
  */
@@ -126,6 +126,25 @@ abstract class Cmodel implements Imodel, Iterator
         return  $db->execute($sql, $dataExec);
     }
 
+    public function form_validate()
+    {
+        $rules = static::rules();
+        $validator = new Cvalidator();
+
+        $result = [];
+        foreach ($rules as $attr => $rule) {
+            foreach ($rule as $v_name) {
+                $result[] = $validator->check($attr, $v_name);
+            }
+        }
+
+        if (in_array(false, $result)) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @return bool
      * Публичный метод save(), который в зависимости от того, новая запись или нет
@@ -133,6 +152,10 @@ abstract class Cmodel implements Imodel, Iterator
      */
     public function save()
     {
+        if (!$this->form_validate()) {
+            return false;
+        }
+
         if ($this->id) {
             return $this->update();
         } else {
@@ -266,4 +289,9 @@ abstract class Cmodel implements Imodel, Iterator
      * Конец группы мктодов, реализующих интерфейс Iterator для
      * успешного перебора свойств в цикле foreach
      */
+
+    public static function rules()
+    {
+        return [];
+    }
 }

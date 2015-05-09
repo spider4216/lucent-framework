@@ -5,6 +5,7 @@ use core\classes\ccontroller;
 use core\classes\cview;
 use core\modules\page\models\page;
 use core\classes\request;
+use core\classes\cmessages;
 
 class basicController extends Ccontroller{
 
@@ -29,6 +30,7 @@ class basicController extends Ccontroller{
             $model->content = $post['content'];
 
             if ($model->save()) {
+                Cmessages::set('Страница была успешна создана', 'success');
                 Request::redirect('/page/basic/');
             }
         }

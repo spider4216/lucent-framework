@@ -1,8 +1,15 @@
 <?php
 use core\classes\cwidget;
+use core\classes\cmessages;
 ?>
 
 <h2>Список страниц</h2>
+
+<?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>
+    <div class="summary">
+        <?php echo $messages; ?>
+    </div>
+<?php endif; ?>
 
 <div class="tool">
     <br/>

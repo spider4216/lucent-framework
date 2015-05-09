@@ -6,6 +6,10 @@ html, body {
     min-height: 100%;
 }
 
+.page .push {
+    height: 100px;
+}
+
 footer {
     margin-top: -20px;
     height: 20px;

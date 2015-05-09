@@ -1,6 +1,16 @@
+<?php
+use core\classes\cmessages;
+?>
+
 <h2>Создание страницы</h2>
 
 <div class="form-group">
+    <?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>
+        <div class="summary">
+            <?php echo $messages; ?>
+        </div>
+    <?php endif; ?>
+
     <form action="/page/basic/create" method="post">
 
         <div class="m-row">

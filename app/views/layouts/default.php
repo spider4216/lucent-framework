@@ -48,6 +48,8 @@ use core\classes\Casset;
             </div>
         </div>
     </section>
+
+    <div class="push"></div>
 </div>
 
     <footer>

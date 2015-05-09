@@ -16,4 +16,12 @@ class Page extends Cmodel
             'content' => 'Содержимое',
         ];
     }
+
+    public static function rules()
+    {
+        return [
+            'title' => ['required'],
+            'content' => ['required'],
+        ];
+    }
 }

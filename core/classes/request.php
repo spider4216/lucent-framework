@@ -28,5 +28,6 @@ class Request {
     public static function redirect($path)
     {
         header('Location: ' . $path, true, 303);
+        exit();
     }
 }
