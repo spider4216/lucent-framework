@@ -25,28 +25,7 @@ class Cview
 
     public function __construct()
     {
-        $this->initCoreAssets();
-    }
-
-    /**
-     * Данный метод запускается при создании текущего класса.
-     * Подготваливает все системные скрипты и стили для подключения
-     * Подготовленные скрипты в этом методе будут доступны на любой странице
-     * экшена
-     */
-    private function initCoreAssets()
-    {
-        Casset::setAssets('jquery/external/jquery/jquery.js', 'system');
-        Casset::setAssets('jquery/jquery-ui.min.js', 'system');
-        Casset::setAssets('jquery/jquery-ui.theme.min.css', 'system');
-        Casset::setAssets('jquery/jquery-ui.structure.min.css', 'system');
-        Casset::setAssets('jquery/jquery-ui.min.css', 'system');
-
-        Casset::setAssets('bootstrap/css/bootstrap.min.css', 'system');
-        Casset::setAssets('bootstrap/css/bootstrap-theme.min.css', 'system');
-        Casset::setAssets('bootstrap/js/bootstrap.min.js', 'system');
-
-        Casset::setAssets('lucent/css/style.css', 'system');
+        Casset::initCoreAssets();
     }
 
     /**

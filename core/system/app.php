@@ -1,8 +1,11 @@
 <?php
 namespace core\system;
 use core\classes\casset;
+use core\classes\cmessages;
 use core\classes\cmodule;
+use core\classes\exception\e404;
 use core\classes\path;
+use core\classes\cdisplay;
 
 /**
  * Class App
@@ -33,12 +36,14 @@ class App
      */
     private static function semantic_url($default_ctrl, $default_act)
     {
+        $display = new Cdisplay();
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $pathParts = explode('/', $path);
 
         $pathCtrlIndex = 1;
         $pathActIndex = 2;
         $namespace = 'app\\controllers\\';
+        $module = '';
         if (count($pathParts) > 3) {
             $pathModuleIndex = 1;
             $pathCtrlIndex = 2;
@@ -61,8 +66,20 @@ class App
             $controllerClassNameFull = $namespace . $controllerClassName;
         }
 
+        if (!class_exists($controllerClassNameFull)) {
+            Cmessages::set('Страница не найдена','info');
+            $display->render('core/views/errors/404', false, true);
+        }
+
         $controller = new $controllerClassNameFull;
         $method = 'action' . $act;
-        $controller->$method();
+
+
+        try {
+            $controller->$method();
+        } catch (E404 $e) {
+            Cmessages::set('Страница не найдена','info');
+            $display->render('core/views/errors/404', false, true);
+        }
     }
 }

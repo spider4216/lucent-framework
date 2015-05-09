@@ -2,6 +2,8 @@
 
 namespace core\classes;
 
+use core\classes\exception\e404;
+
 /**
  * Class Ccontroller
  * @package core\classes
@@ -25,6 +27,11 @@ class Ccontroller
      * Полное наименование вызываемого контроллера
      */
     public static $name;
+
+    public function __call($name, $value)
+    {
+        throw new E404;
+    }
 
     /**
      * @var string $path

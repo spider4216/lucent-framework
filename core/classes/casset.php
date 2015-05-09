@@ -34,6 +34,27 @@ class Casset {
     private static $script = [];
 
     /**
+     * Данный метод запускается при создании текущего класса.
+     * Подготваливает все системные скрипты и стили для подключения
+     * Подготовленные скрипты в этом методе будут доступны на любой странице
+     * экшена
+     */
+    public static function initCoreAssets()
+    {
+        Casset::setAssets('jquery/external/jquery/jquery.js', 'system');
+        Casset::setAssets('jquery/jquery-ui.min.js', 'system');
+        Casset::setAssets('jquery/jquery-ui.theme.min.css', 'system');
+        Casset::setAssets('jquery/jquery-ui.structure.min.css', 'system');
+        Casset::setAssets('jquery/jquery-ui.min.css', 'system');
+
+        Casset::setAssets('bootstrap/css/bootstrap.min.css', 'system');
+        Casset::setAssets('bootstrap/css/bootstrap-theme.min.css', 'system');
+        Casset::setAssets('bootstrap/js/bootstrap.min.js', 'system');
+
+        Casset::setAssets('lucent/css/style.css', 'system');
+    }
+
+    /**
      * Данный метод сравнивает закрытую системную директорию с ассетами в /core и
      * открытую директорию в /app. Если какие либо основные директории (те, которые находятся в корне
      * /app/assets/system) отсутствуют, производится автоматическое копирование недостающих

@@ -21,8 +21,13 @@ class Cmessages
 
     public static function get($type)
     {
+        $message = [];
         if (isset($_SESSION[$type])) {
-            return $_SESSION[$type];
+            $message[$type] = $_SESSION[$type];
+
+            session_destroy();
+
+            return $message;
         }
 
         return false;
