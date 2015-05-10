@@ -62,7 +62,13 @@
                             <a class="glyphicon glyphicon-pencil" href="<?php echo $button['update']['link'] . '?id=' . $item->id; ?>"></a>
                         <?php endif; ?>
                         <?php if ($button['delete']): ?>
-                            <a class="glyphicon glyphicon-trash" href="<?php echo $button['delete']['link'] . '?id=' . $item->id; ?>"></a>
+                            <a class="glyphicon glyphicon-trash confirmation"
+                               href="<?php echo $button['delete']['link'] . '?id=' . $item->id; ?>"
+                               data-href="<?php echo $button['delete']['link'] . '?id=' . $item->id; ?>"
+                               data-title="Вы уверены?"
+                               data-btnOkClass="btn btn-danger"
+                               data-btnOkLabel="<i class='glyphicon glyphicon-ok-circle'></i> Да"
+                               data-btnCancelLabel="<i class='glyphicon glyphicon-remove-circle'></i> Нет"></a>
                         <?php endif; ?>
                     </div>
                 </td>

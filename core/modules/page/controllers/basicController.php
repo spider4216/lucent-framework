@@ -30,7 +30,7 @@ class basicController extends Ccontroller{
             $model->content = $post['content'];
 
             if ($model->save()) {
-                Cmessages::set('Страница была успешна создана', 'success');
+                Cmessages::set('Страница "'. $model->title .'" была успешна создана', 'success');
                 Request::redirect('/page/basic/');
             }
         }
@@ -49,6 +49,7 @@ class basicController extends Ccontroller{
             $model->content = $post['content'];
 
             if ($model->save()) {
+                Cmessages::set('Страница "'. $model->title .'" была успешна обновлена', 'success');
                 Request::redirect('/page/basic/');
             }
         }
@@ -86,6 +87,7 @@ class basicController extends Ccontroller{
             $item = $model->findByPk($id);
 
             if ($item->delete()) {
+                Cmessages::set('Страница "'. $item->title .'" была успешна удалена', 'success');
                 Request::redirect('/page/basic/');
             }
 

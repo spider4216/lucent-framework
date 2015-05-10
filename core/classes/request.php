@@ -30,4 +30,9 @@ class Request {
         header('Location: ' . $path, true, 303);
         exit();
     }
+
+    public static function getUrl()
+    {
+        return $_SERVER['REQUEST_URI'];
+    }
 }
