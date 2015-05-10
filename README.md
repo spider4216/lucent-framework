@@ -1,1 +1,1 @@
-# lucent-framework
+# Учебный проект Lucent Framework
