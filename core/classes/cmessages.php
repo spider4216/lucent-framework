@@ -16,14 +16,14 @@ class Cmessages
 
     public static function set($text, $type)
     {
-        $_SESSION[$type][] = $text;
+        $_SESSION['messages'][$type][] = $text;
     }
 
     public static function get($type)
     {
         $message = [];
-        if (isset($_SESSION[$type])) {
-            $message[$type] = $_SESSION[$type];
+        if (isset($_SESSION['messages'][$type])) {
+            $message[$type] = $_SESSION['messages'][$type];
 
             session_destroy();
 
@@ -35,7 +35,7 @@ class Cmessages
 
     public static function getAll()
     {
-        if ($session = $_SESSION) {
+        if ($session = $_SESSION['messages']) {
             $messages = [];
 
             foreach ($session as $type => $message) {

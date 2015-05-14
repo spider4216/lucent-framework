@@ -1,6 +1,7 @@
 <?php
 
-use core\classes\Casset;
+use core\classes\casset;
+use core\classes\cauth;
 
 /**
  * @var string $content - Содержимое views
@@ -37,6 +38,27 @@ use core\classes\Casset;
                 <li>
                     <a href="#">Планы</a>
                 </li>
+            </ul>
+
+            <ul class="nav navbar-nav pull-right">
+                <?php if ($username = Cauth::getCurrentUser()): ?>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            <span>Пользователь: <?php echo $username; ?></span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="/users/control/user?id=<?php echo $_COOKIE['user_id']; ?>">Профиль</a>
+                                <a href="/users/control/logout">Выйти</a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <a href="/users/control/login">Войти в систему</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>

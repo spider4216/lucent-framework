@@ -233,6 +233,15 @@ abstract class Cmodel implements Imodel, Iterator
         return false;
     }
 
+    public function is_new_record($column, $value)
+    {
+        if (!static::findByColumn($column, $value)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * @param $name
      * @return bool|string
@@ -294,4 +303,5 @@ abstract class Cmodel implements Imodel, Iterator
     {
         return [];
     }
+
 }

@@ -2,6 +2,7 @@
 namespace core\modules\page\controllers;
 
 use core\classes\ccontroller;
+use core\classes\Cdisplay;
 use core\classes\cview;
 use core\modules\page\models\page;
 use core\classes\request;
@@ -42,6 +43,7 @@ class basicController extends Ccontroller{
     {
         $model = new Page();
         $view = new Cview();
+        $display = new Cdisplay();
 
         if ($post = Request::post()) {
             $model = $model->findByPk($post['id']);
@@ -56,27 +58,46 @@ class basicController extends Ccontroller{
 
         if ($id = Request::get('id')) {
             $view->model = $model;
+            $item = $model->findByPk($id);
+
+            if (!$item) {
+                Cmessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
+                $display->render('core/views/errors/404',false,true);
+            }
+
             $view->item = $model->findByPk($id);
 
             $view->display('update');
         } else {
-            Request::redirect('/page/basic/');
+            $display = new Cdisplay();
+            Cmessages::set('Страница не найдена', 'danger');
+            $display->render('core/views/errors/404',false,true);
         }
 
     }
 
     public function actionView()
     {
+        $display = new Cdisplay();
+
         if ($id = Request::get('id')) {
             $model = new Page();
             $view = new Cview();
 
             $view->model = $model;
-            $view->item = $model->findByPk($id);
+            $item = $model->findByPk($id);
+
+            if (!$item) {
+                Cmessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
+                $display->render('core/views/errors/404',false,true);
+            }
+
+            $view->item = $item;
 
             $view->display('view');
         } else {
-            Request::redirect('/page/basic/');
+            Cmessages::set('Страница не найдена', 'danger');
+            $display->render('core/views/errors/404',false,true);
         }
     }
 

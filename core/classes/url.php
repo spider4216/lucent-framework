@@ -39,7 +39,7 @@ class Url
             $controllerClassNameFull = $namespace . $controllerClassName;
 
             if (!class_exists($controllerClassNameFull)) {
-                Cmessages::set('Страница '. $request_url .' не найдена','info');
+                Cmessages::set('Страница '. $request_url .' не найдена','danger');
                 $display->render('core/views/errors/404', false, true);
             }
         } else {
@@ -52,7 +52,7 @@ class Url
             $controllerClassNameFull = $namespace . $controllerClassName;
 
             if (!class_exists($controllerClassNameFull)) {
-                Cmessages::set('Страница '. $request_url .' не найдена','info');
+                Cmessages::set('Страница '. $request_url .' не найдена','danger');
                 $display->render('core/views/errors/404', false, true);
             }
         }
@@ -64,7 +64,7 @@ class Url
         try {
             $controller->$method();
         } catch (E404 $e) {
-            Cmessages::set('Страница '. $request_url .' не найдена','info');
+            Cmessages::set('Страница '. $request_url .' не найдена','danger');
             $display->render('core/views/errors/404', false, true);
         }
     }

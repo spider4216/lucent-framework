@@ -2,9 +2,9 @@
 use core\classes\cmessages;
 ?>
 
-<?php header("HTTP/1.0 404 Not Found"); ?>
+<?php header("HTTP/1.0 400 Not Found"); ?>
 
 <div class="error-page">
-    <h2>Ошибка 404</h2>
+    <h2>Ошибка 400</h2>
     <?php echo Cmessages::pretty(Cmessages::get('danger')); ?>
 </div>
