@@ -8,6 +8,11 @@ return [
     'default_controller' => 'home',
     /** Действие по умолчанию*/
     'default_action' => 'index',
+    
+    'system_tables' => [
+        'users' => 'users',
+        'roles' => 'roles',
+    ],
 ];
 
 ?>

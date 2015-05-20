@@ -55,6 +55,46 @@ class Ccontroller
         $this->getName();
     }
 
+    public static function permission()
+    {
+        return true;
+    }
+
+    public function beforeAction()
+    {
+        return true;
+    }
+
+    public function afterAction()
+    {
+        return true;
+    }
+
+    //@todo Допилить
+    public function allow_action($action_name)
+    {
+        $permissions = static::permission();
+
+        if (is_array($permissions)) {
+            foreach ($permissions as $permission => $roles) {
+                if ($action_name == $permission) {
+                    foreach ($roles as $role) {
+                        $current_role = Cauth::getCurrentRole();
+                        if (false === $current_role && $role === '-') {
+                            return false;
+                        }
+
+                        if ($current_role === $role) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Получить поолный путь до вызываемого контроллера
      */

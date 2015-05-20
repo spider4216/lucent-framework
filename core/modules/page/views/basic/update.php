@@ -1,3 +1,7 @@
+<?php
+use core\classes\cwidget;
+?>
+
 <h2>Редактирование страницы</h2>
 
 <div class="form-group">
@@ -18,6 +22,12 @@
         <div class="m-row">
             <input type="hidden" name="id" value="<?php echo $item->id; ?>"/>
             <input type="submit" value="Сохранить" class="btn btn-primary"/>
+            <?php
+                echo Cwidget::build('wbtnask', $model, [
+                    'link' => '/page/basic/delete?id=' . $item->id,
+                    'ok_class' => 'btn btn-danger',
+                ]);
+            ?>
         </div>
 
     </form>

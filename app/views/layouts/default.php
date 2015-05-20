@@ -49,6 +49,9 @@ use core\classes\cauth;
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
+                                <?php if (Cauth::getCurrentRole() == 'admin'): ?>
+                                    <a href="/admin/panel/">Админ панель</a>
+                                <?php endif; ?>
                                 <a href="/users/control/user?id=<?php echo $_COOKIE['user_id']; ?>">Профиль</a>
                                 <a href="/users/control/logout">Выйти</a>
                             </li>

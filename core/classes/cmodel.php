@@ -27,6 +27,8 @@ abstract class Cmodel implements Imodel, Iterator
      */
     protected static $table;
 
+    protected static $innerJoin = false;
+
     /**
      * @var array $data
      * Массив в который записываются и читаются данные при помощи __get и __set
@@ -145,6 +147,11 @@ abstract class Cmodel implements Imodel, Iterator
         return true;
     }
 
+    public function beforeSave()
+    {
+        return true;
+    }
+
     /**
      * @return bool
      * Публичный метод save(), который в зависимости от того, новая запись или нет
@@ -152,6 +159,10 @@ abstract class Cmodel implements Imodel, Iterator
      */
     public function save()
     {
+        if (!$this->beforeSave()) {
+            return false;
+        }
+
         if (!$this->form_validate()) {
             return false;
         }
@@ -302,6 +313,21 @@ abstract class Cmodel implements Imodel, Iterator
     public static function rules()
     {
         return [];
+    }
+
+    public static function innerJoin($model, $field_relate, $field_related)
+    {
+        $relate_table = static::$table;
+        $related_table = $model::$table;
+
+        $sql = 'SELECT * FROM ' . $relate_table . ' INNER JOIN '.
+            $related_table . ' ON ' . $relate_table . '.' . $field_relate . '=' . $related_table . '.' . $field_related;
+
+        static::$innerJoin = $sql;
+
+        $class = get_called_class();
+
+        return new $class;
     }
 
 }

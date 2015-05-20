@@ -1,6 +1,7 @@
 <?php
 namespace core\classes;
 
+use core\system\app;
 
 class Cauth {
 
@@ -63,5 +64,18 @@ class Cauth {
         }
 
         return false;
+    }
+
+    public static function getCurrentRole()
+    {
+        $db = Database::getObj();
+        $sql = 'SELECT * FROM ' . App::$config['system_tables']['users'] . ' WHERE id=:user_id';
+        $result = $db->query($sql, [':user_id' => static::getCurrentUserId()])[0];
+        $user_role_id = $result->role_id;
+
+        $sql = 'SELECT * FROM ' . App::$config['system_tables']['roles'] . ' WHERE id=:role_id';
+        $result = $db->query($sql, [':role_id' => $user_role_id])[0];
+
+        return is_null($result->name) ? false : $result->name;
     }
 }

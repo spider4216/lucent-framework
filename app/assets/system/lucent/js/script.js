@@ -1,4 +1,4 @@
 $(document).ready(function() {
-    var select = $('.glyphicon-trash.confirmation');
+    var select = $('.bootstrap-confirmation');
     $(select).confirmation();
 });

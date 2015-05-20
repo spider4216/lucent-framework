@@ -1,3 +1,7 @@
+<?php
+use core\classes\cwidget;
+?>
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -62,13 +66,16 @@
                             <a class="glyphicon glyphicon-pencil" href="<?php echo $button['update']['link'] . '?id=' . $item->id; ?>"></a>
                         <?php endif; ?>
                         <?php if ($button['delete']): ?>
-                            <a class="glyphicon glyphicon-trash confirmation"
-                               href="<?php echo $button['delete']['link'] . '?id=' . $item->id; ?>"
-                               data-href="<?php echo $button['delete']['link'] . '?id=' . $item->id; ?>"
-                               data-title="Вы уверены?"
-                               data-btnOkClass="btn btn-danger"
-                               data-btnOkLabel="<i class='glyphicon glyphicon-ok-circle'></i> Да"
-                               data-btnCancelLabel="<i class='glyphicon glyphicon-remove-circle'></i> Нет"></a>
+                            <?php
+                                echo Cwidget::build('wbtnask', $model, [
+                                    'link' => $button['delete']['link'] . '?id=' . $item->id,
+                                    'value' => '',
+                                    'ok_class' => 'btn btn-danger',
+                                    'attributes' => [
+                                        'class' => 'glyphicon glyphicon-trash',
+                                    ],
+                                ]);
+                            ?>
                         <?php endif; ?>
                     </div>
                 </td>

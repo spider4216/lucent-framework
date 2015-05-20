@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers;
+use core\classes\cauth;
 use core\classes\ccontroller;
 use core\classes\cview;
 use core\classes\cwidget;
@@ -32,6 +33,8 @@ class homeController extends Ccontroller
         $model = new Page();
         $view = new Cview();
         $view->model = $model;
+
         $view->display('demo');
     }
+
 }

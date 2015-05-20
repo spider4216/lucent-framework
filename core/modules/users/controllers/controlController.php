@@ -8,10 +8,30 @@ use core\classes\cpassword;
 use core\classes\cdisplay;
 use core\classes\cview;
 use core\classes\request;
+use core\modules\users\models\roles;
 use core\modules\users\models\users;
+use core\modules\users\models\usersUpdate;
 
 class ControlController extends Ccontroller
 {
+    public static function permission()
+    {
+        // "-" - неавторизованный пользователь
+        return [
+            'index' => ['user', '-'],
+            'manage' => ['user', '-'],
+            'update' => ['user', '-'],
+            'delete' => ['user', '-'],
+        ];
+    }
+
+    public function actionIndex()
+    {
+        $view = new Cview();
+
+        $view->display('index');
+    }
+
     public function actionUser()
     {
         $display = new Cdisplay();
@@ -91,6 +111,123 @@ class ControlController extends Ccontroller
             Request::redirect('/');
         } else {
             Cmessages::set('Не удается выйти из системы', 'danger');
+        }
+    }
+
+    public function actionManage()
+    {
+        $model = new Users();
+
+        $view = new Cview();
+        $view->model = $model;
+
+        $view->display('manage');
+    }
+
+    public function actionUpdate()
+    {
+        $roleList = Roles::findAll();
+
+        if ($post = Request::post()) {
+            $view = new Cview();
+            $model = UsersUpdate::findByPk($post['id']);
+
+            if ($model->username == $post['username']) {
+
+                $model->username = $post['username'];
+                $model->role_id = $post['roles'];
+
+                if (!empty($post['password'])) {
+                    $model->password = Cpassword::hash($post['password']);
+                }
+
+                $model->email = $post['email'];
+
+                if ($model->save()) {
+                    Cmessages::set('Пользователь ' . $model->username . ' был успешно обновлен', 'success');
+
+                    if (Cauth::getCurrentUserId() == $model->id) {
+                        Cauth::logout();
+                        Cmessages::set('Снова войдите в систему для применения изменений', 'info');
+                        Request::redirect('/users/control/login');
+                    }
+
+                    Request::redirect('/users/control/manage');
+                }
+            } else {
+                if ($model->is_new_record('username', $post['username'])) {
+
+                    $model->username = $post['username'];
+                    $model->role_id = $post['roles'];
+
+                    if (!empty($post['password'])) {
+                        $model->password = Cpassword::hash($post['password']);
+                    }
+
+                    $model->email = $post['email'];
+
+                    if ($model->save()) {
+                        Cmessages::set('Пользователь ' . $model->username . ' был успешно обновлен', 'success');
+
+                        if (Cauth::getCurrentUserId() == $model->id) {
+                            Cauth::logout();
+                            Cmessages::set('Снова войдите в систему для применения изменений', 'info');
+                            Request::redirect('/users/control/login');
+                        }
+
+                        Request::redirect('/users/control/manage');
+                    }
+                } else {
+                    Cmessages::set('Пользователь ' . $post['username'] . ' уже существует', 'danger');
+                }
+            }
+
+
+            $view->model = $model;
+            $view->roleList = $roleList;
+
+            $view->display('update');
+        }
+
+        if ($id = Request::get('id')) {
+            $model = UsersUpdate::findByPk($id);
+
+            $view = new Cview();
+            $view->roleList = $roleList;
+            $view->model = $model;
+
+            $view->display('update');
+        } else {
+            $display = new Cdisplay();
+            Cmessages::set('Неопознанный пользователь', 'danger');
+            $display->render('core/views/errors/404',false,true);
+        }
+    }
+
+    public function actionDelete()
+    {
+        if ($id = Request::get('id')) {
+            $model = UsersUpdate::findByPk($id);
+
+            if (Cauth::getCurrentUserId() != $model->id) {
+
+                if ($model->delete()) {
+                    Cmessages::set('Пользователь ' . $model->username . ' был успешно удвлен', 'success');
+                } else {
+                    Cmessages::set('Ошибка при удалении пользователя', 'danger');
+                }
+
+            } else {
+                Cmessages::set('Нельзя удалить авторизованного пользователя', 'danger');
+                Request::redirect('/users/control/manage');
+            }
+
+            Request::redirect('/users/control/manage');
+
+        } else {
+            $display = new Cdisplay();
+            Cmessages::set('Неопознанный пользователь', 'danger');
+            $display->render('core/views/errors/404',false,true);
         }
     }
 }

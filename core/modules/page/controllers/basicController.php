@@ -10,6 +10,17 @@ use core\classes\cmessages;
 
 class basicController extends Ccontroller{
 
+    public static function permission()
+    {
+        // "-" - неавторизованный пользователь
+        return [
+            'index' => ['user', '-'],
+            'create' => ['user', '-'],
+            'update' => ['user', '-'],
+            'delete' => ['user', '-'],
+        ];
+    }
+
     public function actionIndex()
     {
         $model = new Page();

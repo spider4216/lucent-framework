@@ -13,13 +13,15 @@ use core\classes\url;
  */
 class App
 {
+    public static $config;
+
     //Главный метод класса. Вся инициализация приложения проходит через этот метод.
     public static function run()
     {
         header('Content-Type: text/html; charset=utf-8');
         session_start();
-        $config = include __DIR__ . '/../../app/config/main.php';
+        static::$config = include __DIR__ . '/../../app/config/main.php';
         Casset::filesAttach();
-        Url::semantic_url($config['default_controller'], $config['default_action']);
+        Url::semantic_url(static::$config['default_controller'], static::$config['default_action']);
     }
 }

@@ -17,6 +17,7 @@ class Users extends Cmodel
             'password' => 'Пароль',
             'password_again' => 'Повторите пароль',
             'email' => 'Электронная почта',
+            'roles' => 'Роль',
         ];
     }
 
@@ -28,5 +29,11 @@ class Users extends Cmodel
             'password_again' => ['compared'],
             'email' => ['required', 'email'],
         ];
+    }
+
+    public function beforeSave()
+    {
+        $this->role_id = 2;
+        return true;
     }
 }

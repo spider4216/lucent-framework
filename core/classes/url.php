@@ -62,7 +62,14 @@ class Url
 
 
         try {
-            $controller->$method();
+            if ($controller->allow_action($act)) {
+                $controller->beforeAction();
+                $controller->$method();
+                $controller->afterAction();
+            } else {
+                Cmessages::set('Доступ запрещен','danger');
+                $display->render('core/views/errors/403', false, true);
+            }
         } catch (E404 $e) {
             Cmessages::set('Страница '. $request_url .' не найдена','danger');
             $display->render('core/views/errors/404', false, true);
