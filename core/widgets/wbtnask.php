@@ -2,9 +2,10 @@
 namespace core\widgets;
 
 
+use core\classes\cwidget;
 use core\classes\path;
 
-class Wbtnask
+class Wbtnask extends Cwidget
 {
 
     public function stick($name, $model, $data)
@@ -29,16 +30,7 @@ class Wbtnask
 
         $tools['attributes']['class'] .= ' bootstrap-confirmation';
 
-
-        return $this->render($name, $tools);
-    }
-
-    private function render($name, $tools)
-    {
-        ob_start();
-        include Path::directory('core') . '/widgets/templates/_' . strtolower($name) . '.php';
-        $content = ob_get_contents();
-        ob_end_clean();
-        return $content;
+        //Во вьюхе $tools будет доступна как $data
+        return $this->render($name, $model, $tools);
     }
 }

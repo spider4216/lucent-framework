@@ -2,9 +2,10 @@
 namespace core\widgets;
 
 
+use core\classes\cwidget;
 use core\classes\path;
 
-class Wtable
+class Wtable extends Cwidget
 {
 
     public function stick($name, $model, $data)
@@ -29,15 +30,10 @@ class Wtable
 
         $items = $model->findAll($conditional, $columns);
 
-        return $this->render($name, $model, $items, $tools, $show_id);
-    }
-
-    private function render($name, $model, $items, $tools, $show_id)
-    {
-        ob_start();
-        include Path::directory('core') . '/widgets/templates/_' . strtolower($name) . '.php';
-        $content = ob_get_contents();
-        ob_end_clean();
-        return $content;
+        return $this->render($name, $model, [
+            'items' => $items,
+            'tools' => $tools,
+            'show_id' => $show_id,
+        ]);
     }
 }

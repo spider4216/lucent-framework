@@ -2,12 +2,12 @@
 use core\classes\chtml;
 ?>
 
-<a <?php echo Chtml::getAttributesFromArray($tools['attributes']); ?>
-    data-href="<?php echo $tools['link']; ?>"
-    data-title="<?php echo $tools['message']; ?>"
-    data-btnOkClass="<?php echo $tools['ok_class']; ?>"
-    data-btnOkLabel="<?php echo $tools['ok_label']; ?>"
-    data-btnCancelLabel="<?php echo $tools['cancel_label']; ?>"
+<a <?php echo Chtml::getAttributesFromArray($data['attributes']); ?>
+    data-href="<?php echo $data['link']; ?>"
+    data-title="<?php echo $data['message']; ?>"
+    data-btnOkClass="<?php echo $data['ok_class']; ?>"
+    data-btnOkLabel="<?php echo $data['ok_label']; ?>"
+    data-btnCancelLabel="<?php echo $data['cancel_label']; ?>"
 >
-    <?php echo $tools['value']; ?>
+    <?php echo $data['value']; ?>
 </a>

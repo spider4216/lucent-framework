@@ -5,7 +5,7 @@ use core\classes\cwidget;
 <table class="table table-striped">
     <thead>
     <tr>
-        <?php foreach ($items as $item): ?>
+        <?php foreach ($data['items'] as $item): ?>
             <?php foreach ($item as $key => $value): ?>
                 <?php if ('id' == $key && $show_id): ?>
                     <?php if ($label = $model->getLabel($key)): ?>
@@ -30,7 +30,7 @@ use core\classes\cwidget;
                 <?php endif; ?>
             <?php endforeach; ?>
 
-            <?php if ($tools['buttons']): ?>
+            <?php if ($data['tools']['buttons']): ?>
                 <th>
                     <span></span>
                 </th>
@@ -42,10 +42,10 @@ use core\classes\cwidget;
     </thead>
 
     <tbody>
-    <?php foreach ($items as $item): ?>
+    <?php foreach ($data['items'] as $item): ?>
         <tr>
             <?php foreach ($item as $key => $itm): ?>
-                <?php if ('id' == $key && $show_id): ?>
+                <?php if ('id' == $key && $data['show_id']): ?>
                     <td>
                         <span><?php echo $itm; ?></span>
                     </td>
@@ -56,7 +56,7 @@ use core\classes\cwidget;
                 <?php endif; ?>
             <?php endforeach; ?>
 
-            <?php if ($button = $tools['buttons']): ?>
+            <?php if ($button = $data['tools']['buttons']): ?>
                 <td>
                     <div class="widget-table-buttons-panel">
                         <?php if ($button['view']): ?>
