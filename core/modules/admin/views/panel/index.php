@@ -11,5 +11,9 @@
         <li>
             <a href="/users/control/">Система пользователей</a>
         </li>
+
+        <li>
+            <a href="/admin/panel/modules">Модули</a>
+        </li>
     </ul>
 </div>

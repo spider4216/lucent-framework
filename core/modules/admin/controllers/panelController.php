@@ -4,6 +4,7 @@ namespace core\modules\admin\controllers;
 
 use core\classes\cauth;
 use core\classes\ccontroller;
+use core\classes\Cmodule;
 use core\classes\cview;
 
 class PanelController extends Ccontroller
@@ -18,6 +19,7 @@ class PanelController extends Ccontroller
         // "-" - неавторизованный пользователь
         return [
             'index' => ['user', '-'],
+            'modules' => ['user', '-'],
         ];
     }
 
@@ -25,6 +27,15 @@ class PanelController extends Ccontroller
     {
         $view = new Cview();
         $view->display('index');
+    }
+
+    public function actionModules()
+    {
+        $view = new Cview();
+        $modules = Cmodule::getAllModules();
+        $view->modules = $modules;
+
+        $view->display('modules');
     }
 
 }
