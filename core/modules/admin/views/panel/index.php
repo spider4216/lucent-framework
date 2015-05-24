@@ -1,6 +1,16 @@
+<?php
+use core\classes\cwidget;
+?>
+
 <div class="page-header">
     <h2>Админ панель</h2>
 </div>
+
+<?php
+    echo Cwidget::build('wbreadcrumbs', '', [
+        'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
+    ]);
+?>
 
 <div class="admin-menu-content">
     <ul>

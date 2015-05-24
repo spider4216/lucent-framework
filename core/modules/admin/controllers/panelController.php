@@ -3,6 +3,7 @@ namespace core\modules\admin\controllers;
 
 
 use core\classes\cauth;
+use core\classes\Cbreadcrumbs;
 use core\classes\ccontroller;
 use core\classes\Cmodule;
 use core\classes\cview;
@@ -23,17 +24,37 @@ class PanelController extends Ccontroller
         ];
     }
 
+    public function breadcrumbs()
+    {
+        return [
+            'index' => [
+                'админ панель' => '-',
+            ],
+
+            'modules' => [
+                'админ панель' => '/admin/panel/',
+                'модули' => '-',
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'index');
+
         $view = new Cview();
+        $view->breadcrumbs = $breadcrumbs;
         $view->display('index');
     }
 
     public function actionModules()
     {
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'modules');
+
         $view = new Cview();
         $modules = Cmodule::getAllModules();
         $view->modules = $modules;
+        $view->breadcrumbs = $breadcrumbs;
 
         $view->display('modules');
     }

@@ -1,9 +1,19 @@
 <?php
 use core\classes\cwidget;
 use core\classes\cmessages;
+use core\classes\cbreadcrumbs;
 ?>
 
-<h2>Список страниц</h2>
+<div class="page-header">
+    <h2>Список страниц</h2>
+</div>
+
+
+<?php
+echo Cwidget::build('wbreadcrumbs', '', [
+    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
+]);
+?>
 
 <?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>
     <div class="summary">

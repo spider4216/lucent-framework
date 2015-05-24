@@ -7,6 +7,7 @@ use core\classes\cview;
 use core\classes\request;
 use core\modules\users\models\roles;
 use core\classes\cdisplay;
+use core\classes\cbreadcrumbs;
 
 class RolesController extends Ccontroller
 {
@@ -21,22 +22,49 @@ class RolesController extends Ccontroller
         ];
     }
 
+    public function breadcrumbs()
+    {
+        //% - замещение. Например Хочу передать виджету никий заголовок для принта
+        return [
+            'index' => [
+                'пользователи' => '/users/control/',
+                'управление ролями' => '-',
+            ],
+
+            'create' => [
+                'пользователи' => '/users/control/',
+                'управление ролями' => '/users/roles/',
+                'создать роль' => '-',
+            ],
+
+            'update' => [
+                'пользователи' => '/users/control/',
+                'управление ролями' => '/users/roles/',
+                'редактировать роль' => '-',
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'index');
         $model = new Roles();
         $view = new Cview();
 
         $view->model = $model;
+        $view->breadcrumbs = $breadcrumbs;
 
         $view->display('index');
     }
 
     public function actionCreate()
     {
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'create');
         $model = new Roles();
         $view = new Cview();
 
         $view->model = $model;
+        $view->breadcrumbs = $breadcrumbs;
 
         if ($post = Request::post()) {
             $model->name = $post['name'];
@@ -56,7 +84,9 @@ class RolesController extends Ccontroller
 
     public function actionUpdate()
     {
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'update');
         $view = new Cview();
+        $view->breadcrumbs = $breadcrumbs;
 
         if($post = Request::post()) {
             $model = Roles::findByPk($post['id']);

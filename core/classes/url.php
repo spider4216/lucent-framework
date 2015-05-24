@@ -64,6 +64,7 @@ class Url
         try {
             if ($controller->allow_action($act)) {
                 $controller->beforeAction();
+
                 $controller->$method();
                 $controller->afterAction();
             } else {

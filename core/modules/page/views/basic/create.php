@@ -1,8 +1,17 @@
 <?php
 use core\classes\cmessages;
+use core\classes\cwidget;
 ?>
 
-<h2>Создание страницы</h2>
+<div class="page-header">
+    <h2>Создание страницы</h2>
+</div>
+
+<?php
+echo Cwidget::build('wbreadcrumbs', '', [
+    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
+]);
+?>
 
 <div class="form-group">
     <?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>

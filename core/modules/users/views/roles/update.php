@@ -8,6 +8,11 @@ use core\classes\cwidget;
     <h2>Изменить роль</h2>
 </div>
 
+<?php
+echo Cwidget::build('wbreadcrumbs', '', [
+    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
+]);
+?>
 
 <?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>
     <div class="summary">

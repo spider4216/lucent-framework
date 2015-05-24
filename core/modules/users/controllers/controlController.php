@@ -11,6 +11,7 @@ use core\classes\request;
 use core\modules\users\models\roles;
 use core\modules\users\models\users;
 use core\modules\users\models\usersUpdate;
+use core\classes\cbreadcrumbs;
 
 class ControlController extends Ccontroller
 {
@@ -25,19 +26,59 @@ class ControlController extends Ccontroller
         ];
     }
 
+    public function breadcrumbs()
+    {
+        //% - замещение. Например Хочу передать виджету никий заголовок для принта
+        return [
+            'index' => [
+                'пользователи' => '-',
+            ],
+
+            'user' => [
+                'пользователи' => '/users/control/',
+                '%' => '-',
+            ],
+
+            'register' => [
+                'пользователи' => '/users/control/',
+                'регистрация' => '-',
+            ],
+
+            'login' => [
+                'пользователи' => '/users/control/',
+                'вход' => '-',
+            ],
+
+            'manage' => [
+                'пользователи' => '/users/control/',
+                'управление пользователями' => '-',
+            ],
+
+            'update' => [
+                'пользователи' => '/users/control/',
+                'управление пользователями' => '/users/control/manage',
+                'редактировать пользователя' => '-',
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $view = new Cview();
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'index');
 
+        $view->breadcrumbs = $breadcrumbs;
         $view->display('index');
     }
 
     public function actionUser()
     {
         $display = new Cdisplay();
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'user');
 
         if ($id = Request::get('id')) {
             $view = new Cview();
+            $view->breadcrumbs = $breadcrumbs;
             $user = Users::findByPk($id);
 
             if (!$user) {
@@ -57,9 +98,11 @@ class ControlController extends Ccontroller
     public function actionRegister()
     {
         $view = new Cview();
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'register');
         $model = new Users();
 
         $view->model = $model;
+        $view->breadcrumbs = $breadcrumbs;
 
         if ($post = Request::post()) {
             $model->username = $post['username'];
@@ -86,6 +129,7 @@ class ControlController extends Ccontroller
     public function actionLogin()
     {
         $view = new Cview();
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'login');
         $model = new Users();
 
         if ($post = Request::post()) {
@@ -102,6 +146,7 @@ class ControlController extends Ccontroller
         }
 
         $view->model = $model;
+        $view->breadcrumbs = $breadcrumbs;
         $view->display('login');
     }
 
@@ -119,7 +164,9 @@ class ControlController extends Ccontroller
         $model = new Users();
 
         $view = new Cview();
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'manage');
         $view->model = $model;
+        $view->breadcrumbs = $breadcrumbs;
 
         $view->display('manage');
     }
@@ -127,6 +174,7 @@ class ControlController extends Ccontroller
     public function actionUpdate()
     {
         $roleList = Roles::findAll();
+        $breadcrumbs = Cbreadcrumbs::getAll($this, 'update');
 
         if ($post = Request::post()) {
             $view = new Cview();
@@ -184,6 +232,7 @@ class ControlController extends Ccontroller
 
 
             $view->model = $model;
+            $view->breadcrumbs = $breadcrumbs;
             $view->roleList = $roleList;
 
             $view->display('update');
@@ -195,6 +244,7 @@ class ControlController extends Ccontroller
             $view = new Cview();
             $view->roleList = $roleList;
             $view->model = $model;
+            $view->breadcrumbs = $breadcrumbs;
 
             $view->display('update');
         } else {

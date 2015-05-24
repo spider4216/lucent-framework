@@ -1,9 +1,18 @@
 <?php
 use core\classes\cmessages;
 use core\classes\cauth;
+use core\classes\cwidget;
 ?>
 
-<h2>Регистрация</h2>
+<div class="page-header">
+    <h2>Регистрация</h2>
+</div>
+
+<?php
+echo Cwidget::build('wbreadcrumbs', '', [
+    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
+]);
+?>
 
 <?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>
     <div class="summary">

@@ -1,8 +1,18 @@
 <?php
 use core\classes\cmessages;
+use core\classes\cwidget;
 ?>
 
-<h2>Личный кабинет</h2>
+<div class="page-header">
+    <h2>Личный кабинет</h2>
+</div>
+
+<?php
+echo Cwidget::build('wbreadcrumbs', '', [
+    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
+    'replacement' =>$user->username,
+]);
+?>
 
 <?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>
     <div class="summary">

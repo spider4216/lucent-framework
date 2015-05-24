@@ -2,7 +2,15 @@
 use core\classes\cwidget;
 ?>
 
-<h2>Редактирование страницы</h2>
+<div class="page-header">
+    <h2>Редактирование страницы</h2>
+</div>
+
+<?php
+echo Cwidget::build('wbreadcrumbs', '', [
+    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
+]);
+?>
 
 <div class="form-group">
     <form action="" method="post">

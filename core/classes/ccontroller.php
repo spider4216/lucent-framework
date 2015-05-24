@@ -3,6 +3,7 @@
 namespace core\classes;
 
 use core\classes\exception\e404;
+use core\system\app;
 
 /**
  * Class Ccontroller
@@ -27,6 +28,8 @@ class Ccontroller
      * Полное наименование вызываемого контроллера
      */
     public static $name;
+
+    public static $action_name;
 
     public function __call($name, $value)
     {
@@ -53,6 +56,7 @@ class Ccontroller
         $this->setLayout();
         $this->getPathController();
         $this->getName();
+        $this->getActionName();
     }
 
     public static function permission()
@@ -70,7 +74,11 @@ class Ccontroller
         return true;
     }
 
-    //@todo Допилить
+    public function breadcrumbs()
+    {
+        return false;
+    }
+
     public function allow_action($action_name)
     {
         $permissions = static::permission();
@@ -117,6 +125,20 @@ class Ccontroller
         $class = get_called_class();
         $classArr = explode('\\', $class);
         static::$name = end($classArr);
+    }
+
+    private function getActionName()
+    {
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $pathParts = explode('/', $path);
+
+        if (count($pathParts) >= 4) {
+            $act = !empty($pathParts[3]) ? $pathParts[3] : App::$config['default_action'];
+        } else {
+            $act = !empty($pathParts[2]) ? $pathParts[2] : App::$config['default_action'];
+        }
+
+        static::$action_name = $act;
     }
 
     /**
