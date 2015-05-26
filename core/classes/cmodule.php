@@ -10,6 +10,7 @@ use core\classes\cfile_manager;
  * @author farZa
  * @copyright 2015
  *
+ *
  * Системный класс модуля
  */
 class Cmodule
