@@ -2,16 +2,16 @@
 
 namespace core\classes;
 
-use core\classes\cdisplay;
+use core\classes\SysDisplay;
 
 /**
- * Class Cmessages
+ * Class SysMessages
  * @package core\classes
  *
  * type: success, info, warning, danger
  */
 
-class Cmessages
+class SysMessages
 {
 
     public static function set($text, $type)
@@ -35,7 +35,7 @@ class Cmessages
 
     public static function getAll()
     {
-        if ($session = $_SESSION['messages']) {
+        if (isset($_SESSION['messages']) && $session = $_SESSION['messages']) {
             $messages = [];
 
             foreach ($session as $type => $message) {
@@ -52,7 +52,7 @@ class Cmessages
 
     public static function pretty($messagesArray)
     {
-        $display = new Cdisplay();
+        $display = new SysDisplay();
         $display->messages = $messagesArray;
 
         return $display->render('core/views/messages/summary', true);

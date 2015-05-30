@@ -2,17 +2,17 @@
 namespace core\modules\admin\controllers;
 
 
-use core\classes\cauth;
-use core\classes\Cbreadcrumbs;
-use core\classes\ccontroller;
-use core\classes\Cmodule;
-use core\classes\cview;
+use core\classes\SysAuth;
+use core\classes\SysBreadcrumbs;
+use core\classes\SysController;
+use core\classes\SysModule;
+use core\classes\SysView;
 
-class PanelController extends Ccontroller
+class PanelController extends SysController
 {
     /**
-     * @todo в ccontroller сделать метод, которому будет передаваться лишь название вызываемого
-     * экшена (это в url классе). Этот метод будет переберать все пермишены, и находить описанный метод
+     * @todo в SysController сделать метод, которому будет передаваться лишь название вызываемого
+     * экшена (это в SysUrl классе). Этот метод будет переберать все пермишены, и находить описанный метод
      * Затем сравнивать роль текущенго пользователя и роли переданные в пермишене
      */
     public static function permission()
@@ -40,19 +40,19 @@ class PanelController extends Ccontroller
 
     public function actionIndex()
     {
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'index');
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'index');
 
-        $view = new Cview();
+        $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;
         $view->display('index');
     }
 
     public function actionModules()
     {
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'modules');
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'modules');
 
-        $view = new Cview();
-        $modules = Cmodule::getAllModules();
+        $view = new SysView();
+        $modules = SysModule::getAllModules();
         $view->modules = $modules;
         $view->breadcrumbs = $breadcrumbs;
 

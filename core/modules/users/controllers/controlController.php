@@ -1,19 +1,19 @@
 <?php
 namespace core\modules\users\controllers;
 
-use core\classes\cauth;
-use core\classes\ccontroller;
-use core\classes\cmessages;
-use core\classes\cpassword;
-use core\classes\cdisplay;
-use core\classes\cview;
-use core\classes\request;
-use core\modules\users\models\roles;
-use core\modules\users\models\users;
-use core\modules\users\models\usersUpdate;
-use core\classes\cbreadcrumbs;
+use core\classes\SysAuth;
+use core\classes\SysController;
+use core\classes\SysMessages;
+use core\classes\SysPassword;
+use core\classes\SysDisplay;
+use core\classes\SysView;
+use core\classes\SysRequest;
+use core\modules\users\models\Roles;
+use core\modules\users\models\Users;
+use core\modules\users\models\UsersUpdate;
+use core\classes\SysBreadcrumbs;
 
-class ControlController extends Ccontroller
+class ControlController extends SysController
 {
     public static function permission()
     {
@@ -64,8 +64,8 @@ class ControlController extends Ccontroller
 
     public function actionIndex()
     {
-        $view = new Cview();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'index');
+        $view = new SysView();
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'index');
 
         $view->breadcrumbs = $breadcrumbs;
         $view->display('index');
@@ -73,16 +73,16 @@ class ControlController extends Ccontroller
 
     public function actionUser()
     {
-        $display = new Cdisplay();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'user');
+        $display = new SysDisplay();
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'user');
 
-        if ($id = Request::get('id')) {
-            $view = new Cview();
+        if ($id = SysRequest::get('id')) {
+            $view = new SysView();
             $view->breadcrumbs = $breadcrumbs;
             $user = Users::findByPk($id);
 
             if (!$user) {
-                Cmessages::set('Пользователь не найден', 'danger');
+                SysMessages::set('Пользователь не найден', 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
 
@@ -90,37 +90,37 @@ class ControlController extends Ccontroller
 
             $view->display('user');
         } else {
-            Cmessages::set('Пользователь не найден', 'danger');
+            SysMessages::set('Пользователь не найден', 'danger');
             $display->render('core/views/errors/404',false,true);
         }
     }
 
     public function actionRegister()
     {
-        $view = new Cview();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'register');
+        $view = new SysView();
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'register');
         $model = new Users();
 
         $view->model = $model;
         $view->breadcrumbs = $breadcrumbs;
 
-        if ($post = Request::post()) {
+        if ($post = SysRequest::post()) {
             $model->username = $post['username'];
-            $model->password = Cpassword::hash($post['password']);
+            $model->password = SysPassword::hash($post['password']);
 
             if ($model->is_new_record('username', $model->username)) {
                 if ($model->save()) {
-                    Cmessages::set('Пользователь был успешно создан', 'success');
-                    Cauth::login($model, $post['username'], $post['password']);
-                    Request::redirect('/users/control/user?id=' . $model->id);
+                    SysMessages::set('Пользователь был успешно создан', 'success');
+                    SysAuth::login($model, $post['username'], $post['password']);
+                    SysRequest::redirect('/users/control/user?id=' . $model->id);
                 }
             } else {
-                Cmessages::set('Пользователь "'.$model->username.'" уже существует', 'danger');
+                SysMessages::set('Пользователь "'.$model->username.'" уже существует', 'danger');
             }
         }
 
-        if (Cauth::is_login()) {
-            Cmessages::set('Вы уже зарегистрированы', 'info');
+        if (SysAuth::is_login()) {
+            SysMessages::set('Вы уже зарегистрированы', 'info');
         }
 
         $view->display('register');
@@ -128,21 +128,21 @@ class ControlController extends Ccontroller
 
     public function actionLogin()
     {
-        $view = new Cview();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'login');
+        $view = new SysView();
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'login');
         $model = new Users();
 
-        if ($post = Request::post()) {
-            if ($id = Cauth::login($model, $post['username'], $post['password'])) {
-                Cmessages::set('Вы вошли как "' . $post['username'] . '"', 'success');
-                Request::redirect('/users/control/user?id=' . $id);
+        if ($post = SysRequest::post()) {
+            if ($id = SysAuth::login($model, $post['username'], $post['password'])) {
+                SysMessages::set('Вы вошли как "' . $post['username'] . '"', 'success');
+                SysRequest::redirect('/users/control/user?id=' . $id);
             } else {
-                Cmessages::set('Неверный логин или пароль', 'danger');
+                SysMessages::set('Неверный логин или пароль', 'danger');
             }
         }
 
-        if (Cauth::is_login()) {
-            Cmessages::set('Вы уже вошли в систему', 'info');
+        if (SysAuth::is_login()) {
+            SysMessages::set('Вы уже вошли в систему', 'info');
         }
 
         $view->model = $model;
@@ -152,10 +152,10 @@ class ControlController extends Ccontroller
 
     public function actionLogout()
     {
-        if (Cauth::logout()) {
-            Request::redirect('/');
+        if (SysAuth::logout()) {
+            SysRequest::redirect('/');
         } else {
-            Cmessages::set('Не удается выйти из системы', 'danger');
+            SysMessages::set('Не удается выйти из системы', 'danger');
         }
     }
 
@@ -163,8 +163,8 @@ class ControlController extends Ccontroller
     {
         $model = new Users();
 
-        $view = new Cview();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'manage');
+        $view = new SysView();
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'manage');
         $view->model = $model;
         $view->breadcrumbs = $breadcrumbs;
 
@@ -174,10 +174,10 @@ class ControlController extends Ccontroller
     public function actionUpdate()
     {
         $roleList = Roles::findAll();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'update');
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'update');
 
-        if ($post = Request::post()) {
-            $view = new Cview();
+        if ($post = SysRequest::post()) {
+            $view = new SysView();
             $model = UsersUpdate::findByPk($post['id']);
 
             if ($model->username == $post['username']) {
@@ -186,21 +186,21 @@ class ControlController extends Ccontroller
                 $model->role_id = $post['roles'];
 
                 if (!empty($post['password'])) {
-                    $model->password = Cpassword::hash($post['password']);
+                    $model->password = SysPassword::hash($post['password']);
                 }
 
                 $model->email = $post['email'];
 
                 if ($model->save()) {
-                    Cmessages::set('Пользователь ' . $model->username . ' был успешно обновлен', 'success');
+                    SysMessages::set('Пользователь ' . $model->username . ' был успешно обновлен', 'success');
 
-                    if (Cauth::getCurrentUserId() == $model->id) {
-                        Cauth::logout();
-                        Cmessages::set('Снова войдите в систему для применения изменений', 'info');
-                        Request::redirect('/users/control/login');
+                    if (SysAuth::getCurrentUserId() == $model->id) {
+                        SysAuth::logout();
+                        SysMessages::set('Снова войдите в систему для применения изменений', 'info');
+                        SysRequest::redirect('/users/control/login');
                     }
 
-                    Request::redirect('/users/control/manage');
+                    SysRequest::redirect('/users/control/manage');
                 }
             } else {
                 if ($model->is_new_record('username', $post['username'])) {
@@ -209,24 +209,24 @@ class ControlController extends Ccontroller
                     $model->role_id = $post['roles'];
 
                     if (!empty($post['password'])) {
-                        $model->password = Cpassword::hash($post['password']);
+                        $model->password = SysPassword::hash($post['password']);
                     }
 
                     $model->email = $post['email'];
 
                     if ($model->save()) {
-                        Cmessages::set('Пользователь ' . $model->username . ' был успешно обновлен', 'success');
+                        SysMessages::set('Пользователь ' . $model->username . ' был успешно обновлен', 'success');
 
-                        if (Cauth::getCurrentUserId() == $model->id) {
-                            Cauth::logout();
-                            Cmessages::set('Снова войдите в систему для применения изменений', 'info');
-                            Request::redirect('/users/control/login');
+                        if (SysAuth::getCurrentUserId() == $model->id) {
+                            SysAuth::logout();
+                            SysMessages::set('Снова войдите в систему для применения изменений', 'info');
+                            SysRequest::redirect('/users/control/login');
                         }
 
-                        Request::redirect('/users/control/manage');
+                        SysRequest::redirect('/users/control/manage');
                     }
                 } else {
-                    Cmessages::set('Пользователь ' . $post['username'] . ' уже существует', 'danger');
+                    SysMessages::set('Пользователь ' . $post['username'] . ' уже существует', 'danger');
                 }
             }
 
@@ -238,45 +238,45 @@ class ControlController extends Ccontroller
             $view->display('update');
         }
 
-        if ($id = Request::get('id')) {
+        if ($id = SysRequest::get('id')) {
             $model = UsersUpdate::findByPk($id);
 
-            $view = new Cview();
+            $view = new SysView();
             $view->roleList = $roleList;
             $view->model = $model;
             $view->breadcrumbs = $breadcrumbs;
 
             $view->display('update');
         } else {
-            $display = new Cdisplay();
-            Cmessages::set('Неопознанный пользователь', 'danger');
+            $display = new SysDisplay();
+            SysMessages::set('Неопознанный пользователь', 'danger');
             $display->render('core/views/errors/404',false,true);
         }
     }
 
     public function actionDelete()
     {
-        if ($id = Request::get('id')) {
+        if ($id = SysRequest::get('id')) {
             $model = UsersUpdate::findByPk($id);
 
-            if (Cauth::getCurrentUserId() != $model->id) {
+            if (SysAuth::getCurrentUserId() != $model->id) {
 
                 if ($model->delete()) {
-                    Cmessages::set('Пользователь ' . $model->username . ' был успешно удвлен', 'success');
+                    SysMessages::set('Пользователь ' . $model->username . ' был успешно удвлен', 'success');
                 } else {
-                    Cmessages::set('Ошибка при удалении пользователя', 'danger');
+                    SysMessages::set('Ошибка при удалении пользователя', 'danger');
                 }
 
             } else {
-                Cmessages::set('Нельзя удалить авторизованного пользователя', 'danger');
-                Request::redirect('/users/control/manage');
+                SysMessages::set('Нельзя удалить авторизованного пользователя', 'danger');
+                SysRequest::redirect('/users/control/manage');
             }
 
-            Request::redirect('/users/control/manage');
+            SysRequest::redirect('/users/control/manage');
 
         } else {
-            $display = new Cdisplay();
-            Cmessages::set('Неопознанный пользователь', 'danger');
+            $display = new SysDisplay();
+            SysMessages::set('Неопознанный пользователь', 'danger');
             $display->render('core/views/errors/404',false,true);
         }
     }

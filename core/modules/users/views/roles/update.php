@@ -1,7 +1,7 @@
 <?php
-use core\classes\cmessages;
-use core\classes\cauth;
-use core\classes\cwidget;
+use core\classes\SysMessages;
+use core\classes\SysAuth;
+use core\classes\SysWidget;
 ?>
 
 <div class="page-header">
@@ -9,12 +9,12 @@ use core\classes\cwidget;
 </div>
 
 <?php
-echo Cwidget::build('wbreadcrumbs', '', [
+echo SysWidget::build('WBreadcrumbs', '', [
     'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
 ]);
 ?>
 
-<?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>
+<?php if ($messages = SysMessages::pretty(SysMessages::getAll())): ?>
     <div class="summary">
         <?php echo $messages; ?>
     </div>
@@ -35,7 +35,7 @@ echo Cwidget::build('wbreadcrumbs', '', [
             <input type="hidden" value="<?php echo $model->id; ?>" name="id" />
             <input type="submit" value="сохранить" class="btn btn-primary"/>
             <?php
-            echo Cwidget::build('wbtnask', $model, [
+            echo SysWidget::build('WBtnAsk', $model, [
                 'link' => '/users/roles/delete?id=' . $model->id,
                 'ok_class' => 'btn btn-danger',
             ]);

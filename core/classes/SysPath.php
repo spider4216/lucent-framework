@@ -3,7 +3,7 @@
 namespace core\classes;
 
 /**
- * Class Path
+ * Class SysPath
  * @package core\classes
  * @version 1.0
  * @author farZa
@@ -11,7 +11,7 @@ namespace core\classes;
  *
  * Класс позволяет работать с путями
  */
-class Path {
+class SysPath {
     /**
      * @var string $root
      * путь корня фраемворка в файловой системе

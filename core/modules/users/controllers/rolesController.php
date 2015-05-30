@@ -1,15 +1,15 @@
 <?php
 namespace core\modules\users\controllers;
 
-use core\classes\ccontroller;
-use core\classes\cmessages;
-use core\classes\cview;
-use core\classes\request;
-use core\modules\users\models\roles;
-use core\classes\cdisplay;
-use core\classes\cbreadcrumbs;
+use core\classes\SysController;
+use core\classes\SysMessages;
+use core\classes\SysView;
+use core\classes\SysRequest;
+use core\modules\users\models\Roles;
+use core\classes\SysDisplay;
+use core\classes\SysBreadcrumbs;
 
-class RolesController extends Ccontroller
+class RolesController extends SysController
 {
     public static function permission()
     {
@@ -47,9 +47,9 @@ class RolesController extends Ccontroller
 
     public function actionIndex()
     {
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'index');
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'index');
         $model = new Roles();
-        $view = new Cview();
+        $view = new SysView();
 
         $view->model = $model;
         $view->breadcrumbs = $breadcrumbs;
@@ -59,23 +59,23 @@ class RolesController extends Ccontroller
 
     public function actionCreate()
     {
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'create');
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'create');
         $model = new Roles();
-        $view = new Cview();
+        $view = new SysView();
 
         $view->model = $model;
         $view->breadcrumbs = $breadcrumbs;
 
-        if ($post = Request::post()) {
+        if ($post = SysRequest::post()) {
             $model->name = $post['name'];
 
             if ($model->is_new_record('name', $model->name)) {
                 if ($model->save()) {
-                    Cmessages::set('Роль "' . $model->name . '" была успешно создана', 'success');
-                    Request::redirect('/users/roles/');
+                    SysMessages::set('Роль "' . $model->name . '" была успешно создана', 'success');
+                    SysRequest::redirect('/users/roles/');
                 }
             } else {
-                Cmessages::set('Роль "' . $model->name . '" уже существует', 'danger');
+                SysMessages::set('Роль "' . $model->name . '" уже существует', 'danger');
             }
         }
 
@@ -84,24 +84,24 @@ class RolesController extends Ccontroller
 
     public function actionUpdate()
     {
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'update');
-        $view = new Cview();
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'update');
+        $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;
 
-        if($post = Request::post()) {
+        if($post = SysRequest::post()) {
             $model = Roles::findByPk($post['id']);
 
             if ($post['name'] == $model->name) {
-                Cmessages::set('Роль "' . $model->name . '" осталась без изменений', 'info');
-                Request::redirect('/users/roles/');
+                SysMessages::set('Роль "' . $model->name . '" осталась без изменений', 'info');
+                SysRequest::redirect('/users/roles/');
             }
 
             if ($post['name'] != $model->name && $model->is_new_record('name', $post['name'])) {
                 $model->name = $post['name'];
 
                 if ($model->save()) {
-                    Cmessages::set('Роль "' . $post['name'] . '" была успешно обновлена', 'success');
-                    Request::redirect('/users/roles/');
+                    SysMessages::set('Роль "' . $post['name'] . '" была успешно обновлена', 'success');
+                    SysRequest::redirect('/users/roles/');
                 } else {
                     $model = Roles::findByPk($post['id']);
                     $view->model = $model;
@@ -111,36 +111,36 @@ class RolesController extends Ccontroller
                 $model = Roles::findByPk($post['id']);
                 $model->name = $post['name'];
                 $view->model = $model;
-                Cmessages::set('Роль "' . $post['name'] . '" уже существует', 'danger');
+                SysMessages::set('Роль "' . $post['name'] . '" уже существует', 'danger');
                 $view->display('update');
 
             }
         }
 
-        if ($id = Request::get('id')) {
+        if ($id = SysRequest::get('id')) {
             $model = Roles::findByPk($id);
 
             $view->model = $model;
             $view->display('update');
         } else {
-            $display = new Cdisplay();
-            Cmessages::set('Роль не найдена', 'danger');
+            $display = new SysDisplay();
+            SysMessages::set('Роль не найдена', 'danger');
             $display->render('core/views/errors/404',false,true);
         }
     }
 
     public function actionDelete()
     {
-        if ($id = Request::get('id')) {
+        if ($id = SysRequest::get('id')) {
             $model = Roles::findByPk($id);
 
             if ($model->delete()) {
-                Cmessages::set('Роль "' . $model->name . '" была успешно удалена', 'success');
-                Request::redirect('/users/roles/');
+                SysMessages::set('Роль "' . $model->name . '" была успешно удалена', 'success');
+                SysRequest::redirect('/users/roles/');
             }
         } else {
-            Cmessages::set('Роль не была удалена', 'danger');
-            Request::redirect('/users/roles/');
+            SysMessages::set('Роль не была удалена', 'danger');
+            SysRequest::redirect('/users/roles/');
         }
     }
 }

@@ -1,10 +1,10 @@
 <?php
-use core\classes\cmessages;
+use core\classes\SysMessages;
 ?>
 
 <?php header("HTTP/1.0 403 Forbidden"); ?>
 
 <div class="error-page">
     <h2>Ошибка 403</h2>
-    <?php echo Cmessages::pretty(Cmessages::get('danger')); ?>
+    <?php echo SysMessages::pretty(SysMessages::get('danger')); ?>
 </div>

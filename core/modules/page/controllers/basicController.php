@@ -1,15 +1,15 @@
 <?php
 namespace core\modules\page\controllers;
 
-use core\classes\ccontroller;
-use core\classes\Cdisplay;
-use core\classes\cview;
-use core\modules\page\models\page;
-use core\classes\request;
-use core\classes\cmessages;
-use core\classes\cbreadcrumbs;
+use core\classes\SysController;
+use core\classes\SysDisplay;
+use core\classes\SysView;
+use core\modules\page\models\Page;
+use core\classes\SysRequest;
+use core\classes\SysMessages;
+use core\classes\SysBreadcrumbs;
 
-class basicController extends Ccontroller{
+class basicController extends SysController{
 
     public static function permission()
     {
@@ -50,9 +50,9 @@ class basicController extends Ccontroller{
     public function actionIndex()
     {
         $model = new Page();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'index');
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'index');
 
-        $view = new Cview();
+        $view = new SysView();
         $view->model = $model;
         $view->breadcrumbs = $breadcrumbs;
 
@@ -61,19 +61,19 @@ class basicController extends Ccontroller{
 
     public function actionCreate()
     {
-        $view = new Cview();
+        $view = new SysView();
         $model = new Page();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'create');
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'create');
         $view->model = $model;
         $view->breadcrumbs = $breadcrumbs;
 
-        if ($post = Request::post()) {
+        if ($post = SysRequest::post()) {
             $model->title = $post['title'];
             $model->content = $post['content'];
 
             if ($model->save()) {
-                Cmessages::set('Страница "'. $model->title .'" была успешна создана', 'success');
-                Request::redirect('/page/basic/');
+                SysMessages::set('Страница "'. $model->title .'" была успешна создана', 'success');
+                SysRequest::redirect('/page/basic/');
             }
         }
 
@@ -83,28 +83,28 @@ class basicController extends Ccontroller{
     public function actionUpdate()
     {
         $model = new Page();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'update');
-        $view = new Cview();
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'update');
+        $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;
-        $display = new Cdisplay();
+        $display = new SysDisplay();
 
-        if ($post = Request::post()) {
+        if ($post = SysRequest::post()) {
             $model = $model->findByPk($post['id']);
             $model->title = $post['title'];
             $model->content = $post['content'];
 
             if ($model->save()) {
-                Cmessages::set('Страница "'. $model->title .'" была успешна обновлена', 'success');
-                Request::redirect('/page/basic/');
+                SysMessages::set('Страница "'. $model->title .'" была успешна обновлена', 'success');
+                SysRequest::redirect('/page/basic/');
             }
         }
 
-        if ($id = Request::get('id')) {
+        if ($id = SysRequest::get('id')) {
             $view->model = $model;
             $item = $model->findByPk($id);
 
             if (!$item) {
-                Cmessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
+                SysMessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
 
@@ -112,8 +112,8 @@ class basicController extends Ccontroller{
 
             $view->display('update');
         } else {
-            $display = new Cdisplay();
-            Cmessages::set('Страница не найдена', 'danger');
+            $display = new SysDisplay();
+            SysMessages::set('Страница не найдена', 'danger');
             $display->render('core/views/errors/404',false,true);
         }
 
@@ -121,19 +121,19 @@ class basicController extends Ccontroller{
 
     public function actionView()
     {
-        $display = new Cdisplay();
-        $breadcrumbs = Cbreadcrumbs::getAll($this, 'view');
+        $display = new SysDisplay();
+        $breadcrumbs = SysBreadcrumbs::getAll($this, 'view');
 
-        if ($id = Request::get('id')) {
+        if ($id = SysRequest::get('id')) {
             $model = new Page();
-            $view = new Cview();
+            $view = new SysView();
             $view->breadcrumbs = $breadcrumbs;
 
             $view->model = $model;
             $item = $model->findByPk($id);
 
             if (!$item) {
-                Cmessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
+                SysMessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
 
@@ -141,24 +141,24 @@ class basicController extends Ccontroller{
 
             $view->display('view');
         } else {
-            Cmessages::set('Страница не найдена', 'danger');
+            SysMessages::set('Страница не найдена', 'danger');
             $display->render('core/views/errors/404',false,true);
         }
     }
 
     public function actionDelete()
     {
-        if ($id = Request::get('id')) {
+        if ($id = SysRequest::get('id')) {
             $model = new Page();
             $item = $model->findByPk($id);
 
             if ($item->delete()) {
-                Cmessages::set('Страница "'. $item->title .'" была успешна удалена', 'success');
-                Request::redirect('/page/basic/');
+                SysMessages::set('Страница "'. $item->title .'" была успешна удалена', 'success');
+                SysRequest::redirect('/page/basic/');
             }
 
         } else {
-            Request::redirect('/page/basic/');
+            SysRequest::redirect('/page/basic/');
         }
     }
 }

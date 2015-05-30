@@ -1,5 +1,5 @@
 <?php
-use core\classes\cwidget;
+use core\classes\SysWidget;
 ?>
 
 <div class="page-header">
@@ -7,7 +7,7 @@ use core\classes\cwidget;
 </div>
 
 <?php
-echo Cwidget::build('wbreadcrumbs', '', [
+echo SysWidget::build('WBreadcrumbs', '', [
     'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
     'replacement' => $item->title,
 ]);

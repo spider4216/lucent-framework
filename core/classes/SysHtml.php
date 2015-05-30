@@ -9,7 +9,7 @@
 namespace core\classes;
 
 
-class Chtml {
+class SysHtml {
     public static function getAttributesFromArray($attributesArr)
     {
         $str_attributes = '';

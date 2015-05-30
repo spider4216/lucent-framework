@@ -2,7 +2,7 @@
 
 namespace core\classes;
 
-class Cbreadcrumbs {
+class SysBreadcrumbs {
 
     public static function getAll($controller, $action_name)
     {

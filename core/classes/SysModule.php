@@ -1,10 +1,10 @@
 <?php
 namespace core\classes;
 
-use core\classes\cfile_manager;
+use core\classes\SysFileManager;
 
 /**
- * Class Cmodule
+ * Class SysModule
  * @package core\classes
  * @version 1.0
  * @author farZa
@@ -13,7 +13,7 @@ use core\classes\cfile_manager;
  *
  * Системный класс модуля
  */
-class Cmodule
+class SysModule
 {
     /**
      * @var string $moduleName
@@ -26,9 +26,9 @@ class Cmodule
 
     public static function getModuleInfo($name, $type = 'system')
     {
-        $file = Path::directory('core') . '/modules/' . $name . '/' . $name . '_info.php';
+        $file = SysPath::directory('core') . '/modules/' . $name . '/' . $name . '_info.php';
         if ('app' === $type) {
-            $file = Path::directory('app') . '/modules/' . $name . '/' . $name . '_info.php';
+            $file = SysPath::directory('app') . '/modules/' . $name . '/' . $name . '_info.php';
         }
 
         if (file_exists($file)) {
@@ -40,10 +40,10 @@ class Cmodule
 
     public static function getAllModules($type = 'system')
     {
-        $fileManager = new Cfile_manager();
-        $directory = Path::directory('core') . '/modules/';
+        $fileManager = new SysFileManager();
+        $directory = SysPath::directory('core') . '/modules/';
         if ('app' === $type) {
-            $directory = Path::directory('app') . '/modules/';
+            $directory = SysPath::directory('app') . '/modules/';
         }
 
         $names = $fileManager->scanDir($directory);

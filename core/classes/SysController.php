@@ -6,19 +6,19 @@ use core\classes\exception\e404;
 use core\system\app;
 
 /**
- * Class Ccontroller
+ * Class SysController
  * @package core\classes
  * @version 1.0
  * @author farZa
  * @copyright 2015
  * Системный класс контроллера.
  */
-class Ccontroller
+class SysController
 {
     /**
      * @var string $folder
      * Свойство с наименованием дериктории, в которой должно лежать представление.
-     * Это свойство возможно перегрузить в дочернем классе. Системный класс Cview дергает
+     * Это свойство возможно перегрузить в дочернем классе. Системный класс SysView дергает
      * данное свойство для получения наименования дериктории
      */
     public static $folder;
@@ -87,7 +87,7 @@ class Ccontroller
             foreach ($permissions as $permission => $roles) {
                 if ($action_name == $permission) {
                     foreach ($roles as $role) {
-                        $current_role = Cauth::getCurrentRole();
+                        $current_role = SysAuth::getCurrentRole();
                         if (false === $current_role && $role === '-') {
                             return false;
                         }
@@ -160,7 +160,7 @@ class Ccontroller
      */
     private function setLayout()
     {
-        static::$layout = Path::directory('root') . '/app/views/layouts/default.php';
+        static::$layout = SysPath::directory('root') . '/app/views/layouts/default.php';
     }
 
 }

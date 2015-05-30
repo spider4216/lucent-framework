@@ -1,8 +1,8 @@
 <?php
-use core\classes\casset;
-use core\classes\cwidget;
+use core\classes\SysAssets;
+use core\classes\SysWidget;
 
-Casset::setAssets('css/style.css', 'users');
+SysAssets::setAssets('css/style.css', 'users');
 ?>
 
 <h2>Страница Demo</h2>
@@ -12,7 +12,7 @@ Casset::setAssets('css/style.css', 'users');
 
 <div class="widget-test">
     <?php
-    echo Cwidget::build('wtable', $model, [
+    echo SysWidget::build('WTable', $model, [
         'columns' => [
             'title',
             'content',

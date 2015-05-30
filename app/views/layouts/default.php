@@ -1,7 +1,7 @@
 <?php
 
-use core\classes\casset;
-use core\classes\cauth;
+use core\classes\SysAssets;
+use core\classes\SysAuth;
 
 /**
  * @var string $content - Содержимое views
@@ -14,8 +14,8 @@ use core\classes\cauth;
 <head>
     <meta charset="UTF-8">
     <title>Lucent Framework</title>
-    <?php echo Casset::getAssets('style'); ?>
-    <?php echo Casset::getAssets('script'); ?>
+    <?php echo SysAssets::getAssets('style'); ?>
+    <?php echo SysAssets::getAssets('script'); ?>
 </head>
 <body>
 
@@ -41,7 +41,7 @@ use core\classes\cauth;
             </ul>
 
             <ul class="nav navbar-nav pull-right">
-                <?php if ($username = Cauth::getCurrentUser()): ?>
+                <?php if ($username = SysAuth::getCurrentUser()): ?>
                     <li role="presentation" class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                             <span>Пользователь: <?php echo $username; ?></span>
@@ -49,7 +49,7 @@ use core\classes\cauth;
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                <?php if (Cauth::getCurrentRole() == 'admin'): ?>
+                                <?php if (SysAuth::getCurrentRole() == 'admin'): ?>
                                     <a href="/admin/panel/">Админ панель</a>
                                 <?php endif; ?>
                                 <a href="/users/control/user?id=<?php echo $_COOKIE['user_id']; ?>">Профиль</a>

@@ -11,7 +11,7 @@ namespace core\classes;
  *
  * Класс для работы с файлами
  */
-class Cfile_manager {
+class SysFileManager {
 
     /**
      * @param $path

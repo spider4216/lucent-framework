@@ -3,7 +3,7 @@
 namespace core\classes;
 
 
-class Cpassword {
+class SysPassword {
     public static function hash($password)
     {
         return md5($password);

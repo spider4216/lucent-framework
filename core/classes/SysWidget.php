@@ -2,7 +2,7 @@
 
 namespace core\classes;
 
-class Cwidget {
+class SysWidget {
 
     public static function build($name, $model, $data = null)
     {
@@ -14,7 +14,7 @@ class Cwidget {
     protected function render($name, $model, $data = null)
     {
         ob_start();
-        include Path::directory('core') . '/widgets/templates/_' . strtolower($name) . '.php';
+        include SysPath::directory('core') . '/widgets/templates/_' . strtolower($name) . '.php';
         $content = ob_get_contents();
         ob_end_clean();
         return $content;

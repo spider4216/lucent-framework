@@ -3,7 +3,7 @@ namespace core\classes;
 
 use core\system\app;
 
-class Cauth {
+class SysAuth {
 
     public static function login($model, $username, $password)
     {
@@ -22,7 +22,7 @@ class Cauth {
     {
         $user_data = $model->findByColumn('username', $username);
 
-        if ($user_data->username == $username && $user_data->password == Cpassword::hash($password)) {
+        if ($user_data->username == $username && $user_data->password == SysPassword::hash($password)) {
             return true;
         }
 
@@ -68,14 +68,21 @@ class Cauth {
 
     public static function getCurrentRole()
     {
-        $db = Database::getObj();
+        $db = SysDatabase::getObj();
         $sql = 'SELECT * FROM ' . App::$config['system_tables']['users'] . ' WHERE id=:user_id';
-        $result = $db->query($sql, [':user_id' => static::getCurrentUserId()])[0];
+        $result = $db->query($sql, [':user_id' => static::getCurrentUserId()]);
+
+        if (!$result) {
+            return false;
+        }
+
+        $result = $result[0];
+
         $user_role_id = $result->role_id;
 
         $sql = 'SELECT * FROM ' . App::$config['system_tables']['roles'] . ' WHERE id=:role_id';
         $result = $db->query($sql, [':role_id' => $user_role_id])[0];
 
-        return is_null($result->name) ? false : $result->name;
+        return $result->name;
     }
 }

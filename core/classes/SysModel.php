@@ -1,22 +1,21 @@
 <?php
 namespace core\classes;
 
-use core\classes\database;
-use core\interfaces\imodel;
+use core\classes\SysDatabase;
+use core\interfaces\IModel;
 use \Iterator;
-use core\classes\cvalidator;
+use core\classes\SysValidator;
 
 /**
- * Class Cmodel. Системный класс модели.
+ * Class SysModel. Системный класс модели.
  * @package core\classes
  * @version 1.0
  * @author farZa
  * @copyright 2015
  * @todo Сделать метод load для загрузки атрибутов
- * @todo Реализовать beforeSave и afterSave
  * @todo Написать beforeValidate и afterValidate
  */
-abstract class Cmodel implements Imodel, Iterator
+abstract class SysModel implements IModel, Iterator
 {
 
     /**
@@ -78,7 +77,7 @@ abstract class Cmodel implements Imodel, Iterator
      */
     public function __get($key)
     {
-        return $this->data[$key];
+        return isset($this->data[$key]) ? $this->data[$key] : false;
     }
 
     /**
@@ -88,8 +87,8 @@ abstract class Cmodel implements Imodel, Iterator
      */
     private function insert()
     {
-        /** @var Database $db */
-        $db = Database::getObj();
+        /** @var SysDatabase $db */
+        $db = SysDatabase::getObj();
         $cols = array_keys($this->data);
         $colsPrepare = array_map(function($col_name) { return ':' . $col_name;}, $cols);
         $dataExec = [];
@@ -113,8 +112,8 @@ abstract class Cmodel implements Imodel, Iterator
      */
     private function update()
     {
-        /** @var Database $db */
-        $db = Database::getObj();
+        /** @var SysDatabase $db */
+        $db = SysDatabase::getObj();
         $data = [];
         $dataExec = [];
         foreach ($this->data as $key=>$value) {
@@ -131,7 +130,7 @@ abstract class Cmodel implements Imodel, Iterator
     public function form_validate()
     {
         $rules = static::rules();
-        $validator = new Cvalidator();
+        $validator = new SysValidator();
 
         $result = [];
         foreach ($rules as $attr => $rule) {
@@ -180,8 +179,8 @@ abstract class Cmodel implements Imodel, Iterator
      */
     public function delete()
     {
-        /** @var Database $db */
-        $db = Database::getObj();
+        /** @var SysDatabase $db */
+        $db = SysDatabase::getObj();
         $sql = 'DELETE FROM ' . static::$table . ' WHERE id=:id';
         return  $db->execute($sql, [':id'=>$this->id]);
     }
@@ -192,8 +191,8 @@ abstract class Cmodel implements Imodel, Iterator
      */
     public static function findAll($condition = [], $columns = [])
     {
-        /** @var Database $db */
-        $db = Database::getObj();
+        /** @var SysDatabase $db */
+        $db = SysDatabase::getObj();
         $class = get_called_class();
         $db->setClassName($class);
 
@@ -216,8 +215,8 @@ abstract class Cmodel implements Imodel, Iterator
      */
     public static function findByPk($id)
     {
-        /** @var Database $db */
-        $db = Database::getObj();
+        /** @var SysDatabase $db */
+        $db = SysDatabase::getObj();
         $class = get_called_class();
         $db->setClassName($class);
         $sql = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
@@ -232,8 +231,8 @@ abstract class Cmodel implements Imodel, Iterator
      */
     public static function findByColumn($column, $value)
     {
-        /** @var Database $db */
-        $db = Database::getObj();
+        /** @var SysDatabase $db */
+        $db = SysDatabase::getObj();
         $class = get_called_class();
         $db->setClassName($class);
         $sql = 'SELECT * FROM ' . static::$table . ' WHERE ' . $column . ' = :value';

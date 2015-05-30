@@ -1,6 +1,6 @@
 <?php
-use core\classes\cmessages;
-use core\classes\cwidget;
+use core\classes\SysMessages;
+use core\classes\SysWidget;
 ?>
 
 <div class="page-header">
@@ -8,12 +8,12 @@ use core\classes\cwidget;
 </div>
 
 <?php
-echo Cwidget::build('wbreadcrumbs', '', [
+echo SysWidget::build('WBreadcrumbs', '', [
     'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
 ]);
 ?>
 
-<?php if ($messages = cmessages::pretty(Cmessages::getAll())): ?>
+<?php if ($messages = SysMessages::pretty(SysMessages::getAll())): ?>
     <div class="summary">
         <?php echo $messages; ?>
     </div>
@@ -28,7 +28,7 @@ echo Cwidget::build('wbreadcrumbs', '', [
 <div class="roles-list">
     <div class="widget-table">
         <?php
-        echo Cwidget::build('wtable', $model, [
+        echo SysWidget::build('WTable', $model, [
             'columns' => [
                 'name',
             ],

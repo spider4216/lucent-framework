@@ -2,20 +2,20 @@
 namespace core\classes;
 
 /**
- * Class Cview
+ * Class SysView
  * @package core\classes
  * @version 1.0
  * @author farZa
  * @copyright 2015
- * Системный класс Cview отвечает связь контроллера и вьюхи.
+ * Системный класс SysView отвечает связь контроллера и вьюхи.
  * Для того, чтобы передать данные во вьюху, необходимо создать
- * экземпляр объекта Cview или его потомка, затем в качестве его свойств
+ * экземпляр объекта SysView или его потомка, затем в качестве его свойств
  * задать те значения, которые должны появиться во вьюхе. После применения метода display($view)
  * в представлении будут доступны переменные, которые были заданы в качестве свойств
- * Например: $view = new Cview(); $view->title = 'Hello World'; $view->display('home/index.php');
+ * Например: $view = new SysView(); $view->title = 'Hello World'; $view->display('home/index.php');
  * В home/index.php станет доступна переменная $title
  */
-class Cview
+class SysView
 {
     /**
      * @var array
@@ -25,7 +25,7 @@ class Cview
 
     public function __construct()
     {
-        Casset::initCoreAssets();
+        SysAssets::initCoreAssets();
     }
 
     /**
@@ -64,7 +64,7 @@ class Cview
             $$key = $value;
         }
 
-        $pathView = Ccontroller::$path . '/../views/' . Ccontroller::$folder . '/' . $view . '.php';
+        $pathView = SysController::$path . '/../views/' . SysController::$folder . '/' . $view . '.php';
 
         ob_start();
         include $pathView;
@@ -73,7 +73,7 @@ class Cview
         ob_end_clean();
 
         ob_start();
-        include Ccontroller::$layout;
+        include SysController::$layout;
         $content_final = ob_get_contents();
         ob_end_clean();
 

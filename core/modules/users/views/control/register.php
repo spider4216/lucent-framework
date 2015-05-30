@@ -1,7 +1,7 @@
 <?php
-use core\classes\cmessages;
-use core\classes\cauth;
-use core\classes\cwidget;
+use core\classes\SysMessages;
+use core\classes\SysAuth;
+use core\classes\SysWidget;
 ?>
 
 <div class="page-header">
@@ -9,18 +9,18 @@ use core\classes\cwidget;
 </div>
 
 <?php
-echo Cwidget::build('wbreadcrumbs', '', [
+echo SysWidget::build('WBreadcrumbs', '', [
     'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
 ]);
 ?>
 
-<?php if ($messages = Cmessages::pretty(Cmessages::getAll())): ?>
+<?php if ($messages = SysMessages::pretty(SysMessages::getAll())): ?>
     <div class="summary">
         <?php echo $messages; ?>
     </div>
 <?php endif; ?>
 
-<?php if (!Cauth::is_login()): ?>
+<?php if (!SysAuth::is_login()): ?>
 
 <div class="form-group">
     <form action="/users/control/register" method="post">
@@ -28,7 +28,8 @@ echo Cwidget::build('wbreadcrumbs', '', [
         <div class="m-row">
             <label for="username"><?php echo $model->getLabel('username'); ?></label>
             <input type="text" name="username" class="form-control username"
-                   placeholder="Имя пользователя" value="<?php echo $_POST['username']; ?>"/>
+                   placeholder="Имя пользователя"
+                   value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>"/>
             <br/>
         </div>
 
@@ -49,7 +50,8 @@ echo Cwidget::build('wbreadcrumbs', '', [
         <div class="m-row">
             <label for="email"><?php echo $model->getLabel('email'); ?></label>
             <input type="email" name="email" class="form-control email"
-                   placeholder="E-mail" value="<?php echo $_POST['email']; ?>"/>
+                   placeholder="E-mail"
+                   value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>"/>
             <br/>
         </div>
 

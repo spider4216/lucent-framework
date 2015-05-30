@@ -1,9 +1,9 @@
 <?php
 namespace core\system;
-use core\classes\casset;
-use core\classes\cmodule;
-use core\classes\path;
-use core\classes\url;
+use core\classes\SysAssets;
+use core\classes\SysModule;
+use core\classes\SysPath;
+use core\classes\SysUrl;
 
 /**
  * Class App
@@ -21,7 +21,7 @@ class App
         header('Content-Type: text/html; charset=utf-8');
         session_start();
         static::$config = include __DIR__ . '/../../app/config/main.php';
-        Casset::filesAttach();
-        Url::semantic_url(static::$config['default_controller'], static::$config['default_action']);
+        SysAssets::filesAttach();
+        SysUrl::semantic_url(static::$config['default_controller'], static::$config['default_action']);
     }
 }

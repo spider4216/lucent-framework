@@ -2,12 +2,12 @@
 
 namespace core\classes;
 
-use core\classes\cdisplay;
-use core\classes\cmessages;
+use core\classes\SysDisplay;
+use core\classes\SysMessages;
 use core\classes\exception\e404;
-use core\classes\request;
+use core\classes\SysRequest;
 
-class Url
+class SySUrl
 {
     /**
      * @param $default_ctrl
@@ -20,16 +20,16 @@ class Url
      */
     public static function semantic_url($default_ctrl, $default_act)
     {
-        $request_url = Request::getUrl();
-        $display = new Cdisplay();
+        $request_url = SysRequest::getUrl();
+        $display = new SysDisplay();
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $pathParts = explode('/', $path);
 
         //Если в урл передали больше или равно 4 частей (первый нулевой), тогда это модуль
         if (count($pathParts) >= 4) {
             $module = $pathParts[1];
-            //Даем знать классу Cmodule о наименовании текущего модуля
-            Cmodule::$moduleName = $module;
+            //Даем знать классу SysModule о наименовании текущего модуля
+            SysModule::$moduleName = $module;
             $namespace = 'core\\modules\\'. $module .'\\controllers\\';
 
             $ctrl = !empty($pathParts[2]) ? $pathParts[2] : $default_ctrl;
@@ -39,7 +39,7 @@ class Url
             $controllerClassNameFull = $namespace . $controllerClassName;
 
             if (!class_exists($controllerClassNameFull)) {
-                Cmessages::set('Страница '. $request_url .' не найдена','danger');
+                SysMessages::set('Страница '. $request_url .' не найдена','danger');
                 $display->render('core/views/errors/404', false, true);
             }
         } else {
@@ -52,7 +52,7 @@ class Url
             $controllerClassNameFull = $namespace . $controllerClassName;
 
             if (!class_exists($controllerClassNameFull)) {
-                Cmessages::set('Страница '. $request_url .' не найдена','danger');
+                SysMessages::set('Страница '. $request_url .' не найдена','danger');
                 $display->render('core/views/errors/404', false, true);
             }
         }
@@ -68,11 +68,11 @@ class Url
                 $controller->$method();
                 $controller->afterAction();
             } else {
-                Cmessages::set('Доступ запрещен','danger');
+                SysMessages::set('Доступ запрещен','danger');
                 $display->render('core/views/errors/403', false, true);
             }
         } catch (E404 $e) {
-            Cmessages::set('Страница '. $request_url .' не найдена','danger');
+            SysMessages::set('Страница '. $request_url .' не найдена','danger');
             $display->render('core/views/errors/404', false, true);
         }
     }

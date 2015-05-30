@@ -2,21 +2,21 @@
 
 namespace core\classes;
 
-use core\classes\cmessages;
+use core\classes\SysMessages;
 
-class Cvalidator
+class SysValidator
 {
 
     private $compare_data = [];
 
     public function check($name, $v_name)
     {
-        $post = Request::post();
+        $post = SysRequest::post();
         if (isset($post[$name])) {
             if (method_exists($this, $v_name)) {
                 return $this->$v_name($post[$name], $name);
             } else {
-                Cmessages::set('Правило ' . $v_name . ' не существует', 'danger');
+                SysMessages::set('Правило ' . $v_name . ' не существует', 'danger');
             }
         }
 
@@ -29,7 +29,7 @@ class Cvalidator
             return true;
         }
 
-        Cmessages::set('Поле ' . $name . ' не может быть пустым', 'danger');
+        SysMessages::set('Поле ' . $name . ' не может быть пустым', 'danger');
         return false;
     }
 
@@ -49,7 +49,7 @@ class Cvalidator
             return true;
         }
 
-        Cmessages::set('Значение поля ' . $this->compare_data['name'] . ' не соответствует полю ' . $name, 'danger');
+        SysMessages::set('Значение поля ' . $this->compare_data['name'] . ' не соответствует полю ' . $name, 'danger');
         return false;
     }
 
@@ -61,7 +61,7 @@ class Cvalidator
             return true;
         }
 
-        Cmessages::set('Email введен не корректно', 'danger');
+        SysMessages::set('Email введен не корректно', 'danger');
         return false;
     }
 
@@ -74,7 +74,7 @@ class Cvalidator
             return true;
         }
 
-        Cmessages::set('Имя пользователя введено не корректно', 'danger');
+        SysMessages::set('Имя пользователя введено не корректно', 'danger');
         return false;
     }
 
@@ -88,7 +88,7 @@ class Cvalidator
             return true;
         }
 
-        Cmessages::set('Пароль введен не корректно', 'danger');
+        SysMessages::set('Пароль введен не корректно', 'danger');
         return false;
     }
 }

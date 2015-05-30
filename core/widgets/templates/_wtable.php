@@ -1,5 +1,6 @@
 <?php
-use core\classes\cwidget;
+use core\classes\SysWidget;
+
 ?>
 
 <table class="table table-striped">
@@ -7,7 +8,7 @@ use core\classes\cwidget;
     <tr>
         <?php foreach ($data['items'] as $item): ?>
             <?php foreach ($item as $key => $value): ?>
-                <?php if ('id' == $key && $show_id): ?>
+                <?php if ('id' == $key && $data['show_id']): ?>
                     <?php if ($label = $model->getLabel($key)): ?>
                         <th>
                             <span><?php echo $label; ?></span>
@@ -59,15 +60,15 @@ use core\classes\cwidget;
             <?php if ($button = $data['tools']['buttons']): ?>
                 <td>
                     <div class="widget-table-buttons-panel">
-                        <?php if ($button['view']): ?>
+                        <?php if (isset($button['view'])): ?>
                             <a class="glyphicon glyphicon-eye-open" href="<?php echo $button['view']['link'] . '?id=' . $item->id; ?>"></a>
                         <?php endif; ?>
-                        <?php if ($button['update']): ?>
+                        <?php if (isset($button['update'])): ?>
                             <a class="glyphicon glyphicon-pencil" href="<?php echo $button['update']['link'] . '?id=' . $item->id; ?>"></a>
                         <?php endif; ?>
-                        <?php if ($button['delete']): ?>
+                        <?php if (isset($button['delete'])): ?>
                             <?php
-                                echo Cwidget::build('wbtnask', $model, [
+                                echo SysWidget::build('WBtnAsk', $model, [
                                     'link' => $button['delete']['link'] . '?id=' . $item->id,
                                     'value' => '',
                                     'ok_class' => 'btn btn-danger',

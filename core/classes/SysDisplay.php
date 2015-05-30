@@ -3,7 +3,7 @@
 namespace core\classes;
 
 
-class Cdisplay {
+class SysDisplay {
 
     protected static $layout;
 
@@ -12,9 +12,9 @@ class Cdisplay {
     public function __construct($layout = false)
     {
         if (true == $layout) {
-            static::$layout = Path::directory('app') . '/' . $layout . '.php';
+            static::$layout = SysPath::directory('app') . '/' . $layout . '.php';
         } else {
-            static::$layout = Path::directory('app') . '/views/layouts/default.php';
+            static::$layout = SysPath::directory('app') . '/views/layouts/default.php';
         }
     }
 
@@ -35,7 +35,7 @@ class Cdisplay {
         }
 
         ob_start();
-        include Path::directory('root') . '/' . $path . '.php';
+        include SysPath::directory('root') . '/' . $path . '.php';
 
         $content = ob_get_contents();
         ob_end_clean();
@@ -49,9 +49,9 @@ class Cdisplay {
             return $content;
         }
 
-        Casset::initCoreAssets();
+        SysAssets::initCoreAssets();
         ob_start();
-        include Cdisplay::$layout;
+        include SysDisplay::$layout;
         $content_final = ob_get_contents();
         ob_end_clean();
 

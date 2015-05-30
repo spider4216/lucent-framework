@@ -1,8 +1,8 @@
 <?php
-use core\classes\chtml;
+use core\classes\SysHtml;
 ?>
 
-<a <?php echo Chtml::getAttributesFromArray($data['attributes']); ?>
+<a <?php echo SysHtml::getAttributesFromArray($data['attributes']); ?>
     data-href="<?php echo $data['link']; ?>"
     data-title="<?php echo $data['message']; ?>"
     data-btnOkClass="<?php echo $data['ok_class']; ?>"

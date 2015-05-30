@@ -1,12 +1,12 @@
 <?php
 
 namespace app\controllers;
-use core\classes\cauth;
-use core\classes\ccontroller;
-use core\classes\cmodule;
-use core\classes\cview;
-use core\classes\cwidget;
-use core\modules\page\models\page;
+use core\classes\SysAuth;
+use core\classes\SysController;
+use core\classes\SysModule;
+use core\classes\SysView;
+use core\classes\SysWidget;
+use core\modules\page\models\Page;
 
 /**
  * Class homeController
@@ -19,12 +19,12 @@ use core\modules\page\models\page;
  * @var string $folder - статичное свойство. Наименование папки для views. Т.Е. Где искать файл вьюхи,
  * в какой дериктории искать файл с вьюхой. По умолчанию равен наименованию котроллера
  */
-class homeController extends Ccontroller
+class homeController extends SysController
 {
 
     public function actionIndex()
     {
-        $view = new Cview();
+        $view = new SysView();
         $view->title = 'Добро пожаловать';
         $view->display('index');
     }
@@ -32,7 +32,7 @@ class homeController extends Ccontroller
     public function actionDemo()
     {
         $model = new Page();
-        $view = new Cview();
+        $view = new SysView();
         $view->model = $model;
         $view->display('demo');
     }

@@ -2,20 +2,20 @@
 
 namespace core\classes;
 
-use core\classes\cfile_manager;
-use core\classes\path;
+use core\classes\SysFileManager;
+use core\classes\SysPath;
 
 /**
- * Class Casset
+ * Class SysAssets
  * @package core\classes
  * @version 1.0
  * @author farZa
  * @copyright 2015
  *
- * Casset - системный класс, где сосредоточена вся логика
+ * SysAssets - системный класс, где сосредоточена вся логика
  * подготовки и подключения стилей, скриптов и т.д.
  */
-class Casset {
+class SysAssets {
 
     /**
      * @var array $style
@@ -41,20 +41,20 @@ class Casset {
      */
     public static function initCoreAssets()
     {
-        Casset::setAssets('jquery/external/jquery/jquery.js', 'system');
-        Casset::setAssets('jquery/jquery-ui.min.js', 'system');
-        Casset::setAssets('jquery/jquery-ui.theme.min.css', 'system');
-        Casset::setAssets('jquery/jquery-ui.structure.min.css', 'system');
-        Casset::setAssets('jquery/jquery-ui.min.css', 'system');
+        SysAssets::setAssets('jquery/external/jquery/jquery.js', 'system');
+        SysAssets::setAssets('jquery/jquery-ui.min.js', 'system');
+        SysAssets::setAssets('jquery/jquery-ui.theme.min.css', 'system');
+        SysAssets::setAssets('jquery/jquery-ui.structure.min.css', 'system');
+        SysAssets::setAssets('jquery/jquery-ui.min.css', 'system');
 
-        Casset::setAssets('bootstrap/css/bootstrap.min.css', 'system');
-        Casset::setAssets('bootstrap/css/bootstrap-theme.min.css', 'system');
-        Casset::setAssets('bootstrap/js/bootstrap.min.js', 'system');
-        Casset::setAssets('bootstrap/js/bootstrap-tooltip.js', 'system');
-        Casset::setAssets('bootstrap/js/bootstrap-confirmation.js', 'system');
+        SysAssets::setAssets('bootstrap/css/bootstrap.min.css', 'system');
+        SysAssets::setAssets('bootstrap/css/bootstrap-theme.min.css', 'system');
+        SysAssets::setAssets('bootstrap/js/bootstrap.min.js', 'system');
+        SysAssets::setAssets('bootstrap/js/bootstrap-tooltip.js', 'system');
+        SysAssets::setAssets('bootstrap/js/bootstrap-confirmation.js', 'system');
 
-        Casset::setAssets('lucent/css/style.css', 'system');
-        Casset::setAssets('lucent/js/script.js', 'system');
+        SysAssets::setAssets('lucent/css/style.css', 'system');
+        SysAssets::setAssets('lucent/js/script.js', 'system');
     }
 
     /**
@@ -65,15 +65,15 @@ class Casset {
      */
     public static function filesAttach()
     {
-        $fileManager = new Cfile_manager();
-        $coreAssets = $fileManager->scanDir(Path::directory('core') . '/assets');
-        $appAssetsSystem =  $fileManager->scanDir(Path::directory('app') . '/assets/system');
+        $fileManager = new SysFileManager();
+        $coreAssets = $fileManager->scanDir(SysPath::directory('core') . '/assets');
+        $appAssetsSystem =  $fileManager->scanDir(SysPath::directory('app') . '/assets/system');
 
         foreach ($coreAssets as $coreA) {
             if (!in_array($coreA, $appAssetsSystem)) {
                 $fileManager->recurse_copy(
-                    Path::directory('core') . '/assets/' . $coreA,
-                    Path::directory('app') . '/assets/system/' . $coreA
+                    SysPath::directory('core') . '/assets/' . $coreA,
+                    SysPath::directory('app') . '/assets/system/' . $coreA
                 );
             }
         }
@@ -101,7 +101,7 @@ class Casset {
                 break;
         }
 
-        if (file_exists($final_path = Path::directory('app') . $path_prepare)) {
+        if (file_exists($final_path = SysPath::directory('app') . $path_prepare)) {
             $file_info = pathinfo($path_prepare);
 
             switch ($file_info['extension']) {

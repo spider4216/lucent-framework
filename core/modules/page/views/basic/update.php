@@ -1,5 +1,5 @@
 <?php
-use core\classes\cwidget;
+use core\classes\SysWidget;
 ?>
 
 <div class="page-header">
@@ -7,7 +7,7 @@ use core\classes\cwidget;
 </div>
 
 <?php
-echo Cwidget::build('wbreadcrumbs', '', [
+echo SysWidget::build('WBreadcrumbs', '', [
     'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
 ]);
 ?>
@@ -31,7 +31,7 @@ echo Cwidget::build('wbreadcrumbs', '', [
             <input type="hidden" name="id" value="<?php echo $item->id; ?>"/>
             <input type="submit" value="Сохранить" class="btn btn-primary"/>
             <?php
-                echo Cwidget::build('wbtnask', $model, [
+                echo SysWidget::build('WBtnAsk', $model, [
                     'link' => '/page/basic/delete?id=' . $item->id,
                     'ok_class' => 'btn btn-danger',
                 ]);

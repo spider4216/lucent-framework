@@ -2,7 +2,7 @@
 namespace core\classes;
 
 
-class Request {
+class SysRequest {
 
     //@todo Сделать обработку поста
     public static function post()
