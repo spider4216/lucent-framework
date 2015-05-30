@@ -36,5 +36,4 @@ class WTable extends SysWidget
             'show_id' => $show_id,
         ]);
     }
-
 }

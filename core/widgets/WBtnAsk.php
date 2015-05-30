@@ -30,7 +30,6 @@ class WBtnAsk extends SysWidget
 
         $tools['attributes']['class'] .= ' bootstrap-confirmation';
 
-
         //Во вьюхе $tools будет доступна как $data
         return $this->render($name, $model, $tools);
     }

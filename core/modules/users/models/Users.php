@@ -3,7 +3,6 @@ namespace core\modules\users\models;
 
 use core\classes\SysModel;
 
-
 class Users extends SysModel
 {
     public static $table = 'users';

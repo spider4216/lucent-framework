@@ -24,4 +24,5 @@ class Page extends SysModel
             'content' => ['required'],
         ];
     }
+
 }

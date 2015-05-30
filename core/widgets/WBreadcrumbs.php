@@ -1,7 +1,6 @@
 <?php
 namespace core\widgets;
 
-
 use core\classes\SysWidget;
 use core\classes\SysPath;
 

@@ -20,4 +20,5 @@ interface IModel {
     public static function findByPk($id);
     /** Ищет данные по наименовию и значению колонки*/
     public static function findByColumn($column, $value);
+
 }
