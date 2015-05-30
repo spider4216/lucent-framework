@@ -12,8 +12,6 @@ use core\classes\SysValidator;
  * @version 1.0
  * @author farZa
  * @copyright 2015
- * @todo Сделать метод load для загрузки атрибутов
- * @todo Написать beforeValidate и afterValidate
  */
 abstract class SysModel implements IModel, Iterator
 {

@@ -4,7 +4,6 @@ namespace core\classes;
 
 class SysRequest {
 
-    //@todo Сделать обработку поста
     public static function post()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

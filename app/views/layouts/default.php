@@ -5,7 +5,6 @@ use core\classes\SysAuth;
 
 /**
  * @var string $content - Содержимое views
- * @todo Настройка имени проекта в title
  */
 ?>
 

@@ -57,7 +57,4 @@ class SysMessages
 
         return $display->render('core/views/messages/summary', true);
     }
-
-    //@todo подогнать все кроме вьюхи через общий метод рендера
-
 }

@@ -5,10 +5,8 @@ use core\classes\SysModel;
 
 class Page extends SysModel
 {
-    //@todo Сделать инициализацию таблиц в БД
     protected static $table = 'pages';
 
-    //@todo Сделать функцию перевода
     protected static function labels()
     {
         return [
