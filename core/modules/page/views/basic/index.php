@@ -1,7 +1,7 @@
 <?php
 use core\classes\SysWidget;
 use core\classes\SysMessages;
-use core\classes\SysBreadcrumbs;
+use core\extensions\ExtBreadcrumbs;
 ?>
 
 <div class="page-header">

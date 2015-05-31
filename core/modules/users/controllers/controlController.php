@@ -11,7 +11,7 @@ use core\classes\SysRequest;
 use core\modules\users\models\Roles;
 use core\modules\users\models\Users;
 use core\modules\users\models\UsersUpdate;
-use core\classes\SysBreadcrumbs;
+use core\extensions\ExtBreadcrumbs;
 
 class ControlController extends SysController
 {
@@ -65,7 +65,7 @@ class ControlController extends SysController
     public function actionIndex()
     {
         $view = new SysView();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'index');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
 
         $view->breadcrumbs = $breadcrumbs;
         $view->display('index');
@@ -74,7 +74,7 @@ class ControlController extends SysController
     public function actionUser()
     {
         $display = new SysDisplay();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'user');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'user');
 
         if ($id = SysRequest::get('id')) {
             $view = new SysView();
@@ -98,7 +98,7 @@ class ControlController extends SysController
     public function actionRegister()
     {
         $view = new SysView();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'register');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'register');
         $model = new Users();
 
         $view->model = $model;
@@ -129,7 +129,7 @@ class ControlController extends SysController
     public function actionLogin()
     {
         $view = new SysView();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'login');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'login');
         $model = new Users();
 
         if ($post = SysRequest::post()) {
@@ -164,7 +164,7 @@ class ControlController extends SysController
         $model = new Users();
 
         $view = new SysView();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'manage');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'manage');
         $view->model = $model;
         $view->breadcrumbs = $breadcrumbs;
 
@@ -174,7 +174,7 @@ class ControlController extends SysController
     public function actionUpdate()
     {
         $roleList = Roles::findAll();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'update');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
 
         if ($post = SysRequest::post()) {
             $view = new SysView();

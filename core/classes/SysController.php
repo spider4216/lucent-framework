@@ -160,7 +160,7 @@ class SysController
      */
     private function setLayout()
     {
-        static::$layout = SysPath::directory('root') . '/app/views/layouts/default.php';
+        static::$layout = SysPath::directory('core') . '/views/layouts/default.php';
     }
 
 }

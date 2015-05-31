@@ -7,7 +7,7 @@ use core\classes\SysView;
 use core\modules\page\models\Page;
 use core\classes\SysRequest;
 use core\classes\SysMessages;
-use core\classes\SysBreadcrumbs;
+use core\extensions\ExtBreadcrumbs;
 
 class basicController extends SysController{
 
@@ -50,7 +50,7 @@ class basicController extends SysController{
     public function actionIndex()
     {
         $model = new Page();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'index');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
 
         $view = new SysView();
         $view->model = $model;
@@ -63,7 +63,7 @@ class basicController extends SysController{
     {
         $view = new SysView();
         $model = new Page();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'create');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'create');
         $view->model = $model;
         $view->breadcrumbs = $breadcrumbs;
 
@@ -83,7 +83,7 @@ class basicController extends SysController{
     public function actionUpdate()
     {
         $model = new Page();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'update');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
         $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;
         $display = new SysDisplay();
@@ -122,7 +122,7 @@ class basicController extends SysController{
     public function actionView()
     {
         $display = new SysDisplay();
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'view');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'view');
 
         if ($id = SysRequest::get('id')) {
             $model = new Page();

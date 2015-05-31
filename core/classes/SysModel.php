@@ -187,7 +187,7 @@ abstract class SysModel implements IModel, Iterator
      * @return array
      * Возвращает все найденные записи выбранной модели
      */
-    public static function findAll($condition = [], $columns = [])
+    public static function findAll($condition = [], $columns = [], $order = ['id' => 'DESC'])
     {
         /** @var SysDatabase $db */
         $db = SysDatabase::getObj();
@@ -196,7 +196,8 @@ abstract class SysModel implements IModel, Iterator
 
         $select = ($columns) ? implode(',', $columns) : '*';
 
-        $sql = 'SELECT '. $select .' FROM ' . static::$table;
+        $sql = 'SELECT '. $select .' FROM ' . static::$table .
+            ' ORDER BY ' . key($order) . ' ' . $order[key($order)];
 
         if ($condition) {
             $sql = $sql . ' WHERE ' . $condition[0];

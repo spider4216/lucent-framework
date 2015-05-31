@@ -7,7 +7,7 @@ use core\classes\SysView;
 use core\classes\SysRequest;
 use core\modules\users\models\Roles;
 use core\classes\SysDisplay;
-use core\classes\SysBreadcrumbs;
+use core\extensions\ExtBreadcrumbs;
 
 class RolesController extends SysController
 {
@@ -47,7 +47,7 @@ class RolesController extends SysController
 
     public function actionIndex()
     {
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'index');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
         $model = new Roles();
         $view = new SysView();
 
@@ -59,7 +59,7 @@ class RolesController extends SysController
 
     public function actionCreate()
     {
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'create');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'create');
         $model = new Roles();
         $view = new SysView();
 
@@ -84,7 +84,7 @@ class RolesController extends SysController
 
     public function actionUpdate()
     {
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'update');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
         $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;
 

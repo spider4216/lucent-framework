@@ -1,7 +1,7 @@
 <?php
 namespace core\classes;
 
-use core\classes\SysFileManager;
+use core\extensions\ExtFileManager;
 
 /**
  * Class SysModule
@@ -40,7 +40,7 @@ class SysModule
 
     public static function getAllModules($type = 'system')
     {
-        $fileManager = new SysFileManager();
+        $fileManager = new ExtFileManager();
         $directory = SysPath::directory('core') . '/modules/';
         if ('app' === $type) {
             $directory = SysPath::directory('app') . '/modules/';

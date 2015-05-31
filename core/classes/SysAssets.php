@@ -2,7 +2,7 @@
 
 namespace core\classes;
 
-use core\classes\SysFileManager;
+use core\extensions\ExtFileManager;
 use core\classes\SysPath;
 
 /**
@@ -65,7 +65,7 @@ class SysAssets {
      */
     public static function filesAttach()
     {
-        $fileManager = new SysFileManager();
+        $fileManager = new ExtFileManager();
         $coreAssets = $fileManager->scanDir(SysPath::directory('core') . '/assets');
         $appAssetsSystem =  $fileManager->scanDir(SysPath::directory('app') . '/assets/system');
 

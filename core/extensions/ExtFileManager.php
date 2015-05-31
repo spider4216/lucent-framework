@@ -1,9 +1,9 @@
 <?php
 
-namespace core\classes;
+namespace core\extensions;
 
 /**
- * Class Cfile_manager
+ * Class ExtFileManager
  * @package core\classes
  * @version 1.0
  * @author farZa
@@ -11,7 +11,7 @@ namespace core\classes;
  *
  * Класс для работы с файлами
  */
-class SysFileManager {
+class ExtFileManager {
 
     /**
      * @param $path

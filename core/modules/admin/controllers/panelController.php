@@ -3,7 +3,7 @@ namespace core\modules\admin\controllers;
 
 
 use core\classes\SysAuth;
-use core\classes\SysBreadcrumbs;
+use core\extensions\ExtBreadcrumbs;
 use core\classes\SysController;
 use core\classes\SysModule;
 use core\classes\SysView;
@@ -35,7 +35,7 @@ class PanelController extends SysController
 
     public function actionIndex()
     {
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'index');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
 
         $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;
@@ -44,7 +44,7 @@ class PanelController extends SysController
 
     public function actionModules()
     {
-        $breadcrumbs = SysBreadcrumbs::getAll($this, 'modules');
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'modules');
 
         $view = new SysView();
         $modules = SysModule::getAllModules();

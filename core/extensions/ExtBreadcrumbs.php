@@ -1,8 +1,8 @@
 <?php
 
-namespace core\classes;
+namespace core\extensions;
 
-class SysBreadcrumbs {
+class ExtBreadcrumbs {
 
     public static function getAll($controller, $action_name)
     {
