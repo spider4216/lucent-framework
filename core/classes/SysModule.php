@@ -55,4 +55,23 @@ class SysModule
 
         return $modules_info;
     }
+
+    public static function getModulePath($name)
+    {
+        $path = SysPath::directory('core') . '/modules/' . strtolower($name);
+
+        if (!file_exists($path)) {
+            $path = SysPath::directory('app') . '/modules/' . strtolower($name);
+
+            if (!file_exists($path)) {
+                return false;
+            }
+
+            $path = 'app/modules/' . strtolower($name);
+        } else {
+            $path = 'core/modules/' . strtolower($name);
+        }
+
+        return $path;
+    }
 }

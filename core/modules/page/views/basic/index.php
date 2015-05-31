@@ -28,24 +28,6 @@ echo SysWidget::build('WBreadcrumbs', '', [
 
 <div class="pages-list">
     <div class="widget-test">
-        <?php
-        echo SysWidget::build('WTable', $model, [
-            'columns' => [
-                'title',
-            ],
-
-            'buttons' => [
-                'view' => [
-                    'link' => '/page/basic/view',
-                ],
-                'update' => [
-                    'link' => '/page/basic/update',
-                ],
-                'delete' => [
-                    'link' => '/page/basic/delete',
-                ],
-            ],
-        ]);
-        ?>
+        %page_listAll%
     </div>
 </div>
