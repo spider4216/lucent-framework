@@ -14,11 +14,7 @@ echo SysWidget::build('WBreadcrumbs', '', [
 ]);
 ?>
 
-<?php if ($messages = SysMessages::pretty(SysMessages::getAll())): ?>
-    <div class="summary">
-        <?php echo $messages; ?>
-    </div>
-<?php endif; ?>
+%system_notifications%
 
 <div class="user-info">
 

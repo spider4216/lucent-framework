@@ -14,11 +14,8 @@ echo SysWidget::build('WBreadcrumbs', '', [
 ?>
 
 <div class="form-group">
-    <?php if ($messages = SysMessages::pretty(SysMessages::getAll())): ?>
-        <div class="summary">
-            <?php echo $messages; ?>
-        </div>
-    <?php endif; ?>
+
+    %system_notifications%
 
     <form action="/page/basic/create" method="post">
 

@@ -9,15 +9,11 @@ use core\classes\SysWidget;
 
 <?php
 echo SysWidget::build('WBreadcrumbs', '', [
-    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
+    'breadcrumbs' => $breadcrumbs, //SysBreadcrumbs::getAll
 ]);
 ?>
 
-<?php if ($messages = SysMessages::pretty(SysMessages::getAll())): ?>
-    <div class="summary">
-        <?php echo $messages; ?>
-    </div>
-<?php endif; ?>
+%system_notifications%
 
 <div class="tools">
     <a href="/users/roles/create" class="btn btn-default">Создать роль</a>
@@ -27,20 +23,6 @@ echo SysWidget::build('WBreadcrumbs', '', [
 
 <div class="roles-list">
     <div class="widget-table">
-        <?php
-        echo SysWidget::build('WTable', $model, [
-            'columns' => [
-                'name',
-            ],
-
-            'buttons' => [
-                'update' => [
-                    'link' => '/users/roles/update',
-                ],
-                'delete' => [
-                    'link' => '/users/roles/delete',
-                ],
-            ],
-        ]);
-        ?>
+        %users_roles%
     </div>
+</div>
