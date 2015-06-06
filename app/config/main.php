@@ -13,6 +13,10 @@ return [
         'users' => 'users',
         'roles' => 'roles',
     ],
+
+    'path' => [
+        'migration_directory' => 'app/migrations',
+    ],
 ];
 
 ?>
