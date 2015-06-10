@@ -74,4 +74,15 @@ class SysModule
 
         return $path;
     }
+
+    public static function getCurrentModuleName() {
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $pathParts = explode('/', $path);
+
+        if (count($pathParts) >=4) {
+            return $pathParts[1];
+        }
+
+        return false;
+    }
 }

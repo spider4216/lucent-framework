@@ -57,6 +57,39 @@ class SysAssets {
         SysAssets::setAssets('lucent/js/script.js', 'system');
     }
 
+    public static function initModuleAssets()
+    {
+        $moduleName = SysModule::getCurrentModuleName();
+
+        if (false !== $moduleName) {
+            $moduleInfo = SysModule::getModuleInfo($moduleName);
+
+            if (!isset($moduleInfo['assets'])) {
+                return false;
+            }
+
+            $moduleAssets = $moduleInfo['assets'];
+
+            foreach ($moduleAssets['js'] as $jsPath) {
+                $fileName = basename($jsPath);
+                $path = $moduleName . '/js/' . $fileName;
+                SysAssets::setAssets($path, 'modules');
+            }
+
+            foreach ($moduleAssets['css'] as $cssPath) {
+                $fileName = basename($cssPath);
+                $path = $moduleName . '/css/' . $fileName;
+                SysAssets::setAssets($path, 'modules');
+            }
+
+            return true;
+
+            //var_dump($moduleInfo['assets']);
+        }
+
+        return false;
+    }
+
     /**
      * Данный метод сравнивает закрытую системную директорию с ассетами в /core и
      * открытую директорию в /app. Если какие либо основные директории (те, которые находятся в корне
@@ -79,6 +112,71 @@ class SysAssets {
         }
     }
 
+    private static function moduleScanAssets()
+    {
+        $moduleNames = SysModule::getAllModules();
+        $moduleAssets = [];
+        foreach ($moduleNames as $module) {
+            if (isset($module['assets'])) {
+                if (isset($module['assets']['js'])) {
+                    foreach ($module['assets']['js'] as $moduleJs) {
+                        $moduleAssets[$module['name']]['js'][] = SysPath::directory('core') .
+                            '/modules/' . strtolower($module['name']) . '/' . $moduleJs;
+                    }
+                }
+
+                if (isset($module['assets']['css'])) {
+                    foreach ($module['assets']['css'] as $moduleCss) {
+                        $moduleAssets[$module['name']]['css'][] = SysPath::directory('core') .
+                            '/modules/' . strtolower($module['name']) . '/' . $moduleCss;
+                    }
+                }
+            }
+        }
+
+        return $moduleAssets;
+    }
+
+    public static function moduleFilesAttach()
+    {
+        $files = static::moduleScanAssets();
+        $publicAssetPath = SysPath::directory('app') . '/assets/modules/';
+        $attached = [];
+
+        foreach ($files as $moduleName => $moduleSet) {
+            if (!file_exists($publicAssetPath . $moduleName)) {
+                foreach ($moduleSet['css'] as $cssPack) {
+                    if (!is_dir($publicAssetPath . $moduleName)) {
+                        mkdir($publicAssetPath . $moduleName, 0777);
+                    }
+
+                    if (!is_dir($publicAssetPath . $moduleName . '/css')) {
+                        mkdir($publicAssetPath . $moduleName . '/css', 0777);
+                    }
+
+                    copy($cssPack, $publicAssetPath . $moduleName . '/css/' . basename($cssPack));
+                    $attached['css'][] = $publicAssetPath . $moduleName . '/css/' . basename($cssPack);
+                }
+
+                foreach ($moduleSet['js'] as $jsPack) {
+                    if (!is_dir($publicAssetPath . $moduleName)) {
+                        mkdir($publicAssetPath . $moduleName, 0777);
+                    }
+
+                    if (!is_dir($publicAssetPath . $moduleName . '/js')) {
+                        mkdir($publicAssetPath . $moduleName . '/js', 0777);
+                    }
+
+                    copy($jsPack, $publicAssetPath . $moduleName . '/js/' . basename($jsPack));
+                    $attached['js'][] = $publicAssetPath . $moduleName . '/js/' . basename($jsPack);
+                }
+            }
+        }
+
+        return $attached;
+
+    }
+
     /**
      * @param $path
      * @param string $type
@@ -98,6 +196,9 @@ class SysAssets {
                 break;
             case 'system' :
                 $path_prepare = '/assets/system/' . $path;
+                break;
+            case 'modules' :
+                $path_prepare = '/assets/modules/' . $path;
                 break;
         }
 

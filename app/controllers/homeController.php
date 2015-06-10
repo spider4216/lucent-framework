@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers;
+use core\classes\SysAssets;
 use core\classes\SysAuth;
 use core\classes\SysController;
 use core\classes\SysModule;

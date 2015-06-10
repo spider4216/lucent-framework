@@ -22,6 +22,8 @@ class App
         session_start();
         static::$config = include __DIR__ . '/../../app/config/main.php';
         SysAssets::filesAttach();
+        SysAssets::moduleFilesAttach();
+
         SysUrl::semantic_url(static::$config['default_controller'], static::$config['default_action']);
     }
 }

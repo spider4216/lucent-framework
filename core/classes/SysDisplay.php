@@ -14,7 +14,7 @@ class SysDisplay {
         if (true == $layout) {
             static::$layout = SysPath::directory('app') . '/' . $layout . '.php';
         } else {
-            static::$layout = SysPath::directory('app') . '/views/layouts/default.php';
+            static::$layout = SysPath::directory('core') . '/views/layouts/default.php';
         }
     }
 
@@ -50,6 +50,7 @@ class SysDisplay {
         }
 
         SysAssets::initCoreAssets();
+        SysAssets::initModuleAssets();
         ob_start();
         include SysDisplay::$layout;
         $content_final = ob_get_contents();

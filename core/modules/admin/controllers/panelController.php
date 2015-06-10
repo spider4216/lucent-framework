@@ -36,7 +36,6 @@ class PanelController extends SysController
     public function actionIndex()
     {
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
-
         $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;
         $view->display('index');

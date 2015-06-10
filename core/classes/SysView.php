@@ -26,6 +26,7 @@ class SysView
     public function __construct()
     {
         SysAssets::initCoreAssets();
+        SysAssets::initModuleAssets();
     }
 
     /**
