@@ -128,7 +128,9 @@ abstract class SysModel implements IModel, Iterator
     public function form_validate()
     {
         $rules = static::rules();
-        $validator = new SysValidator();
+        $modelName = get_called_class();
+
+        $validator = new SysValidator($modelName);
 
         $result = [];
         foreach ($rules as $attr => $rule) {
@@ -265,7 +267,7 @@ abstract class SysModel implements IModel, Iterator
             }
         }
 
-        return false;
+        return $name;
     }
 
     /**

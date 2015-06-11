@@ -8,6 +8,12 @@ class SysValidator
 {
 
     private $compare_data = [];
+    private $model;
+
+    public function __construct($modelName)
+    {
+        $this->model = new $modelName();
+    }
 
     public function check($name, $v_name)
     {
@@ -29,7 +35,9 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set('Поле ' . $name . ' не может быть пустым', 'danger');
+        $attrLabel = $this->model->getLabel($name);
+
+        SysMessages::set('Поле "' . $attrLabel . '" не может быть пустым', 'danger');
         return false;
     }
 
@@ -49,7 +57,10 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set('Значение поля ' . $this->compare_data['name'] . ' не соответствует полю ' . $name, 'danger');
+        $attrLabel = $this->model->getLabel($name);
+        $attrLabelAgain = $this->model->getLabel($this->compare_data['name']);
+
+        SysMessages::set('Значение поля "' . $attrLabelAgain . '" не соответствует полю "' . $attrLabel . '"', 'danger');
         return false;
     }
 
