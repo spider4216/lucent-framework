@@ -23,6 +23,7 @@ echo SysWidget::build('WBreadcrumbs', '', [
         <div class="m-row">
             <label for="name"><?php echo $model->getLabel('name'); ?></label>
             <input type="text" name="name" class="form-control name"
+                   <?php echo ($model->id == '1' || $model->id == '2') ? 'disabled' : ''; ?>
                    placeholder="Наименование роли" value="<?php echo $model->name ?>"/>
             <br/>
         </div>

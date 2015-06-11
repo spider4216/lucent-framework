@@ -2,6 +2,7 @@
 
 namespace core\modules\users\tokens;
 
+use core\classes\SysAuth;
 use core\modules\users\models\Roles;
 use core\modules\users\models\Users;
 use core\classes\SysWidget;
@@ -47,5 +48,10 @@ class UsersTokens {
                 ],
             ],
         ]);
+    }
+
+    public function currentUsername()
+    {
+        return SysAuth::getCurrentUser();
     }
 }

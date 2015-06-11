@@ -32,3 +32,7 @@ footer .copyright {
 .widget-table-buttons-panel a:hover {
     text-decoration: none;
 }
+
+.login-form .input-group input {
+    width: 200px;
+}

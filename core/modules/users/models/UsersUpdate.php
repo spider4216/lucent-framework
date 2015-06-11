@@ -7,6 +7,13 @@ class UsersUpdate extends SysModel
 {
     public static $table = 'users';
 
+    public static function rules()
+    {
+        return [
+            'email' => ['required', 'email'],
+        ];
+    }
+
     public static function labels()
     {
         return [

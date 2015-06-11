@@ -134,6 +134,11 @@ class RolesController extends SysController
         if ($id = SysRequest::get('id')) {
             $model = Roles::findByPk($id);
 
+            if ($model->id == '1' || $model->id == '2') {
+                SysMessages::set('Системная роль "' . $model->name . '" не может быть удалена', 'danger');
+                SysRequest::redirect('/users/roles/');
+            }
+
             if ($model->delete()) {
                 SysMessages::set('Роль "' . $model->name . '" была успешно удалена', 'success');
                 SysRequest::redirect('/users/roles/');
