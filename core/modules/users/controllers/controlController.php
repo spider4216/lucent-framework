@@ -57,13 +57,15 @@ class ControlController extends SysController
             'update' => [
                 'пользователи' => '/users/control/',
                 'управление пользователями' => '/users/control/manage',
-                'редактировать пользователя' => '-',
+                'редактирование пользователя' => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
+        static::$title = 'Система пользователей';
+
         $view = new SysView();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
 
@@ -80,6 +82,7 @@ class ControlController extends SysController
             $view = new SysView();
             $view->breadcrumbs = $breadcrumbs;
             $user = Users::findByPk($id);
+            static::$title = $user->username;
 
             if (!$user) {
                 SysMessages::set('Пользователь не найден', 'danger');
@@ -97,6 +100,8 @@ class ControlController extends SysController
 
     public function actionRegister()
     {
+        static::$title = 'Регистрация';
+
         $view = new SysView();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'register');
         $model = new Users();
@@ -128,6 +133,8 @@ class ControlController extends SysController
 
     public function actionLogin()
     {
+        static::$title = 'Войти';
+
         $view = new SysView();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'login');
         $model = new Users();
@@ -161,6 +168,8 @@ class ControlController extends SysController
 
     public function actionManage()
     {
+        static::$title = 'Управление пользователями';
+
         $model = new Users();
 
         $view = new SysView();
@@ -173,6 +182,8 @@ class ControlController extends SysController
 
     public function actionUpdate()
     {
+        static::$title = 'Редактирование пользователя';
+
         $roleList = Roles::findAll();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
 

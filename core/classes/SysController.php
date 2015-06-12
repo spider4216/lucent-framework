@@ -31,6 +31,8 @@ class SysController
 
     public static $action_name;
 
+    public static $title = '';
+
     public function __call($name, $value)
     {
         throw new E404;

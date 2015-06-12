@@ -49,6 +49,8 @@ class basicController extends SysController{
 
     public function actionIndex()
     {
+        static::$title = 'Страницы';
+
         $model = new Page();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
 
@@ -61,6 +63,8 @@ class basicController extends SysController{
 
     public function actionCreate()
     {
+        static::$title = 'Создание страницы';
+
         $view = new SysView();
         $model = new Page();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'create');
@@ -82,6 +86,8 @@ class basicController extends SysController{
 
     public function actionUpdate()
     {
+        static::$title = 'Редактирование страницы';
+
         $model = new Page();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
         $view = new SysView();
@@ -131,6 +137,8 @@ class basicController extends SysController{
 
             $view->model = $model;
             $item = $model->findByPk($id);
+
+            static::$title = $item->title;
 
             if (!$item) {
                 SysMessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');

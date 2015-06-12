@@ -5,7 +5,7 @@ use core\classes\SysWidget;
 ?>
 
 <div class="page-header">
-    <h2>Изменить роль</h2>
+    <h2>Изменение роли</h2>
 </div>
 
 <?php

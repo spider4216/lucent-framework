@@ -70,12 +70,12 @@ class SysView
         ob_start();
         include $pathView;
 
-        $content = SysTokens::apply(ob_get_contents());
+        $content = ob_get_contents();
         ob_end_clean();
 
         ob_start();
         include SysController::$layout;
-        $content_final = ob_get_contents();
+        $content_final = SysTokens::apply(ob_get_contents());
         ob_end_clean();
         return $content_final;
     }

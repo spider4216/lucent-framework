@@ -40,13 +40,15 @@ class RolesController extends SysController
             'update' => [
                 'пользователи' => '/users/control/',
                 'управление ролями' => '/users/roles/',
-                'редактировать роль' => '-',
+                'Изменение роли' => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
+        static::$title = 'Управление ролями';
+
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
         $model = new Roles();
         $view = new SysView();
@@ -59,6 +61,8 @@ class RolesController extends SysController
 
     public function actionCreate()
     {
+        static::$title = 'Создать роль';
+
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'create');
         $model = new Roles();
         $view = new SysView();
@@ -84,6 +88,8 @@ class RolesController extends SysController
 
     public function actionUpdate()
     {
+        static::$title = 'Изменение роли';
+
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
         $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;

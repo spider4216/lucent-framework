@@ -5,6 +5,7 @@ use core\classes\SysAuth;
 
 /**
  * @var string $content - Содержимое views
+ * @var string $title - Заголовок страницы
  */
 ?>
 
@@ -12,7 +13,7 @@ use core\classes\SysAuth;
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Lucent Framework</title>
+    <title>%system_headTitle%</title>
     <?php echo SysAssets::getAssets('style'); ?>
     <?php echo SysAssets::getAssets('script'); ?>
 </head>

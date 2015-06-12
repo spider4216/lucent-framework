@@ -28,13 +28,14 @@ class PanelController extends SysController
 
             'modules' => [
                 'админ панель' => '/admin/panel/',
-                'модули' => '-',
+                'список модулей' => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
+        static::$title = 'Админ панель';
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
         $view = new SysView();
         $view->breadcrumbs = $breadcrumbs;
@@ -43,6 +44,8 @@ class PanelController extends SysController
 
     public function actionModules()
     {
+        static::$title = 'Список модулей';
+
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'modules');
 
         $view = new SysView();

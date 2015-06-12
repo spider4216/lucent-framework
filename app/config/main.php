@@ -4,6 +4,7 @@
  * Главный конфигурационный файл приложения
  */
 return [
+    'project_name' => 'Lucent Framework',
     /** Контроллер по умолчанию*/
     'default_controller' => 'home',
     /** Действие по умолчанию*/
