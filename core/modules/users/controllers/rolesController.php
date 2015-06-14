@@ -73,13 +73,9 @@ class RolesController extends SysController
         if ($post = SysRequest::post()) {
             $model->name = $post['name'];
 
-            if ($model->is_new_record('name', $model->name)) {
-                if ($model->save()) {
-                    SysMessages::set('Роль "' . $model->name . '" была успешно создана', 'success');
-                    SysRequest::redirect('/users/roles/');
-                }
-            } else {
-                SysMessages::set('Роль "' . $model->name . '" уже существует', 'danger');
+            if ($model->save()) {
+                SysMessages::set('Роль "' . $model->name . '" была успешно создана', 'success');
+                SysRequest::redirect('/users/roles/');
             }
         }
 

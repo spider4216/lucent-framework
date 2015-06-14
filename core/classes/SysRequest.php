@@ -16,7 +16,8 @@ class SysRequest {
     public static function get($name)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            if ($get = $_GET[$name]) {
+            if (isset($_GET[$name])) {
+                $get = $_GET[$name];
                 return $get;
             }
         }
@@ -33,5 +34,11 @@ class SysRequest {
     public static function getUrl()
     {
         return $_SERVER['REQUEST_URI'];
+    }
+
+    public static function refresh()
+    {
+        header("Refresh:0");
+        die();
     }
 }

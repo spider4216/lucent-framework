@@ -23,10 +23,10 @@ class Users extends SysModel
     public static function rules()
     {
         return [
-            'username' => ['required','username'],
+            'username' => ['required', 'username', 'unique'],
             'password' => ['required', 'compare'],
             'password_again' => ['compared'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique'],
         ];
     }
 

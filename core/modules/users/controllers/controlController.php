@@ -86,7 +86,7 @@ class ControlController extends SysController
 
             if (!$user) {
                 SysMessages::set('Пользователь не найден', 'danger');
-                $display->render('core/views/errors/404',false,true);
+                $display->render('core/views/errors/404', false, true);
             }
 
             $view->user = $user;
@@ -94,7 +94,7 @@ class ControlController extends SysController
             $view->display('user');
         } else {
             SysMessages::set('Пользователь не найден', 'danger');
-            $display->render('core/views/errors/404',false,true);
+            $display->render('core/views/errors/404', false, true);
         }
     }
 
@@ -112,15 +112,12 @@ class ControlController extends SysController
         if ($post = SysRequest::post()) {
             $model->username = $post['username'];
             $model->password = SysPassword::hash($post['password']);
+            $model->email = $post['email'];
 
-            if ($model->is_new_record('username', $model->username)) {
-                if ($model->save()) {
-                    SysMessages::set('Пользователь был успешно создан', 'success');
-                    SysAuth::login($model, $post['username'], $post['password']);
-                    SysRequest::redirect('/users/control/user?id=' . $model->id);
-                }
-            } else {
-                SysMessages::set('Пользователь "'.$model->username.'" уже существует', 'danger');
+            if ($model->save()) {
+                SysMessages::set('Пользователь был успешно создан', 'success');
+                SysAuth::login($model, $post['username'], $post['password']);
+                SysRequest::redirect('/users/control/user?id=' . $model->id);
             }
         }
 
@@ -170,7 +167,7 @@ class ControlController extends SysController
     {
         static::$title = 'Управление пользователями';
 
-        $model = new Users();
+        $model = new UsersUpdate();
 
         $view = new SysView();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'manage');
@@ -182,113 +179,88 @@ class ControlController extends SysController
 
     public function actionUpdate()
     {
-        static::$title = 'Редактирование пользователя';
-
         $roleList = Roles::findAll();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
+        $model = false;
+        $display = new SysDisplay();
+
+        $view = new SysView();
+        $view->roleList = $roleList;
+        $view->breadcrumbs = $breadcrumbs;
+        $attrExist = false;
 
         if ($post = SysRequest::post()) {
-            $view = new SysView();
             $model = UsersUpdate::findByPk($post['id']);
 
-            if ($model->username == $post['username']) {
+            $oldUsername = $post['username'];
+            $oldEmail = $post['email'];
 
-                $model->username = $post['username'];
-                $model->role_id = $post['roles'];
-
-                if (!empty($post['password'])) {
-                    $model->password = SysPassword::hash($post['password']);
-                }
-
-                $model->email = $post['email'];
-
-                if ($model->save()) {
-                    SysMessages::set('Пользователь ' . $model->username . ' был успешно обновлен', 'success');
-
-                    if (SysAuth::getCurrentUserId() == $model->id) {
-                        SysAuth::logout();
-                        SysMessages::set('Снова войдите в систему для применения изменений', 'info');
-                        SysRequest::redirect('/users/control/login');
-                    }
-
-                    SysRequest::redirect('/users/control/manage');
-                }
-            } else {
-                if ($model->is_new_record('username', $post['username'])) {
-
-                    $model->username = $post['username'];
-                    $model->role_id = $post['roles'];
-
-                    if (!empty($post['password'])) {
-                        $model->password = SysPassword::hash($post['password']);
-                    }
-
-                    $model->email = $post['email'];
-
-                    if ($model->save()) {
-                        SysMessages::set('Пользователь ' . $model->username . ' был успешно обновлен', 'success');
-
-                        if (SysAuth::getCurrentUserId() == $model->id) {
-                            SysAuth::logout();
-                            SysMessages::set('Снова войдите в систему для применения изменений', 'info');
-                            SysRequest::redirect('/users/control/login');
-                        }
-
-                        SysRequest::redirect('/users/control/manage');
-                    }
-                } else {
-                    SysMessages::set('Пользователь ' . $post['username'] . ' уже существует', 'danger');
+            if ($oldUsername != $model->username) {
+                if (!$model->is_new_record('username', $oldUsername)) {
+                    SysMessages::set('Пользователь "' . $oldUsername . '" уже существует', 'danger');
+                    $attrExist = true;
                 }
             }
 
+            if ($oldEmail != $model->email) {
+                if (!$model->is_new_record('email', $oldEmail)) {
+                    SysMessages::set('Email "' . $oldEmail . '" уже существует', 'danger');
+                    $attrExist = true;
+                }
+            }
 
-            $view->model = $model;
-            $view->breadcrumbs = $breadcrumbs;
-            $view->roleList = $roleList;
+            if ($attrExist) {
+                $view->model = $model;
+                $view->display('update');
+                return false;
+            }
 
-            $view->display('update');
+            $model->username = $oldUsername;
+            $model->email = $oldEmail;
+            $model->password = SysPassword::hash($post['password']);
+            $model->role_id = $post['roles'];
+
+            if ($model->save()) {
+                SysMessages::set('Пользователь "' . $oldUsername . '" успешно обновлен', 'success');
+                SysRequest::redirect('/users/control/manage');
+            }
+
+            SysMessages::set('Ошибка при обновлении пользователя "' . $oldUsername . '"', 'danger');
+
         }
 
         if ($id = SysRequest::get('id')) {
             $model = UsersUpdate::findByPk($id);
-
-            $view = new SysView();
-            $view->roleList = $roleList;
-            $view->model = $model;
-            $view->breadcrumbs = $breadcrumbs;
-
-            $view->display('update');
-        } else {
-            $display = new SysDisplay();
-            SysMessages::set('Неопознанный пользователь', 'danger');
-            $display->render('core/views/errors/404',false,true);
         }
+
+        if (!$model) {
+            SysMessages::set('Не удается найти запись для редактирования', 'danger');
+            $display->render('core/views/errors/404', false, true);
+        }
+
+        $view->model = $model;
+        $view->display('update');
     }
 
     public function actionDelete()
     {
         if ($id = SysRequest::get('id')) {
             $model = UsersUpdate::findByPk($id);
-
             if (SysAuth::getCurrentUserId() != $model->id) {
-
                 if ($model->delete()) {
                     SysMessages::set('Пользователь ' . $model->username . ' был успешно удвлен', 'success');
                 } else {
                     SysMessages::set('Ошибка при удалении пользователя', 'danger');
                 }
-
             } else {
                 SysMessages::set('Нельзя удалить авторизованного пользователя', 'danger');
                 SysRequest::redirect('/users/control/manage');
             }
-
             SysRequest::redirect('/users/control/manage');
-
         } else {
             $display = new SysDisplay();
             SysMessages::set('Неопознанный пользователь', 'danger');
-            $display->render('core/views/errors/404',false,true);
+            $display->render('core/views/errors/404', false, true);
         }
     }
 }

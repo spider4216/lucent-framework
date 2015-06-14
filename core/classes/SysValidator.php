@@ -29,6 +29,9 @@ class SysValidator
         return false;
     }
 
+    //$v - значение атрибута
+    //$name - наименование атрибута
+
     private function required($v, $name)
     {
         if (!empty($v)) {
@@ -99,6 +102,16 @@ class SysValidator
         }
 
         SysMessages::set('Пароль введен не корректно', 'danger');
+        return false;
+    }
+
+    private function unique($v, $name)
+    {
+        if ($this->model->is_new_record($name, $v)) {
+            return true;
+        }
+
+        SysMessages::set('Запись "' . $v . '" уже существует', 'danger');
         return false;
     }
 }
