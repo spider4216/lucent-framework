@@ -179,6 +179,8 @@ class ControlController extends SysController
 
     public function actionUpdate()
     {
+        static::$title = 'Редактирование пользователя';
+
         $roleList = Roles::findAll();
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
         $model = false;
