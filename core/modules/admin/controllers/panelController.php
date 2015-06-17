@@ -36,9 +36,8 @@ class PanelController extends SysController
     public function actionIndex()
     {
         static::$title = 'Админ панель';
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
         $view = new SysView();
-        $view->breadcrumbs = $breadcrumbs;
+
         $view->display('index');
     }
 
@@ -46,12 +45,9 @@ class PanelController extends SysController
     {
         static::$title = 'Список модулей';
 
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'modules');
-
         $view = new SysView();
         $modules = SysModule::getAllModules();
         $view->modules = $modules;
-        $view->breadcrumbs = $breadcrumbs;
 
         $view->display('modules');
     }

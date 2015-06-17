@@ -6,11 +6,7 @@ use core\classes\SysWidget;
     <h2>Список модулей</h2>
 </div>
 
-<?php
-echo SysWidget::build('WBreadcrumbs', '', [
-    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
-]);
-?>
+%system_breadcrumbs%
 
 <div class="panel panel-default">
     <div class="panel-body">

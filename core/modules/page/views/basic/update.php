@@ -6,11 +6,7 @@ use core\classes\SysWidget;
     <h2>Редактирование страницы</h2>
 </div>
 
-<?php
-echo SysWidget::build('WBreadcrumbs', '', [
-    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
-]);
-?>
+%system_breadcrumbs%
 
 <div class="form-group">
     <form action="" method="post">

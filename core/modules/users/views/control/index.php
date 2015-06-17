@@ -6,11 +6,7 @@ use core\classes\SysWidget;
     <h2>Система пользователей</h2>
 </div>
 
-<?php
-echo SysWidget::build('WBreadcrumbs', '', [
-    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
-]);
-?>
+%system_breadcrumbs%
 
 <div class="user-system">
     <ul>

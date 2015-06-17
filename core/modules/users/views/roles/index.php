@@ -7,11 +7,7 @@ use core\classes\SysWidget;
     <h2>Управление ролями</h2>
 </div>
 
-<?php
-echo SysWidget::build('WBreadcrumbs', '', [
-    'breadcrumbs' => $breadcrumbs, //SysBreadcrumbs::getAll
-]);
-?>
+%system_breadcrumbs%
 
 %system_notifications%
 

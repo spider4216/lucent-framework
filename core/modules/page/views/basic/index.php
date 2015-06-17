@@ -9,11 +9,7 @@ use core\extensions\ExtBreadcrumbs;
 </div>
 
 
-<?php
-echo SysWidget::build('WBreadcrumbs', '', [
-    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
-]);
-?>
+%system_breadcrumbs%
 
 %system_notifications%
 

@@ -49,12 +49,10 @@ class RolesController extends SysController
     {
         static::$title = 'Управление ролями';
 
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
         $model = new Roles();
         $view = new SysView();
 
         $view->model = $model;
-        $view->breadcrumbs = $breadcrumbs;
 
         $view->display('index');
     }
@@ -63,12 +61,10 @@ class RolesController extends SysController
     {
         static::$title = 'Создать роль';
 
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'create');
         $model = new Roles();
         $view = new SysView();
 
         $view->model = $model;
-        $view->breadcrumbs = $breadcrumbs;
 
         if ($post = SysRequest::post()) {
             $model->name = $post['name'];
@@ -86,9 +82,7 @@ class RolesController extends SysController
     {
         static::$title = 'Изменение роли';
 
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
         $view = new SysView();
-        $view->breadcrumbs = $breadcrumbs;
 
         if($post = SysRequest::post()) {
             $model = Roles::findByPk($post['id']);

@@ -52,11 +52,9 @@ class basicController extends SysController{
         static::$title = 'Страницы';
 
         $model = new Page();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
 
         $view = new SysView();
         $view->model = $model;
-        $view->breadcrumbs = $breadcrumbs;
 
         $view->display('index');
     }
@@ -67,9 +65,7 @@ class basicController extends SysController{
 
         $view = new SysView();
         $model = new Page();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'create');
         $view->model = $model;
-        $view->breadcrumbs = $breadcrumbs;
 
         if ($post = SysRequest::post()) {
             $model->title = $post['title'];
@@ -89,9 +85,7 @@ class basicController extends SysController{
         static::$title = 'Редактирование страницы';
 
         $model = new Page();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
         $view = new SysView();
-        $view->breadcrumbs = $breadcrumbs;
         $display = new SysDisplay();
 
         if ($post = SysRequest::post()) {

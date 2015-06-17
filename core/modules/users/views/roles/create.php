@@ -8,11 +8,7 @@ use core\classes\SysWidget;
     <h2>Создать роль</h2>
 </div>
 
-<?php
-echo SysWidget::build('WBreadcrumbs', '', [
-    'breadcrumbs' => $breadcrumbs, //Cbreadcrumbs::getAll
-]);
-?>
+%system_breadcrumbs%
 
 %system_notifications%
 

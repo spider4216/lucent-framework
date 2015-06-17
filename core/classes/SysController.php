@@ -4,6 +4,7 @@ namespace core\classes;
 
 use core\classes\exception\e404;
 use core\system\app;
+use core\extensions\ExtFileManager;
 
 /**
  * Class SysController
@@ -22,6 +23,10 @@ class SysController
      * данное свойство для получения наименования дериктории
      */
     public static $folder;
+
+    public static $currentName;
+
+    public static $currentActionName;
 
     /**
      * @var string $name
@@ -163,6 +168,19 @@ class SysController
     private function setLayout()
     {
         static::$layout = SysPath::directory('core') . '/views/layouts/default.php';
+    }
+
+    public static function getCurrentName()
+    {
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $pathParts = explode('/', $path);
+
+        $name = $pathParts[1];
+        if (count($pathParts) >= 4) {
+            $name = $pathParts[2];
+        }
+
+        return $name;
     }
 
 }

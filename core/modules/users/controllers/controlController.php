@@ -67,9 +67,7 @@ class ControlController extends SysController
         static::$title = 'Система пользователей';
 
         $view = new SysView();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'index');
 
-        $view->breadcrumbs = $breadcrumbs;
         $view->display('index');
     }
 
@@ -103,11 +101,9 @@ class ControlController extends SysController
         static::$title = 'Регистрация';
 
         $view = new SysView();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'register');
         $model = new Users();
 
         $view->model = $model;
-        $view->breadcrumbs = $breadcrumbs;
 
         if ($post = SysRequest::post()) {
             $model->username = $post['username'];
@@ -133,7 +129,6 @@ class ControlController extends SysController
         static::$title = 'Войти';
 
         $view = new SysView();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'login');
         $model = new Users();
 
         if ($post = SysRequest::post()) {
@@ -150,7 +145,6 @@ class ControlController extends SysController
         }
 
         $view->model = $model;
-        $view->breadcrumbs = $breadcrumbs;
         $view->display('login');
     }
 
@@ -170,9 +164,7 @@ class ControlController extends SysController
         $model = new UsersUpdate();
 
         $view = new SysView();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'manage');
         $view->model = $model;
-        $view->breadcrumbs = $breadcrumbs;
 
         $view->display('manage');
     }
@@ -182,13 +174,11 @@ class ControlController extends SysController
         static::$title = 'Редактирование пользователя';
 
         $roleList = Roles::findAll();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'update');
         $model = false;
         $display = new SysDisplay();
 
         $view = new SysView();
         $view->roleList = $roleList;
-        $view->breadcrumbs = $breadcrumbs;
         $attrExist = false;
 
         if ($post = SysRequest::post()) {

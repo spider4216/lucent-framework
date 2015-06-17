@@ -57,6 +57,8 @@ class SySUrl
             }
         }
 
+        SysController::$currentName = $controllerClassNameFull;
+        SysController::$currentActionName = $act;
         $controller = new $controllerClassNameFull;
         $method = 'action' . $act;
 
