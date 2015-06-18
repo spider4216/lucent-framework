@@ -22,8 +22,10 @@ class SysAuth {
     {
         $user_data = $model->findByColumn('username', $username);
 
-        if ($user_data->username == $username && $user_data->password == SysPassword::hash($password)) {
-            return true;
+        if (is_object($user_data)) {
+            if ($user_data->username == $username && $user_data->password == SysPassword::hash($password)) {
+                return true;
+            }
         }
 
         return false;

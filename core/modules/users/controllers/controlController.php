@@ -176,21 +176,36 @@ class ControlController extends SysController
         $roleList = Roles::findAll();
         $model = false;
         $display = new SysDisplay();
+        $currentUsername = SysAuth::getCurrentUser();
 
         $view = new SysView();
         $view->roleList = $roleList;
         $attrExist = false;
+        $allow = true;
 
         if ($post = SysRequest::post()) {
             $model = UsersUpdate::findByPk($post['id']);
 
             $oldUsername = $post['username'];
             $oldEmail = $post['email'];
+            $oldRoleId = $post['roles'];
 
             if ($oldUsername != $model->username) {
                 if (!$model->is_new_record('username', $oldUsername)) {
                     SysMessages::set('Пользователь "' . $oldUsername . '" уже существует', 'danger');
                     $attrExist = true;
+                }
+
+                if ($model->username == $currentUsername) {
+                    SysMessages::set('Редактирование имени этого пользователя запрещено', 'danger');
+                    $allow = false;
+                }
+            }
+
+            if ($oldRoleId != $model->role_id) {
+                if ($model->username == $currentUsername) {
+                    SysMessages::set('Редактирование роли этого пользователя запрещено', 'danger');
+                    $allow = false;
                 }
             }
 
@@ -201,7 +216,7 @@ class ControlController extends SysController
                 }
             }
 
-            if ($attrExist) {
+            if ($attrExist || !$allow) {
                 $view->model = $model;
                 $view->display('update');
                 return false;

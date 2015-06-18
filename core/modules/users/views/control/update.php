@@ -19,7 +19,8 @@ use core\classes\SysWidget;
         <div class="m-row">
             <label for="username"><?php echo $model->getLabel('username'); ?></label>
             <input type="text" name="username" class="form-control username"
-                   placeholder="Имя пользователя" value="<?php echo $model->username ?>"/>
+                   placeholder="Имя пользователя" value="<?php echo $model->username ?>"
+                <?php echo ($model->username == SysAuth::getCurrentUser()) ? 'readonly' : '' ?>/>
             <br/>
         </div>
 
@@ -39,7 +40,7 @@ use core\classes\SysWidget;
 
         <div class="m-row">
             <label for="roles"><?php echo $model->getLabel('roles'); ?></label>
-            <select class="form-control" name="roles" id="roles">
+            <select class="form-control" name="roles" id="roles" >
                 <?php foreach ($roleList as $role): ?>
                     <option <?php echo ($role->id == $model->role_id) ? 'selected' : ''; ?> value="<?php echo $role->id; ?>"><?php echo $role->name; ?></option>
                 <?php endforeach; ?>
