@@ -4,10 +4,7 @@ use core\classes\SysMessages;
 use core\extensions\ExtBreadcrumbs;
 ?>
 
-<div class="page-header">
-    <h2>Список страниц</h2>
-</div>
-
+%system_title%
 
 %system_breadcrumbs%
 

@@ -2,9 +2,7 @@
 use core\classes\SysWidget;
 ?>
 
-<div class="page-header">
-    <h2><?php echo $item->title; ?></h2>
-</div>
+%system_title%
 
 <?php
 echo SysWidget::build('WBreadcrumbs', '', [

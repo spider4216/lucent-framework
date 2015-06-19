@@ -80,7 +80,8 @@ class ControlController extends SysController
             $view = new SysView();
             $view->breadcrumbs = $breadcrumbs;
             $user = Users::findByPk($id);
-            static::$title = $user->username;
+            //static::$title = $user->username;
+            static::$title = 'Личный кабинет';
 
             if (!$user) {
                 SysMessages::set('Пользователь не найден', 'danger');

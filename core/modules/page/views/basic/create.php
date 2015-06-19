@@ -3,9 +3,7 @@ use core\classes\SysMessages;
 use core\classes\SysWidget;
 ?>
 
-<div class="page-header">
-    <h2>Создание страницы</h2>
-</div>
+%system_title%
 
 %system_breadcrumbs%
 

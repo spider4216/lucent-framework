@@ -4,9 +4,7 @@ use core\classes\SysAuth;
 use core\classes\SysWidget;
 ?>
 
-<div class="page-header">
-    <h2>Изменение роли</h2>
-</div>
+%system_title%
 
 %system_breadcrumbs%
 

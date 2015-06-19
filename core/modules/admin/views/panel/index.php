@@ -2,9 +2,7 @@
 use core\classes\SysWidget;
 ?>
 
-<div class="page-header">
-    <h2>Админ панель</h2>
-</div>
+%system_title%
 
 %system_breadcrumbs%
 

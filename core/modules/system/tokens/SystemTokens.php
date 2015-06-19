@@ -42,4 +42,15 @@ class SystemTokens {
         $display->breadcrumbs = $breadcrumbs;
         return $display->render('core/modules/system/tokens/templates/_breadcrumbs', true);
     }
+
+    public function title()
+    {
+        $display = new SysDisplay();
+        $currentControllerName = SysController::$currentName;
+        $controller = new $currentControllerName();
+
+
+        $display->title = $controller::$title;
+        return $display->render('core/modules/system/tokens/templates/_title', true);
+    }
 }

@@ -6,6 +6,7 @@ namespace core\modules\page\tokens;
 use core\classes\SysDisplay;
 use core\classes\SysPath;
 use core\classes\SysWidget;
+use core\classes\SysController;
 use core\modules\page\models\Page;
 
 class PageTokens {
