@@ -37,7 +37,7 @@ class SysDisplay {
         ob_start();
         include SysPath::directory('root') . '/' . $path . '.php';
 
-        $content = ob_get_contents();
+        $content = SysTokens::apply(ob_get_contents());
         ob_end_clean();
 
         if (false == $layout) {
@@ -53,7 +53,7 @@ class SysDisplay {
         SysAssets::initModuleAssets();
         ob_start();
         include SysDisplay::$layout;
-        $content_final = ob_get_contents();
+        $content_final = SysTokens::apply(ob_get_contents());
         ob_end_clean();
 
         if (!$return) {
