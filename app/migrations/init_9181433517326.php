@@ -111,6 +111,32 @@ return [
         ],
     ],
 
+    '8' => [
+        'insert' => [
+            'table' => 'regions',
+            'columns' => [
+                'name',
+            ],
+
+            'values' => [
+                'content',
+            ],
+        ],
+    ],
+
+    '9' => [
+        'createTable' => [
+            'name' => 'blocks',
+            'primary_key' => 'id',
+            'columns' => [
+                'id' => 'serial',
+                'name' => 'varchar(255)',
+                'region_id' => 'varchar(255)',
+                'content' => 'text',
+            ],
+        ],
+    ],
+
 ];
 
 ?>

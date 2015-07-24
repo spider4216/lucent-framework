@@ -23,5 +23,9 @@ use core\classes\SysWidget;
         <li>
             <a href="/regions/general/">Регионы</a>
         </li>
+
+        <li>
+            <a href="/blocks/general/">Блоки</a>
+        </li>
     </ul>
 </div>

@@ -31,6 +31,11 @@ class generalController extends SysController
                 'Регионы' => '/regions/general/',
                 'Создать' => '-',
             ],
+
+            'update' => [
+                'Регионы' => '/regions/general/',
+                'Обновить' => '-',
+            ],
         ];
     }
 

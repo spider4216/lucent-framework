@@ -1,3 +1,7 @@
+<?php
+use core\classes\SysWidget;
+?>
+
 %system_title%
 
 %system_breadcrumbs%
@@ -18,6 +22,12 @@
         <div class="m-row">
             <input type="hidden" name="id" value="<?php echo $item->id; ?>"/>
             <input type="submit" value="Сохранить" class="btn btn-primary"/>
+            <?php
+            echo SysWidget::build('WBtnAsk', $item, [
+                'link' => '/regions/general/delete?id=' . $item->id,
+                'ok_class' => 'btn btn-danger',
+            ]);
+            ?>
         </div>
 
     </form>

@@ -226,7 +226,8 @@ abstract class SysModel implements IModel, Iterator
             ' ORDER BY ' . key($order) . ' ' . $order[key($order)];
 
         if ($condition) {
-            $sql = $sql . ' WHERE ' . $condition[0];
+            $sql = 'SELECT '. $select .' FROM ' . static::$table .
+                ' WHERE ' . $condition[0] . ' ORDER BY ' . key($order) . ' ' . $order[key($order)];
             return $db->query($sql, $condition[1]);
         }
 
@@ -286,7 +287,13 @@ abstract class SysModel implements IModel, Iterator
         $db = SysDatabase::getObj();
         $class = get_called_class();
         $db->setClassName($class);
-        $sql = 'SELECT * FROM ' . static::$table . ' WHERE ' . $column . ' = :value AND id <> ' . $id;
+
+        if (empty($id)) {
+            $sql = 'SELECT * FROM ' . static::$table . ' WHERE ' . $column . ' = :value';
+        } else {
+            $sql = 'SELECT * FROM ' . static::$table . ' WHERE ' . $column . ' = :value AND id <> ' . $id;
+        }
+
         $res =  $db->query($sql, [':value' => $value]);
         if (!empty($res)) {
             return false;

@@ -112,8 +112,9 @@ class SysValidator
 //        if ($this->model->is_new_record($name, $v)) {
 //            return true;
 //        }
+        $id = (array_key_exists('id', $this->data)) ? $this->data['id'] : '';
 
-        if ($this->model->isUniqueExceptRecord($name, $v, $this->data['id'])) {
+        if ($this->model->isUniqueExceptRecord($name, $v, $id)) {
             return true;
         }
 
