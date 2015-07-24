@@ -10,8 +10,8 @@ class UsersUpdate extends SysModel
     public static function rules()
     {
         return [
-            'username' => ['required', 'username'],
-            'email' => ['required', 'email'],
+            ['username' => ['required', 'username']],
+            ['email' => ['required', 'email']],
         ];
     }
 

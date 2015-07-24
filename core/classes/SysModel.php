@@ -33,6 +33,12 @@ abstract class SysModel implements IModel, Iterator
     protected $data = [];
 
     /**
+     * @var bool
+     * Имя сценария для правил валидации
+     */
+    protected static $script = false;
+
+    /**
      * Конструктор системной модели
      */
     public function __construct()
@@ -133,11 +139,29 @@ abstract class SysModel implements IModel, Iterator
         $validator = new SysValidator($modelName);
 
         $result = [];
-        foreach ($rules as $attr => $rule) {
-            foreach ($rule as $v_name) {
-                $result[] = $validator->check($attr, $v_name);
+
+        foreach ($rules as $part) {
+            foreach ($part as $attr => $rule) {
+
+                if (array_key_exists('script', $rule)) {
+                    if ($modelName::getScript() == $rule['script'][0]) {
+                        foreach ($rule as $v_name) {
+                            if (is_array($v_name)) {
+                                continue;
+                            }
+                            $result[] = $validator->check($attr, $v_name, $this->data);
+                        }
+                    }
+                    continue;
+                }
+
+                foreach ($rule as $v_name) {
+                    $result[] = $validator->check($attr, $v_name, $this->data);
+                }
+
             }
         }
+
 
         if (in_array(false, $result)) {
             return false;
@@ -254,6 +278,23 @@ abstract class SysModel implements IModel, Iterator
     }
 
     /**
+     * Если запись уникальна (за исключением самого себя)
+     */
+    public function isUniqueExceptRecord($column, $value, $id)
+    {
+        /** @var SysDatabase $db */
+        $db = SysDatabase::getObj();
+        $class = get_called_class();
+        $db->setClassName($class);
+        $sql = 'SELECT * FROM ' . static::$table . ' WHERE ' . $column . ' = :value AND id <> ' . $id;
+        $res =  $db->query($sql, [':value' => $value]);
+        if (!empty($res)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * @param $name
      * @return bool|string
      * Возвращает наименование атрибута, если его описали в labels в модели
@@ -328,6 +369,20 @@ abstract class SysModel implements IModel, Iterator
         $class = get_called_class();
 
         return new $class;
+    }
+
+    /**
+     * @param $name
+     * задать наименование сценария для правил валидации
+     */
+    public static function setScript($name)
+    {
+        static::$script = $name;
+    }
+
+    public static function getScript()
+    {
+        return static::$script;
     }
 
 }

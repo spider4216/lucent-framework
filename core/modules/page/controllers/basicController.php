@@ -84,38 +84,46 @@ class basicController extends SysController{
     {
         static::$title = 'Редактирование страницы';
 
-        $model = new Page();
         $view = new SysView();
         $display = new SysDisplay();
 
         if ($post = SysRequest::post()) {
-            $model = $model->findByPk($post['id']);
+            $model = Page::findByPk($post['id']);
+
+            if (empty($model)) {
+                SysMessages::set('Страница с идентификатором "'.$post['id'].'" не найдена', 'danger');
+                $display->render('core/views/errors/404',false,true);
+            }
+
             $model->title = $post['title'];
             $model->content = $post['content'];
+
+            $view->model = $model;
 
             if ($model->save()) {
                 SysMessages::set('Страница "'. $model->title .'" была успешна обновлена', 'success');
                 SysRequest::redirect('/page/basic/');
             }
+
+            $view->display('update');
+            return true;
         }
 
         if ($id = SysRequest::get('id')) {
-            $view->model = $model;
-            $item = $model->findByPk($id);
+            $model = Page::findByPk($id);
 
-            if (!$item) {
+            if (empty($model)) {
                 SysMessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
 
-            $view->item = $model->findByPk($id);
-
+            $view->model = $model;
             $view->display('update');
-        } else {
-            $display = new SysDisplay();
-            SysMessages::set('Страница не найдена', 'danger');
-            $display->render('core/views/errors/404',false,true);
+            return true;
         }
+
+        SysMessages::set('Страница не найдена', 'danger');
+        $display->render('core/views/errors/404',false,true);
 
     }
 

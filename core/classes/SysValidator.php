@@ -9,14 +9,16 @@ class SysValidator
 
     private $compare_data = [];
     private $model;
+    private $data;
 
     public function __construct($modelName)
     {
         $this->model = new $modelName();
     }
 
-    public function check($name, $v_name)
+    public function check($name, $v_name, $data)
     {
+        $this->data = $data;
         $post = SysRequest::post();
         if (isset($post[$name])) {
             if (method_exists($this, $v_name)) {
@@ -107,7 +109,11 @@ class SysValidator
 
     private function unique($v, $name)
     {
-        if ($this->model->is_new_record($name, $v)) {
+//        if ($this->model->is_new_record($name, $v)) {
+//            return true;
+//        }
+
+        if ($this->model->isUniqueExceptRecord($name, $v, $this->data['id'])) {
             return true;
         }
 

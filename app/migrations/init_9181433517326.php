@@ -100,6 +100,17 @@ return [
         ],
     ],
 
+    '7' => [
+        'createTable' => [
+            'name' => 'regions',
+            'primary_key' => 'id',
+            'columns' => [
+                'id' => 'serial',
+                'name' => 'varchar(255)',
+            ],
+        ],
+    ],
+
 ];
 
 ?>

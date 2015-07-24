@@ -19,5 +19,9 @@ use core\classes\SysWidget;
         <li>
             <a href="/admin/panel/modules">Модули</a>
         </li>
+
+        <li>
+            <a href="/regions/general/">Регионы</a>
+        </li>
     </ul>
 </div>

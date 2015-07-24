@@ -17,7 +17,7 @@ class Roles extends SysModel
     public static function rules()
     {
         return [
-            'name' => ['required', 'unique'],
+            ['name' => ['required', 'unique']],
         ];
     }
 

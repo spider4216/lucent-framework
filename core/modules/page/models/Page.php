@@ -18,8 +18,8 @@ class Page extends SysModel
     public static function rules()
     {
         return [
-            'title' => ['required'],
-            'content' => ['required'],
+            ['title' => ['required']],
+            ['content' => ['required']],
         ];
     }
 
