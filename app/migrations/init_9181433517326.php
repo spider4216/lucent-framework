@@ -125,6 +125,19 @@ return [
     ],
 
     '9' => [
+        'insert' => [
+            'table' => 'regions',
+            'columns' => [
+                'name',
+            ],
+
+            'values' => [
+                'left',
+            ],
+        ],
+    ],
+
+    '10' => [
         'createTable' => [
             'name' => 'blocks',
             'primary_key' => 'id',
@@ -133,6 +146,74 @@ return [
                 'name' => 'varchar(255)',
                 'region_id' => 'varchar(255)',
                 'content' => 'text',
+            ],
+        ],
+    ],
+
+    '11' => [
+        'insert' => [
+            'table' => 'blocks',
+            'columns' => [
+                'name',
+                'region_id',
+                'content',
+            ],
+
+            'values' => [
+                'Информация',
+                '2',
+                'Здесь будет ваша информация',
+            ],
+        ],
+    ],
+
+    '12' => [
+        'insert' => [
+            'table' => 'blocks',
+            'columns' => [
+                'name',
+                'region_id',
+                'content',
+            ],
+
+            'values' => [
+                'Статистика',
+                '2',
+                'Здесь будет ваша статистика',
+            ],
+        ],
+    ],
+
+    '13' => [
+        'insert' => [
+            'table' => 'blocks',
+            'columns' => [
+                'name',
+                'region_id',
+                'content',
+            ],
+
+            'values' => [
+                'Главное меню',
+                '2',
+                'Здесь будет главное меню',
+            ],
+        ],
+    ],
+
+    '14' => [
+        'insert' => [
+            'table' => 'blocks',
+            'columns' => [
+                'name',
+                'region_id',
+                'content',
+            ],
+
+            'values' => [
+                'CMF Lucent',
+                '1',
+                'Изящный фундамент для ваших веб проектов',
             ],
         ],
     ],

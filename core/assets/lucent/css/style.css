@@ -36,3 +36,18 @@ footer .copyright {
 .login-form .input-group input {
     width: 200px;
 }
+
+.block .glyphicon-pencil {
+    padding: 5px;
+    color: #343434;
+    display: none;
+}
+
+.block .edit a:hover {
+    text-decoration: none;
+}
+
+.block:hover .glyphicon-pencil {
+    display: block;
+    text-decoration: none;
+}
