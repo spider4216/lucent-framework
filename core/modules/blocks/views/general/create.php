@@ -23,6 +23,7 @@
                       rows="8"></textarea>
         </div>
         <br/>
+        <hr/>
 
         <?php if (!empty($regions)): ?>
             <div class="m-row">
@@ -37,6 +38,14 @@
             </div>
             <br/>
         <?php endif; ?>
+
+        <div class="m-row">
+            <label for="weight"><?php echo $model->getLabel('weight'); ?></label>
+            <br/>
+            <input type="number" class="form-control" name="weight" placeholder="Вес" min="0" max="99"
+                   maxlength="99" value="0" />
+        </div>
+        <br/>
 
         <div class="m-row">
             <input type="submit" value="Сохранить" class="btn btn-primary"/>

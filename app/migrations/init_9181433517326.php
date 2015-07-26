@@ -146,6 +146,7 @@ return [
                 'name' => 'varchar(255)',
                 'region_id' => 'varchar(255)',
                 'content' => 'text',
+                'weight' => 'int',
             ],
         ],
     ],
@@ -157,12 +158,14 @@ return [
                 'name',
                 'region_id',
                 'content',
+                'weight',
             ],
 
             'values' => [
                 'Информация',
                 '2',
                 'Здесь будет ваша информация',
+                '2',
             ],
         ],
     ],
@@ -174,12 +177,14 @@ return [
                 'name',
                 'region_id',
                 'content',
+                'weight',
             ],
 
             'values' => [
                 'Статистика',
                 '2',
                 'Здесь будет ваша статистика',
+                '1',
             ],
         ],
     ],
@@ -191,12 +196,14 @@ return [
                 'name',
                 'region_id',
                 'content',
+                'weight',
             ],
 
             'values' => [
                 'Главное меню',
                 '2',
                 'Здесь будет главное меню',
+                '0',
             ],
         ],
     ],
@@ -208,12 +215,14 @@ return [
                 'name',
                 'region_id',
                 'content',
+                'weight',
             ],
 
             'values' => [
                 'CMF Lucent',
                 '1',
                 'Изящный фундамент для ваших веб проектов',
+                '0',
             ],
         ],
     ],

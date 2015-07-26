@@ -41,7 +41,7 @@ class Regions extends SysModel
             return false;
         }
 
-        $blocks = Blocks::findAll(['region_id = :id', [':id' => $regionID->id]]);
+        $blocks = Blocks::findAll(['region_id = :id', [':id' => $regionID->id]], [], ['weight' => 'ASC']);
 
         return $blocks;
     }

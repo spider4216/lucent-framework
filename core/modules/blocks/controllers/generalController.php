@@ -55,7 +55,8 @@ class generalController extends SysController
         foreach ($regions as $region) {
             $template[$i]['regionName'] = $region->name;
 
-            $blocksRegion = Blocks::findAll(['region_id = :r_id', [':r_id' => $region->id]]);
+            $blocksRegion = Blocks::findAll(['region_id = :r_id',
+                [':r_id' => $region->id]], [], ['weight' => 'ASC']);
 
             if (empty($blocksRegion)) {
                 continue;
@@ -87,6 +88,7 @@ class generalController extends SysController
         if ($post = SysRequest::post()) {
             $model->name = $post['name'];
             $model->content = $post['content'];
+            $model->weight = $post['weight'];
 
             if ('none' != $post['region_id']) {
                 $model->region_id = $post['region_id'];
@@ -123,6 +125,7 @@ class generalController extends SysController
             $model->name = $post['name'];
             $model->content = $post['content'];
             $model->region_id = $post['region_id'];
+            $model->weight = $post['weight'];
 
             if ($model->save()) {
                 SysMessages::set('Блок "'. $model->name .'" был успешно обновлен', 'success');

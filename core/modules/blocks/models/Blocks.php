@@ -20,6 +20,7 @@ class Blocks extends SysModel
             'name' => 'Наименование',
             'region_id' => 'Регион',
             'content' => 'Содержимое',
+            'weight' => 'Вес',
         ];
     }
 

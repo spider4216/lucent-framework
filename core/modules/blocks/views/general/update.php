@@ -28,6 +28,8 @@ use core\classes\SysWidget;
         </div>
         <br/>
 
+        <hr/>
+
         <?php if (!empty($regions)): ?>
             <div class="m-row">
                 <label for="region_id"><?php echo $model->getLabel('region_id'); ?></label>
@@ -42,6 +44,14 @@ use core\classes\SysWidget;
             </div>
             <br/>
         <?php endif; ?>
+
+        <div class="m-row">
+            <label for="weight"><?php echo $model->getLabel('weight'); ?></label>
+            <br/>
+            <input type="number" class="form-control" name="weight" placeholder="Вес" min="0" max="99"
+                   maxlength="99" value="<?php echo $model->weight; ?>" />
+        </div>
+        <br/>
 
         <div class="m-row">
             <input type="hidden" name="id" value="<?php echo $model->id; ?>"/>
