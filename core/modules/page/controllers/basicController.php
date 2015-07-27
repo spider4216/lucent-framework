@@ -140,7 +140,9 @@ class basicController extends SysController{
             $view->model = $model;
             $item = $model->findByPk($id);
 
-            static::$title = $item->title;
+            if (!empty($item)) {
+                static::$title = $item->title;
+            }
 
             if (!$item) {
                 SysMessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');

@@ -70,16 +70,20 @@ class SysAssets {
 
             $moduleAssets = $moduleInfo['assets'];
 
-            foreach ($moduleAssets['js'] as $jsPath) {
-                $fileName = basename($jsPath);
-                $path = $moduleName . '/js/' . $fileName;
-                SysAssets::setAssets($path, 'modules');
+            if (isset($moduleAssets['js'])) {
+                foreach ($moduleAssets['js'] as $jsPath) {
+                    $fileName = basename($jsPath);
+                    $path = $moduleName . '/js/' . $fileName;
+                    SysAssets::setAssets($path, 'modules');
+                }
             }
 
-            foreach ($moduleAssets['css'] as $cssPath) {
-                $fileName = basename($cssPath);
-                $path = $moduleName . '/css/' . $fileName;
-                SysAssets::setAssets($path, 'modules');
+            if (isset($moduleAssets['css'])) {
+                foreach ($moduleAssets['css'] as $cssPath) {
+                    $fileName = basename($cssPath);
+                    $path = $moduleName . '/css/' . $fileName;
+                    SysAssets::setAssets($path, 'modules');
+                }
             }
 
             return true;
@@ -145,30 +149,35 @@ class SysAssets {
 
         foreach ($files as $moduleName => $moduleSet) {
             if (!file_exists($publicAssetPath . $moduleName)) {
-                foreach ($moduleSet['css'] as $cssPack) {
-                    if (!is_dir($publicAssetPath . $moduleName)) {
-                        mkdir($publicAssetPath . $moduleName, 0777);
-                    }
 
-                    if (!is_dir($publicAssetPath . $moduleName . '/css')) {
-                        mkdir($publicAssetPath . $moduleName . '/css', 0777);
-                    }
+                if (isset($moduleSet['css'])) {
+                    foreach ($moduleSet['css'] as $cssPack) {
+                        if (!is_dir($publicAssetPath . $moduleName)) {
+                            mkdir($publicAssetPath . $moduleName, 0777);
+                        }
 
-                    copy($cssPack, $publicAssetPath . $moduleName . '/css/' . basename($cssPack));
-                    $attached['css'][] = $publicAssetPath . $moduleName . '/css/' . basename($cssPack);
+                        if (!is_dir($publicAssetPath . $moduleName . '/css')) {
+                            mkdir($publicAssetPath . $moduleName . '/css', 0777);
+                        }
+
+                        copy($cssPack, $publicAssetPath . $moduleName . '/css/' . basename($cssPack));
+                        $attached['css'][] = $publicAssetPath . $moduleName . '/css/' . basename($cssPack);
+                    }
                 }
 
-                foreach ($moduleSet['js'] as $jsPack) {
-                    if (!is_dir($publicAssetPath . $moduleName)) {
-                        mkdir($publicAssetPath . $moduleName, 0777);
-                    }
+                if (isset($moduleSet['js'])) {
+                    foreach ($moduleSet['js'] as $jsPack) {
+                        if (!is_dir($publicAssetPath . $moduleName)) {
+                            mkdir($publicAssetPath . $moduleName, 0777);
+                        }
 
-                    if (!is_dir($publicAssetPath . $moduleName . '/js')) {
-                        mkdir($publicAssetPath . $moduleName . '/js', 0777);
-                    }
+                        if (!is_dir($publicAssetPath . $moduleName . '/js')) {
+                            mkdir($publicAssetPath . $moduleName . '/js', 0777);
+                        }
 
-                    copy($jsPack, $publicAssetPath . $moduleName . '/js/' . basename($jsPack));
-                    $attached['js'][] = $publicAssetPath . $moduleName . '/js/' . basename($jsPack);
+                        copy($jsPack, $publicAssetPath . $moduleName . '/js/' . basename($jsPack));
+                        $attached['js'][] = $publicAssetPath . $moduleName . '/js/' . basename($jsPack);
+                    }
                 }
             }
         }

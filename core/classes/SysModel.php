@@ -246,7 +246,17 @@ abstract class SysModel implements IModel, Iterator
         $class = get_called_class();
         $db->setClassName($class);
         $sql = 'SELECT * FROM ' . static::$table . ' WHERE id=:id';
-        return $db->query($sql, [':id'=>$id])[0];
+
+        $result = $db->query($sql, [':id'=>$id]);
+        if (false === $result) {
+            return false;
+        }
+
+        if (null == $result) {
+            return null;
+        }
+
+        return $result[0];
     }
 
     /**
