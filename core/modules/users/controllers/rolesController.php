@@ -83,43 +83,40 @@ class RolesController extends SysController
         static::$title = 'Изменение роли';
 
         $view = new SysView();
+        $display = new SysDisplay();
 
         if($post = SysRequest::post()) {
             $model = Roles::findByPk($post['id']);
 
-            if ($post['name'] == $model->name) {
-                SysMessages::set('Роль "' . $model->name . '" осталась без изменений', 'info');
-                SysRequest::redirect('/users/roles/');
+            if (empty($model)) {
+                SysMessages::set('Роль не найдена', 'danger');
+                $display->render('core/views/errors/404',false,true);
             }
 
-            if ($post['name'] != $model->name && $model->is_new_record('name', $post['name'])) {
-                $model->name = $post['name'];
+            $model->name = $post['name'];
 
-                if ($model->save()) {
-                    SysMessages::set('Роль "' . $post['name'] . '" была успешно обновлена', 'success');
-                    SysRequest::redirect('/users/roles/');
-                } else {
-                    $model = Roles::findByPk($post['id']);
-                    $view->model = $model;
-                    $view->display('update');
-                }
+            if ($model->save()) {
+                SysMessages::set('Роль "' . $post['name'] . '" была успешно обновлена', 'success');
+                SysRequest::redirect('/users/roles/');
             } else {
                 $model = Roles::findByPk($post['id']);
-                $model->name = $post['name'];
                 $view->model = $model;
-                SysMessages::set('Роль "' . $post['name'] . '" уже существует', 'danger');
                 $view->display('update');
-
             }
         }
 
         if ($id = SysRequest::get('id')) {
             $model = Roles::findByPk($id);
 
+            if (empty($model)) {
+                SysMessages::set('Роль не найдена', 'danger');
+                $display->render('core/views/errors/404',false,true);
+                return true;
+            }
+
             $view->model = $model;
             $view->display('update');
         } else {
-            $display = new SysDisplay();
             SysMessages::set('Роль не найдена', 'danger');
             $display->render('core/views/errors/404',false,true);
         }
