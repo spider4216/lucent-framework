@@ -10,7 +10,6 @@ use core\classes\SysView;
 use core\classes\SysRequest;
 use core\modules\users\models\Roles;
 use core\modules\users\models\Users;
-use core\modules\users\models\UsersUpdate;
 use core\extensions\ExtBreadcrumbs;
 
 class ControlController extends SysController
@@ -103,6 +102,7 @@ class ControlController extends SysController
 
         $view = new SysView();
         $model = new Users();
+        $model->setScript('create');
 
         $view->model = $model;
 
@@ -110,6 +110,7 @@ class ControlController extends SysController
             $model->username = $post['username'];
             $model->password = SysPassword::hash($post['password']);
             $model->email = $post['email'];
+            $model->role_id = 2;
 
             if ($model->save()) {
                 SysMessages::set('Пользователь был успешно создан', 'success');
@@ -162,7 +163,7 @@ class ControlController extends SysController
     {
         static::$title = 'Управление пользователями';
 
-        $model = new UsersUpdate();
+        $model = new Users();
 
         $view = new SysView();
         $view->model = $model;
@@ -175,85 +176,60 @@ class ControlController extends SysController
         static::$title = 'Редактирование пользователя';
 
         $roleList = Roles::findAll();
-        $model = false;
         $display = new SysDisplay();
-        $currentUsername = SysAuth::getCurrentUser();
-
         $view = new SysView();
+
         $view->roleList = $roleList;
-        $attrExist = false;
-        $allow = true;
 
         if ($post = SysRequest::post()) {
-            $model = UsersUpdate::findByPk($post['id']);
+            $model = Users::findByPk($post['id']);
+            $model->setScript('update');
 
-            $oldUsername = $post['username'];
-            $oldEmail = $post['email'];
-            $oldRoleId = $post['roles'];
-
-            if ($oldUsername != $model->username) {
-                if (!$model->is_new_record('username', $oldUsername)) {
-                    SysMessages::set('Пользователь "' . $oldUsername . '" уже существует', 'danger');
-                    $attrExist = true;
-                }
-
-                if ($model->username == $currentUsername) {
-                    SysMessages::set('Редактирование имени этого пользователя запрещено', 'danger');
-                    $allow = false;
-                }
-            }
-
-            if ($oldRoleId != $model->role_id) {
-                if ($model->username == $currentUsername) {
-                    SysMessages::set('Редактирование роли этого пользователя запрещено', 'danger');
-                    $allow = false;
-                }
-            }
-
-            if ($oldEmail != $model->email) {
-                if (!$model->is_new_record('email', $oldEmail)) {
-                    SysMessages::set('Email "' . $oldEmail . '" уже существует', 'danger');
-                    $attrExist = true;
-                }
-            }
-
-            if ($attrExist || !$allow) {
-                $view->model = $model;
-                $view->display('update');
-                return false;
-            }
-
-            $model->username = $oldUsername;
-            $model->email = $oldEmail;
+            $model->username = $post['username'];
+            $model->email = $post['email'];
             $model->password = SysPassword::hash($post['password']);
             $model->role_id = $post['roles'];
 
             if ($model->save()) {
-                SysMessages::set('Пользователь "' . $oldUsername . '" успешно обновлен', 'success');
+                if ($model->id == SysAuth::getCurrentUserId()) {
+                    SysMessages::set('Пользователь "' . $post['username'] . '" успешно обновлен. ' .
+                        'Зайдите в систему сново', 'success');
+                    SysAuth::logout();
+                    SysRequest::redirect('/users/control/login');
+                }
+
+                SysMessages::set('Пользователь "' . $post['username'] . '" успешно обновлен', 'success');
                 SysRequest::redirect('/users/control/manage');
             }
 
-            SysMessages::set('Ошибка при обновлении пользователя "' . $oldUsername . '"', 'danger');
+            $view->model = $model;
 
+            $view->display('update');
+            return true;
         }
 
         if ($id = SysRequest::get('id')) {
-            $model = UsersUpdate::findByPk($id);
-        }
+            $model = Users::findByPk($id);
 
-        if (!$model) {
+            if (!$model) {
+                SysMessages::set('Не удается найти запись для редактирования', 'danger');
+                $display->render('core/views/errors/404', false, true);
+                return true;
+            }
+
+            $view->model = $model;
+            $view->display('update');
+        } else {
             SysMessages::set('Не удается найти запись для редактирования', 'danger');
             $display->render('core/views/errors/404', false, true);
+            return true;
         }
-
-        $view->model = $model;
-        $view->display('update');
     }
 
     public function actionDelete()
     {
         if ($id = SysRequest::get('id')) {
-            $model = UsersUpdate::findByPk($id);
+            $model = Users::findByPk($id);
             if (SysAuth::getCurrentUserId() != $model->id) {
                 if ($model->delete()) {
                     SysMessages::set('Пользователь ' . $model->username . ' был успешно удвлен', 'success');

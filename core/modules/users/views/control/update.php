@@ -18,7 +18,7 @@ use core\classes\SysWidget;
             <label for="username"><?php echo $model->getLabel('username'); ?></label>
             <input type="text" name="username" class="form-control username"
                    placeholder="Имя пользователя" value="<?php echo $model->username ?>"
-                <?php echo ($model->username == SysAuth::getCurrentUser()) ? 'readonly' : '' ?>/>
+                <?php echo ($model->id == SysAuth::getCurrentUserId()) ? 'readonly' : '' ?>/>
             <br/>
         </div>
 
