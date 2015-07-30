@@ -1,6 +1,6 @@
 <div class="breadcrumbs">
     <ol class="breadcrumb">
-        <li><a href="/">Главная</a></li>
+        <li><a href="/"><?php echo _("Main"); ?></a></li>
         <?php foreach ($data['breadcrumbs'] as $breadcrumbs): ?>
             <?php if ($breadcrumbs['link'] == '-'): ?>
 

@@ -12,11 +12,11 @@ class Users extends SysModel
     public static function labels()
     {
         return [
-            'username' => 'Имя пользователя',
-            'password' => 'Пароль',
-            'password_again' => 'Повторите пароль',
-            'email' => 'Электронная почта',
-            'roles' => 'Роль',
+            'username' => _("Username"),
+            'password' => _("Password"),
+            'password_again' => _("Repeat password again"),
+            'email' => _("E-mail"),
+            'roles' => _("Role"),
         ];
     }
 

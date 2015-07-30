@@ -3,10 +3,10 @@
         <h1><?php echo $title; ?></h1>
         <p></p>
         <p>
-            Вас привествует чрезвычайно простой, удобный и яркий фраемворк LUCENT, который готов помочь вам вооплатить
-            все ваши идеи в реальность.
+            <?php echo _("Lucent - Content Management Framework (CMF). With this system you can create ".
+                "web sites, information systems or web applications very quickly and easily"); ?>
         </p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Узнать больше</a></p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button"><?php echo _("Read more"); ?></a></p>
     </div>
 
     <div class="row">

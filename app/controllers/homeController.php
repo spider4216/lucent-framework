@@ -26,7 +26,7 @@ class homeController extends SysController
     public function actionIndex()
     {
         $view = new SysView();
-        $view->title = _('Welcome');
+        $view->title = _('Welcome to CMF Lucent');
         $view->display('index');
     }
 

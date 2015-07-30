@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-07-30 19:54+0600\n"
-"PO-Revision-Date: 2015-07-30 19:54+0600\n"
+"POT-Creation-Date: 2015-07-30 20:57+0600\n"
+"PO-Revision-Date: 2015-07-30 20:57+0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -22,5 +22,111 @@ msgid "'"
 msgstr ""
 
 #: app/controllers/homeController.php:29
-msgid "Welcome"
-msgstr "Добро пожаловать"
+msgid "Welcome to CMF Lucent"
+msgstr "Добро пожаловать в систему CMF Lucent"
+
+#: app/views/home/index.php:6
+msgid ""
+"Lucent - Content Management Framework (CMF). With this system you can create "
+"web sites, information systems or web applications very quickly and easily"
+msgstr ""
+"Lucent - это среда для создания веб-приложений (CMF). При помощи этой "
+"системы вы сможете быстро и не принужденно создавать сайты, информационные "
+"системы или веб-приложения различной сложности"
+
+#: app/views/home/index.php:9
+msgid "Read more"
+msgstr "Подробнее"
+
+#: core/modules/users/controllers/controlController.php:33
+#: core/modules/users/controllers/controlController.php:37
+#: core/modules/users/controllers/controlController.php:42
+#: core/modules/users/controllers/controlController.php:47
+#: core/modules/users/controllers/controlController.php:52
+#: core/modules/users/controllers/controlController.php:57
+msgid "users"
+msgstr "пользователи"
+
+#: core/modules/users/controllers/controlController.php:43
+msgid "registration"
+msgstr "регистрация"
+
+#: core/modules/users/controllers/controlController.php:48
+msgid "sign in"
+msgstr "войти"
+
+#: core/modules/users/controllers/controlController.php:53
+#: core/modules/users/controllers/controlController.php:58
+msgid "manage users"
+msgstr "управление пользователями"
+
+#: core/modules/users/controllers/controlController.php:59
+msgid "edit users"
+msgstr "редактировать пользователей"
+
+#: core/modules/users/controllers/controlController.php:83
+msgid "Profile"
+msgstr "Профайл"
+
+#: core/modules/users/controllers/controlController.php:101
+#: core/modules/users/views/control/login.php:43
+#: core/modules/users/views/control/register.php:49
+msgid "Registration"
+msgstr "Регистрация"
+
+#: core/modules/users/controllers/controlController.php:116
+msgid "User has been created successfully"
+msgstr "Пользователь был успешно создан"
+
+#: core/modules/users/controllers/controlController.php:131
+#: core/modules/users/views/control/login.php:47
+#: core/views/layouts/default.php:62
+msgid "Sign in"
+msgstr "Войти в систему"
+
+#: core/modules/users/controllers/controlController.php:138
+msgid "You signed in as"
+msgstr "Вы вошли как"
+
+#: core/modules/users/models/Users.php:15
+#: core/modules/users/views/control/register.php:21
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: core/modules/users/models/Users.php:16
+#: core/modules/users/views/control/register.php:29
+msgid "Password"
+msgstr "Пароль"
+
+#: core/modules/users/models/Users.php:17
+#: core/modules/users/views/control/register.php:36
+msgid "Repeat password again"
+msgstr "Повторить пароль"
+
+#: core/modules/users/models/Users.php:18
+#: core/modules/users/views/control/register.php:43
+msgid "E-mail"
+msgstr "Электронная почта"
+
+#: core/modules/users/models/Users.php:19
+msgid "Role"
+msgstr "Роль"
+
+#: core/views/layouts/default.php:31
+msgid "Features"
+msgstr "Возможности"
+
+#: core/views/layouts/default.php:35
+msgid "Documentation"
+msgstr "Документация"
+
+#: core/views/layouts/default.php:39
+msgid "Plans"
+msgstr "Планы"
+
+#: core/widgets/templates/_wbreadcrumbs.php:3
+msgid "Main"
+msgstr "Главная"
+
+#~ msgid "Welcome"
+#~ msgstr "Добро пожаловать"

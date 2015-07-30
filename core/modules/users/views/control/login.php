@@ -40,11 +40,11 @@ use core\classes\SysWidget;
         </div>
 
         <div class="m-row">
-            <p><a href="/users/control/register">Регистрация</a></p>
+            <p><a href="/users/control/register"><?php echo _("Registration"); ?></a></p>
         </div>
 
         <div class="m-row">
-            <input type="submit" value="Войти" class="btn btn-primary"/>
+            <input type="submit" value="<?php echo _("Sign in"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

@@ -23,20 +23,20 @@ use core\classes\SysAuth;
     <header>
         <nav class="navbar navbar-inverse">
             <a class="navbar-brand" href="/">
-                <span>Lucent Framework</span>
+                <span>CMF Lucent</span>
             </a>
 
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">Возможности</a>
+                    <a href="#"><?php echo _("Features"); ?></a>
                 </li>
 
                 <li>
-                    <a href="#">Документация</a>
+                    <a href="#"><?php echo _("Documentation"); ?></a>
                 </li>
 
                 <li>
-                    <a href="#">Планы</a>
+                    <a href="#"><?php echo _("Plans"); ?></a>
                 </li>
             </ul>
 
@@ -59,7 +59,7 @@ use core\classes\SysAuth;
                     </li>
                 <?php else: ?>
                     <li>
-                        <a href="/users/control/login">Войти в систему</a>
+                        <a href="/users/control/login"><?php echo _("Sign in"); ?></a>
                     </li>
                 <?php endif; ?>
             </ul>

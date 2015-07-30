@@ -30,33 +30,33 @@ class ControlController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                'пользователи' => '-',
+                _("users") => '-',
             ],
 
             'user' => [
-                'пользователи' => '/users/control/',
+                _("users") => '/users/control/',
                 '%' => '-',
             ],
 
             'register' => [
-                'пользователи' => '/users/control/',
-                'регистрация' => '-',
+                _("users") => '/users/control/',
+                _("registration") => '-',
             ],
 
             'login' => [
-                'пользователи' => '/users/control/',
-                'вход' => '-',
+                _("users") => '/users/control/',
+                _("sign in") => '-',
             ],
 
             'manage' => [
-                'пользователи' => '/users/control/',
-                'управление пользователями' => '-',
+                _("users") => '/users/control/',
+                _("manage users") => '-',
             ],
 
             'update' => [
-                'пользователи' => '/users/control/',
-                'управление пользователями' => '/users/control/manage',
-                'редактирование пользователя' => '-',
+                _("users") => '/users/control/',
+                _("manage users") => '/users/control/manage',
+                _("edit users") => '-',
             ],
         ];
     }
@@ -80,7 +80,7 @@ class ControlController extends SysController
             $view->breadcrumbs = $breadcrumbs;
             $user = Users::findByPk($id);
             //static::$title = $user->username;
-            static::$title = 'Личный кабинет';
+            static::$title = _("Profile");
 
             if (!$user) {
                 SysMessages::set('Пользователь не найден', 'danger');
@@ -98,7 +98,7 @@ class ControlController extends SysController
 
     public function actionRegister()
     {
-        static::$title = 'Регистрация';
+        static::$title = _("Registration");
 
         $view = new SysView();
         $model = new Users();
@@ -113,7 +113,7 @@ class ControlController extends SysController
             $model->role_id = 2;
 
             if ($model->save()) {
-                SysMessages::set('Пользователь был успешно создан', 'success');
+                SysMessages::set(_("User has been created successfully"), 'success');
                 SysAuth::login($model, $post['username'], $post['password']);
                 SysRequest::redirect('/users/control/user?id=' . $model->id);
             }
@@ -128,14 +128,14 @@ class ControlController extends SysController
 
     public function actionLogin()
     {
-        static::$title = 'Войти';
+        static::$title = _("Sign in");
 
         $view = new SysView();
         $model = new Users();
 
         if ($post = SysRequest::post()) {
             if ($id = SysAuth::login($model, $post['username'], $post['password'])) {
-                SysMessages::set('Вы вошли как "' . $post['username'] . '"', 'success');
+                SysMessages::set(_("You signed in as") . ' "' . $post['username'] . '"', 'success');
                 SysRequest::redirect('/users/control/user?id=' . $id);
             } else {
                 SysMessages::set('Неверный логин или пароль', 'danger');
