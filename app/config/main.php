@@ -5,6 +5,10 @@
  */
 return [
     'project_name' => 'Lucent Framework',
+    //Данную запись менять не стоит. Локализация и т.д
+    'project_system_name' => 'lucent',
+    //access: en
+    'lang' => 'en',
     /** Контроллер по умолчанию*/
     'default_controller' => 'home',
     /** Действие по умолчанию*/

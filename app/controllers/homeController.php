@@ -26,7 +26,7 @@ class homeController extends SysController
     public function actionIndex()
     {
         $view = new SysView();
-        $view->title = 'Добро пожаловать';
+        $view->title = _('Welcome');
         $view->display('index');
     }
 
