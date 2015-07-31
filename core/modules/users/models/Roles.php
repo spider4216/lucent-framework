@@ -10,7 +10,7 @@ class Roles extends SysModel
     public static function labels()
     {
         return [
-            'name' => 'Наименование роли',
+            'name' => _("Role name"),
         ];
     }
 

@@ -18,13 +18,13 @@ use core\classes\SysWidget;
             <label for="name"><?php echo $model->getLabel('name'); ?></label>
             <input type="text" name="name" class="form-control name"
                    <?php echo ($model->id == '1' || $model->id == '2') ? 'disabled' : ''; ?>
-                   placeholder="Наименование роли" value="<?php echo $model->name ?>"/>
+                   placeholder="<?php echo _("Role name"); ?>" value="<?php echo $model->name ?>"/>
             <br/>
         </div>
 
         <div class="m-row">
             <input type="hidden" value="<?php echo $model->id; ?>" name="id" />
-            <input type="submit" value="сохранить" class="btn btn-primary"/>
+            <input type="submit" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
             <?php
             echo SysWidget::build('WBtnAsk', $model, [
                 'link' => '/users/roles/delete?id=' . $model->id,

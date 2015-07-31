@@ -17,12 +17,12 @@ use core\classes\SysWidget;
         <div class="m-row">
             <label for="name"><?php echo $model->getLabel('name'); ?></label>
             <input type="text" name="name" class="form-control name"
-                   placeholder="Наименование роли" value="<?php echo $model->name ?>"/>
+                   placeholder="<?php echo _("Role name"); ?>" value="<?php echo $model->name ?>"/>
             <br/>
         </div>
 
         <div class="m-row">
-            <input type="submit" value="Создать" class="btn btn-primary"/>
+            <input type="submit" value="<?php echo _("Create"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

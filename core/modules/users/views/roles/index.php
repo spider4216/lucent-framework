@@ -10,7 +10,7 @@ use core\classes\SysWidget;
 %system_notifications%
 
 <div class="tools">
-    <a href="/users/roles/create" class="btn btn-default">Создать роль</a>
+    <a href="/users/roles/create" class="btn btn-default"><?php echo _("Create role"); ?></a>
 </div>
 
 <br/>

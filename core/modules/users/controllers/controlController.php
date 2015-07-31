@@ -56,7 +56,7 @@ class ControlController extends SysController
             'update' => [
                 _("users") => '/users/control/',
                 _("manage users") => '/users/control/manage',
-                _("edit users") => '-',
+                _("edit user") => '-',
             ],
         ];
     }
@@ -83,7 +83,7 @@ class ControlController extends SysController
             static::$title = _("Profile");
 
             if (!$user) {
-                SysMessages::set('Пользователь не найден', 'danger');
+                SysMessages::set(_("user not found"), 'danger');
                 $display->render('core/views/errors/404', false, true);
             }
 
@@ -91,7 +91,7 @@ class ControlController extends SysController
 
             $view->display('user');
         } else {
-            SysMessages::set('Пользователь не найден', 'danger');
+            SysMessages::set(_("user not found"), 'danger');
             $display->render('core/views/errors/404', false, true);
         }
     }
@@ -120,7 +120,7 @@ class ControlController extends SysController
         }
 
         if (SysAuth::is_login()) {
-            SysMessages::set('Вы уже зарегистрированы', 'info');
+            SysMessages::set(_("You have already signed up"), 'info');
         }
 
         $view->display('register');
@@ -138,12 +138,12 @@ class ControlController extends SysController
                 SysMessages::set(_("You signed in as") . ' "' . $post['username'] . '"', 'success');
                 SysRequest::redirect('/users/control/user?id=' . $id);
             } else {
-                SysMessages::set('Неверный логин или пароль', 'danger');
+                SysMessages::set(_("username or password is not suitable"), 'danger');
             }
         }
 
         if (SysAuth::is_login()) {
-            SysMessages::set('Вы уже вошли в систему', 'info');
+            SysMessages::set(_("you have already logged in"), 'info');
         }
 
         $view->model = $model;
@@ -155,13 +155,13 @@ class ControlController extends SysController
         if (SysAuth::logout()) {
             SysRequest::redirect('/');
         } else {
-            SysMessages::set('Не удается выйти из системы', 'danger');
+            SysMessages::set(_("Exit from system is not possible"), 'danger');
         }
     }
 
     public function actionManage()
     {
-        static::$title = 'Управление пользователями';
+        static::$title = _("Manage users");
 
         $model = new Users();
 
@@ -173,7 +173,7 @@ class ControlController extends SysController
 
     public function actionUpdate()
     {
-        static::$title = 'Редактирование пользователя';
+        static::$title = _("Edit user");
 
         $roleList = Roles::findAll();
         $display = new SysDisplay();
@@ -192,13 +192,13 @@ class ControlController extends SysController
 
             if ($model->save()) {
                 if ($model->id == SysAuth::getCurrentUserId()) {
-                    SysMessages::set('Пользователь "' . $post['username'] . '" успешно обновлен. ' .
-                        'Зайдите в систему сново', 'success');
+                    SysMessages::set(_("User") . ' "' . ' ' . $post['username'] . '" ' . _("has been updated successfully.") .
+                        ' ' . _("Sign in system again"), 'success');
                     SysAuth::logout();
                     SysRequest::redirect('/users/control/login');
                 }
 
-                SysMessages::set('Пользователь "' . $post['username'] . '" успешно обновлен', 'success');
+                SysMessages::set(_("User") . ' "' . $post['username'] . '" ' . _("has been updated successfully"), 'success');
                 SysRequest::redirect('/users/control/manage');
             }
 
@@ -212,7 +212,7 @@ class ControlController extends SysController
             $model = Users::findByPk($id);
 
             if (!$model) {
-                SysMessages::set('Не удается найти запись для редактирования', 'danger');
+                SysMessages::set(_("user not found"), 'danger');
                 $display->render('core/views/errors/404', false, true);
                 return true;
             }
@@ -220,7 +220,7 @@ class ControlController extends SysController
             $view->model = $model;
             $view->display('update');
         } else {
-            SysMessages::set('Не удается найти запись для редактирования', 'danger');
+            SysMessages::set(_("user not found"), 'danger');
             $display->render('core/views/errors/404', false, true);
             return true;
         }
@@ -232,18 +232,19 @@ class ControlController extends SysController
             $model = Users::findByPk($id);
             if (SysAuth::getCurrentUserId() != $model->id) {
                 if ($model->delete()) {
-                    SysMessages::set('Пользователь ' . $model->username . ' был успешно удвлен', 'success');
+                    SysMessages::set(_("User") . ' ' . $model->username . ' ' . _("has been deleted successfully"), 'success');
                 } else {
-                    SysMessages::set('Ошибка при удалении пользователя', 'danger');
+                    //SysMessages::set(_("Ошибка при удалении пользователя"), 'danger');
+                    SysMessages::set(_("user can not be removed"), 'danger');
                 }
             } else {
-                SysMessages::set('Нельзя удалить авторизованного пользователя', 'danger');
+                SysMessages::set(_("authorized user can not be removed"), 'danger');
                 SysRequest::redirect('/users/control/manage');
             }
             SysRequest::redirect('/users/control/manage');
         } else {
             $display = new SysDisplay();
-            SysMessages::set('Неопознанный пользователь', 'danger');
+            SysMessages::set(_("unidentified user"), 'danger');
             $display->render('core/views/errors/404', false, true);
         }
     }

@@ -27,27 +27,27 @@ class RolesController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                'пользователи' => '/users/control/',
-                'управление ролями' => '-',
+                _("users") => '/users/control/',
+                _("manage roles") => '-',
             ],
 
             'create' => [
-                'пользователи' => '/users/control/',
-                'управление ролями' => '/users/roles/',
-                'создать роль' => '-',
+                _("users") => '/users/control/',
+                _("manage roles") => '/users/roles/',
+                _("create role") => '-',
             ],
 
             'update' => [
-                'пользователи' => '/users/control/',
-                'управление ролями' => '/users/roles/',
-                'Изменение роли' => '-',
+                _("users") => '/users/control/',
+                _("manage roles") => '/users/roles/',
+                _("edit role") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = 'Управление ролями';
+        static::$title = _("Manage roles");
 
         $model = new Roles();
         $view = new SysView();
@@ -59,7 +59,7 @@ class RolesController extends SysController
 
     public function actionCreate()
     {
-        static::$title = 'Создать роль';
+        static::$title = _("Create role");
 
         $model = new Roles();
         $view = new SysView();
@@ -70,7 +70,7 @@ class RolesController extends SysController
             $model->name = $post['name'];
 
             if ($model->save()) {
-                SysMessages::set('Роль "' . $model->name . '" была успешно создана', 'success');
+                SysMessages::set(_("Role") . ' "' . $model->name . '" ' . _("has been created successfully"), 'success');
                 SysRequest::redirect('/users/roles/');
             }
         }
@@ -80,7 +80,7 @@ class RolesController extends SysController
 
     public function actionUpdate()
     {
-        static::$title = 'Изменение роли';
+        static::$title = _("Edit role");
 
         $view = new SysView();
         $display = new SysDisplay();
@@ -89,14 +89,14 @@ class RolesController extends SysController
             $model = Roles::findByPk($post['id']);
 
             if (empty($model)) {
-                SysMessages::set('Роль не найдена', 'danger');
+                SysMessages::set(_("Role not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
 
             $model->name = $post['name'];
 
             if ($model->save()) {
-                SysMessages::set('Роль "' . $post['name'] . '" была успешно обновлена', 'success');
+                SysMessages::set(_("Role") . ' "' . $post['name'] . '" ' . _("has been updated successfully"), 'success');
                 SysRequest::redirect('/users/roles/');
             } else {
                 $model = Roles::findByPk($post['id']);
@@ -109,7 +109,7 @@ class RolesController extends SysController
             $model = Roles::findByPk($id);
 
             if (empty($model)) {
-                SysMessages::set('Роль не найдена', 'danger');
+                SysMessages::set(_("Role not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
                 return true;
             }
@@ -117,7 +117,7 @@ class RolesController extends SysController
             $view->model = $model;
             $view->display('update');
         } else {
-            SysMessages::set('Роль не найдена', 'danger');
+            SysMessages::set(_("Role not found"), 'danger');
             $display->render('core/views/errors/404',false,true);
         }
     }
@@ -128,16 +128,16 @@ class RolesController extends SysController
             $model = Roles::findByPk($id);
 
             if ($model->id == '1' || $model->id == '2') {
-                SysMessages::set('Системная роль "' . $model->name . '" не может быть удалена', 'danger');
+                SysMessages::set(_("System role") . ' "' . $model->name . '" ' . _("can not be deleted"), 'danger');
                 SysRequest::redirect('/users/roles/');
             }
 
             if ($model->delete()) {
-                SysMessages::set('Роль "' . $model->name . '" была успешно удалена', 'success');
+                SysMessages::set(_("Role") . ' "' . $model->name . '" ' . _("has been deleted successfully"), 'success');
                 SysRequest::redirect('/users/roles/');
             }
         } else {
-            SysMessages::set('Роль не была удалена', 'danger');
+            SysMessages::set(_("Role can not be deleted"), 'danger');
             SysRequest::redirect('/users/roles/');
         }
     }
