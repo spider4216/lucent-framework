@@ -6,13 +6,13 @@
 
 <div class="tools">
     <p>
-        <a href="/blocks/general/create">Создать блок</a>
+        <a href="/blocks/general/create"><?php echo _("Create block"); ?></a>
     </p>
 </div>
 
 <div class="content">
     <div class="col-md-9">
-        <h4>Доступные регионы</h4>
+        <h4><?php echo _("Available regions"); ?></h4>
 
         <div class="regions-list">
             <?php if (!empty($template)): ?>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="col-md-3">
-        <h4>Доступные блоки</h4>
+        <h4><?php echo _("Available blocks"); ?></h4>
 
         <div class="blocks-list">
             <ul class="list-group">

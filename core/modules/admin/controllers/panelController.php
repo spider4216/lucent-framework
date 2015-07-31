@@ -23,19 +23,19 @@ class PanelController extends SysController
     {
         return [
             'index' => [
-                'админ панель' => '-',
+                _("admin panel") => '-',
             ],
 
             'modules' => [
-                'админ панель' => '/admin/panel/',
-                'список модулей' => '-',
+                _("admin panel") => '/admin/panel/',
+                _("Modules list") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = 'Админ панель';
+        static::$title = _("Admin panel");
         $view = new SysView();
 
         $view->display('index');
@@ -43,7 +43,7 @@ class PanelController extends SysController
 
     public function actionModules()
     {
-        static::$title = 'Список модулей';
+        static::$title = _("Modules list");
 
         $view = new SysView();
         $modules = SysModule::getAllModules();

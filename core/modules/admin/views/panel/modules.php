@@ -10,8 +10,8 @@ use core\classes\SysWidget;
     <div class="panel-body">
         <div class="col-xs-4">
             <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#">Системные</a></li>
-                <li role="presentation"><a href="#">Пользовательские</a></li>
+                <li role="presentation" class="active"><a href="#"><?php echo _("System modules"); ?></a></li>
+                <li role="presentation"><a href="#"><?php echo _("User modules"); ?></a></li>
             </ul>
 
             <div class="system-list">
@@ -31,11 +31,11 @@ use core\classes\SysWidget;
         <div class="col-xs-8">
             <div class="description">
                 <div class="page-header">
-                    <h1>Lucent Store <small>магазин модулей</small> </h1>
+                    <h1>Lucent Store <small><?php echo _("modules shop"); ?></small> </h1>
                 </div>
 
                 <div class="content">
-                    <p>Здесь будет iframe магазина</p>
+                    <p><?php echo _("iframe here"); ?></p>
                 </div>
             </div>
         </div>

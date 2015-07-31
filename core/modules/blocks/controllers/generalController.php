@@ -25,24 +25,24 @@ class generalController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                'Блоки' => '-',
+                _("blocks") => '-',
             ],
 
             'create' => [
-                'Блоки' => '/blocks/general/',
-                'Создать блок' => '-',
+                _("blocks") => '/blocks/general/',
+                _("create block") => '-',
             ],
 
             'update' => [
-                'Блоки' => '/blocks/general/',
-                'Обновить блок' => '-',
+                _("blocks") => '/blocks/general/',
+                _("update block") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = 'Блоки';
+        static::$title = _("Blocks");
         $view = new SysView();
         $blocks = Blocks::findAll();
 
@@ -79,7 +79,7 @@ class generalController extends SysController
 
     public function actionCreate()
     {
-        static::$title = 'Создать блок';
+        static::$title = _("Create block");
 
         $view = new SysView();
         $model = new Blocks();
@@ -95,7 +95,7 @@ class generalController extends SysController
             }
 
             if ($model->save()) {
-                SysMessages::set('Блок "'. $model->name .'" был успешно создан', 'success');
+                SysMessages::set(_("Block") . ' "'. $model->name .'" ' . _("has been created successfully"), 'success');
                 SysRequest::redirect('/blocks/general/');
             }
         }
@@ -107,7 +107,7 @@ class generalController extends SysController
 
     public function actionUpdate()
     {
-        static::$title = 'Обновить блок';
+        static::$title = _("Update block");
 
         $view = new SysView();
         $display = new SysDisplay();
@@ -117,7 +117,7 @@ class generalController extends SysController
             $model = Blocks::findByPk($post['id']);
 
             if (empty($model)) {
-                SysMessages::set('Блок c id "'. $post['id'] .'" не найден', 'danger');
+                SysMessages::set(_("Block with id") . ' "'. $post['id'] .'" ' . _("not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
                 return true;
             }
@@ -128,7 +128,7 @@ class generalController extends SysController
             $model->weight = $post['weight'];
 
             if ($model->save()) {
-                SysMessages::set('Блок "'. $model->name .'" был успешно обновлен', 'success');
+                SysMessages::set(_("Block") . ' "'. $model->name .'" ' . _("has been updated successfully"), 'success');
                 SysRequest::redirect('/blocks/general/');
             } else {
                 $view->model = $model;
@@ -145,7 +145,7 @@ class generalController extends SysController
             $model = Blocks::findByPk($id);
 
             if (empty($model)) {
-                SysMessages::set('Блок c id "'. $id .'" не найден', 'danger');
+                SysMessages::set(_("Block with id") . ' "'. $id .'" ' . _("not fount"), 'danger');
                 $display->render('core/views/errors/404',false,true);
                 return true;
             }
@@ -156,7 +156,7 @@ class generalController extends SysController
 
             $view->display('update');
         } else {
-            SysMessages::set('Блок не найден', 'danger');
+            SysMessages::set(_("Block not found"), 'danger');
             $display->render('core/views/errors/404',false,true);
         }
     }
@@ -166,16 +166,16 @@ class generalController extends SysController
         if ($id = SysRequest::get('id')) {
             $model = Blocks::findByPk($id);
             if (empty($model)) {
-                SysMessages::set('Блок не найден', 'danger');
+                SysMessages::set(_("Block not found"), 'danger');
                 SysRequest::redirect('/blocks/general/');
             }
 
             $blockName = $model->name;
 
             if (false !== $model->delete()) {
-                SysMessages::set('Блок "'. $blockName .'" был успешно удален', 'success');
+                SysMessages::set(_("Block") . ' "'. $blockName .'" ' . _("has been deleted successfully"), 'success');
             } else {
-                SysMessages::set('Блок "'. $blockName .'" не был удален', 'danger');
+                SysMessages::set('Block' . ' "'. $blockName .'" ' . _("can not be deleted"), 'danger');
             }
         }
 

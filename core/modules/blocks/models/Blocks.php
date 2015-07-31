@@ -17,10 +17,10 @@ class Blocks extends SysModel
     protected static function labels()
     {
         return [
-            'name' => 'Наименование',
-            'region_id' => 'Регион',
-            'content' => 'Содержимое',
-            'weight' => 'Вес',
+            'name' => _("Block name"),
+            'region_id' => _("Region"),
+            'content' => _("Content"),
+            'weight' => _("Weight"),
         ];
     }
 
