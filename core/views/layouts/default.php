@@ -44,16 +44,16 @@ use core\classes\SysAuth;
                 <?php if ($username = SysAuth::getCurrentUser()): ?>
                     <li role="presentation" class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                            <span>Пользователь: <?php echo $username; ?></span>
+                            <span><?php echo _("User") . ': ' .  $username; ?></span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
                                 <?php if (SysAuth::getCurrentRole() == 'admin'): ?>
-                                    <a href="/admin/panel/">Админ панель</a>
+                                    <a href="/admin/panel/"><?php echo _("Admin panel"); ?></a>
                                 <?php endif; ?>
-                                <a href="/users/control/user?id=<?php echo $_COOKIE['user_id']; ?>">Профиль</a>
-                                <a href="/users/control/logout">Выйти</a>
+                                <a href="/users/control/user?id=<?php echo $_COOKIE['user_id']; ?>"><?php echo _("Profile"); ?></a>
+                                <a href="/users/control/logout"><?php echo _("Logout"); ?></a>
                             </li>
                         </ul>
                     </li>

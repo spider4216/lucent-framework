@@ -24,24 +24,24 @@ class generalController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                'Регионы' => '-',
+                _("regions") => '-',
             ],
 
             'create' => [
-                'Регионы' => '/regions/general/',
-                'Создать' => '-',
+                _("regions") => '/regions/general/',
+                _("create") => '-',
             ],
 
             'update' => [
-                'Регионы' => '/regions/general/',
-                'Обновить' => '-',
+                _("regions") => '/regions/general/',
+                _("update") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = 'Регионы';
+        static::$title = _("Regions");
 
         $view = new SysView();
         $view->display('index');
@@ -49,7 +49,7 @@ class generalController extends SysController
 
     public function actionCreate()
     {
-        static::$title = 'Создание региона';
+        static::$title = _("Create region");
         $model = new Regions();
         $model->setScript('create');
 
@@ -60,7 +60,7 @@ class generalController extends SysController
             $model->name = $post['name'];
 
             if ($model->save()) {
-                SysMessages::set('Регион "'. $model->name .'" был успешно создан', 'success');
+                SysMessages::set(_("Region has been created successfully"), 'success');
                 SysRequest::redirect('/regions/general/');
             }
         }
@@ -70,7 +70,7 @@ class generalController extends SysController
 
     public function actionUpdate()
     {
-        static::$title = 'Обновление региона';
+        static::$title = _("Update region");
 
         $view = new SysView();
         $display = new SysDisplay();
@@ -81,7 +81,7 @@ class generalController extends SysController
         if (!empty($post)) {
             $model = Regions::findByPk($post['id']);
             if (empty($model)) {
-                SysMessages::set('Регион с id "'.$post['id'].'" не найден', 'danger');
+                SysMessages::set(_("Region not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
             $model->setScript('update');
@@ -91,7 +91,7 @@ class generalController extends SysController
 //            return true;
 
             if ($model->save()) {
-                SysMessages::set('Регион "'. $model->name .'" был успешно обновлен', 'success');
+                SysMessages::set(_("Region has been updated successfully"), 'success');
                 SysRequest::redirect('/regions/general/');
             } else {
                 $view->item = $model;
@@ -103,14 +103,14 @@ class generalController extends SysController
         if (!empty($id)) {
             $model = Regions::findByPk($id);
             if (empty($model)) {
-                SysMessages::set('Регион с id "'.$id.'" не найден', 'danger');
+                SysMessages::set(_("Region not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
                 return true;
             }
 
             $view->item = $model;
         } else {
-            SysMessages::set('Регион не найден', 'danger');
+            SysMessages::set(_("Region not found"), 'danger');
             $display->render('core/views/errors/404',false,true);
             return true;
         }
@@ -124,16 +124,16 @@ class generalController extends SysController
         if ($id = SysRequest::get('id')) {
             $model = Regions::findByPk($id);
             if (empty($model)) {
-                SysMessages::set('Регион не найден', 'danger');
+                SysMessages::set(_("Region not found"), 'danger');
                 SysRequest::redirect('/regions/general/');
             }
 
             $regionName = $model->name;
 
             if (false !== $model->delete()) {
-                SysMessages::set('Регион "'. $regionName .'" был успешно удален', 'success');
+                SysMessages::set(_("Region has been deleted successfully"), 'success');
             } else {
-                SysMessages::set('Регион "'. $regionName .'" не был удален', 'danger');
+                SysMessages::set(_("Region can not be deleted"), 'danger');
             }
         }
 

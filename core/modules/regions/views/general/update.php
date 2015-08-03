@@ -13,15 +13,16 @@ use core\classes\SysWidget;
 
         <div class="m-row">
             <label for="title"><?php echo $item->getLabel('name'); ?></label>
-            <input type="text" name="name" value="<?php echo $item->name; ?>" class="form-control name" placeholder="Введите имя"/>
-            <small>Наименование региона должно состоять из латинских букв и знаков подчеркивания</small>
+            <input type="text" name="name" value="<?php echo $item->name; ?>" class="form-control name"
+                   placeholder="<?php echo _("name"); ?>"/>
+            <small><?php echo _("Name have to contain: a-z and/or _ symbols"); ?></small>
             <br/>
             <br/>
         </div>
 
         <div class="m-row">
             <input type="hidden" name="id" value="<?php echo $item->id; ?>"/>
-            <input type="submit" value="Сохранить" class="btn btn-primary"/>
+            <input type="submit" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
             <?php
             echo SysWidget::build('WBtnAsk', $item, [
                 'link' => '/regions/general/delete?id=' . $item->id,

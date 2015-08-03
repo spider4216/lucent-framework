@@ -27,21 +27,21 @@ class basicController extends SysController{
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                'страницы' => '-',
+                _("pages") => '-',
             ],
 
             'create' => [
-                'страницы' => '/page/basic/',
-                'создание страницы' => '-',
+                _("pages") => '/page/basic/',
+                _("create page") => '-',
             ],
 
             'update' => [
-                'страницы' => '/page/basic/',
-                'редактирование страницы' => '-',
+                _("pages") => '/page/basic/',
+                _("edit page") => '-',
             ],
 
             'view' => [
-                'страницы' => '/page/basic/',
+                _("pages") => '/page/basic/',
                 '%' => '-',
             ],
         ];
@@ -49,7 +49,7 @@ class basicController extends SysController{
 
     public function actionIndex()
     {
-        static::$title = 'Страницы';
+        static::$title = ("Pages");
 
         $model = new Page();
 
@@ -61,7 +61,7 @@ class basicController extends SysController{
 
     public function actionCreate()
     {
-        static::$title = 'Создание страницы';
+        static::$title = _("Create page");
 
         $view = new SysView();
         $model = new Page();
@@ -72,7 +72,7 @@ class basicController extends SysController{
             $model->content = $post['content'];
 
             if ($model->save()) {
-                SysMessages::set('Страница "'. $model->title .'" была успешна создана', 'success');
+                SysMessages::set(_("Page has been created successfully"), 'success');
                 SysRequest::redirect('/page/basic/');
             }
         }
@@ -82,7 +82,7 @@ class basicController extends SysController{
 
     public function actionUpdate()
     {
-        static::$title = 'Редактирование страницы';
+        static::$title = _("Edit page");
 
         $view = new SysView();
         $display = new SysDisplay();
@@ -91,7 +91,7 @@ class basicController extends SysController{
             $model = Page::findByPk($post['id']);
 
             if (empty($model)) {
-                SysMessages::set('Страница с идентификатором "'.$post['id'].'" не найдена', 'danger');
+                SysMessages::set(_("Page not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
 
@@ -101,7 +101,7 @@ class basicController extends SysController{
             $view->model = $model;
 
             if ($model->save()) {
-                SysMessages::set('Страница "'. $model->title .'" была успешна обновлена', 'success');
+                SysMessages::set(_("Page has been updated successfully"), 'success');
                 SysRequest::redirect('/page/basic/');
             }
 
@@ -113,7 +113,7 @@ class basicController extends SysController{
             $model = Page::findByPk($id);
 
             if (empty($model)) {
-                SysMessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
+                SysMessages::set(_("Page not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
 
@@ -122,7 +122,7 @@ class basicController extends SysController{
             return true;
         }
 
-        SysMessages::set('Страница не найдена', 'danger');
+        SysMessages::set(_("Page not found"), 'danger');
         $display->render('core/views/errors/404',false,true);
 
     }
@@ -145,7 +145,7 @@ class basicController extends SysController{
             }
 
             if (!$item) {
-                SysMessages::set('Страница с идентификатором "'.$id.'" не найдена', 'danger');
+                SysMessages::set(_("Page not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
             }
 
@@ -153,7 +153,7 @@ class basicController extends SysController{
 
             $view->display('view');
         } else {
-            SysMessages::set('Страница не найдена', 'danger');
+            SysMessages::set(_("Page not found"), 'danger');
             $display->render('core/views/errors/404',false,true);
         }
     }
@@ -165,7 +165,7 @@ class basicController extends SysController{
             $item = $model->findByPk($id);
 
             if ($item->delete()) {
-                SysMessages::set('Страница "'. $item->title .'" была успешна удалена', 'success');
+                SysMessages::set(_("Page has been deleted successfully"), 'success');
                 SysRequest::redirect('/page/basic/');
             }
 

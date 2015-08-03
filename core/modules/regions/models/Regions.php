@@ -12,7 +12,7 @@ class Regions extends SysModel
     protected static function labels()
     {
         return [
-            'name' => 'Наименование',
+            'name' => _("Name"),
         ];
     }
 

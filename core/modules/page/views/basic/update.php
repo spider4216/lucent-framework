@@ -13,19 +13,21 @@ use core\classes\SysWidget;
 
         <div class="m-row">
             <label for="title"><?php echo $model->getLabel('title'); ?></label>
-            <input type="text" name="title" class="form-control title" placeholder="Введите заголовок" value="<?php echo $model->title ?>"/>
+            <input type="text" name="title" class="form-control title" placeholder="<?php echo _("title"); ?>"
+                   value="<?php echo $model->title ?>"/>
             <br/>
         </div>
 
         <div class="m-row">
             <label for="content"><?php echo $model->getLabel('content'); ?></label>
-            <textarea name="content" class="form-control content" rows="8" placeholder="Введите текст"><?php echo $model->content ?></textarea>
+            <textarea name="content" class="form-control content" rows="8"
+                      placeholder="<?php echo _("content"); ?>"><?php echo $model->content ?></textarea>
             <br/>
         </div>
 
         <div class="m-row">
             <input type="hidden" name="id" value="<?php echo $model->id; ?>"/>
-            <input type="submit" value="Сохранить" class="btn btn-primary"/>
+            <input type="submit" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
             <?php
                 echo SysWidget::build('WBtnAsk', $model, [
                     'link' => '/page/basic/delete?id=' . $model->id,

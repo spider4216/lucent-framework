@@ -24,7 +24,7 @@ class SysValidator
             if (method_exists($this, $v_name)) {
                 return $this->$v_name($post[$name], $name);
             } else {
-                SysMessages::set('Правило ' . $v_name . ' не существует', 'danger');
+                SysMessages::set(_("Rule") . ' ' . $v_name . ' ' . _("does not exist"), 'danger');
             }
         }
 
@@ -42,7 +42,7 @@ class SysValidator
 
         $attrLabel = $this->model->getLabel($name);
 
-        SysMessages::set('Поле "' . $attrLabel . '" не может быть пустым', 'danger');
+        SysMessages::set(_("Field") . ' "' . $attrLabel . '" ' . 'can not be empty', 'danger');
         return false;
     }
 
@@ -65,7 +65,8 @@ class SysValidator
         $attrLabel = $this->model->getLabel($name);
         $attrLabelAgain = $this->model->getLabel($this->compare_data['name']);
 
-        SysMessages::set('Значение поля "' . $attrLabelAgain . '" не соответствует полю "' . $attrLabel . '"', 'danger');
+        SysMessages::set(_("Field value") . ' "' . $attrLabelAgain . '" ' . _("does not match") . ' "' . $attrLabel .
+            '"', 'danger');
         return false;
     }
 
@@ -77,7 +78,7 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set('Email введен не корректно', 'danger');
+        SysMessages::set(_("E-mail is not valid"), 'danger');
         return false;
     }
 
@@ -90,7 +91,7 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set('Имя пользователя введено не корректно', 'danger');
+        SysMessages::set(_("Username or password is not valid"), 'danger');
         return false;
     }
 
@@ -103,7 +104,7 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set('Пароль введен не корректно', 'danger');
+        SysMessages::set(_("Password is not valid"), 'danger');
         return false;
     }
 
@@ -118,7 +119,7 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set('Запись "' . $v . '" уже существует', 'danger');
+        SysMessages::set(_("Record") . ' "' . $v . '" ' . _("has already exist"), 'danger');
         return false;
     }
 }

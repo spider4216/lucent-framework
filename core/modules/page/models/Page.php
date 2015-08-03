@@ -10,8 +10,8 @@ class Page extends SysModel
     protected static function labels()
     {
         return [
-            'title' => 'Заголовок',
-            'content' => 'Содержимое',
+            'title' => _("Title"),
+            'content' => _("Content"),
         ];
     }
 

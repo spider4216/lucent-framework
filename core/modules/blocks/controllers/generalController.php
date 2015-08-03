@@ -95,7 +95,7 @@ class generalController extends SysController
             }
 
             if ($model->save()) {
-                SysMessages::set(_("Block") . ' "'. $model->name .'" ' . _("has been created successfully"), 'success');
+                SysMessages::set(_("Block has been created successfully"), 'success');
                 SysRequest::redirect('/blocks/general/');
             }
         }
@@ -117,7 +117,7 @@ class generalController extends SysController
             $model = Blocks::findByPk($post['id']);
 
             if (empty($model)) {
-                SysMessages::set(_("Block with id") . ' "'. $post['id'] .'" ' . _("not found"), 'danger');
+                SysMessages::set(_("Block not found"), 'danger');
                 $display->render('core/views/errors/404',false,true);
                 return true;
             }
@@ -128,7 +128,7 @@ class generalController extends SysController
             $model->weight = $post['weight'];
 
             if ($model->save()) {
-                SysMessages::set(_("Block") . ' "'. $model->name .'" ' . _("has been updated successfully"), 'success');
+                SysMessages::set(_("Block has been updated successfully"), 'success');
                 SysRequest::redirect('/blocks/general/');
             } else {
                 $view->model = $model;
@@ -145,7 +145,7 @@ class generalController extends SysController
             $model = Blocks::findByPk($id);
 
             if (empty($model)) {
-                SysMessages::set(_("Block with id") . ' "'. $id .'" ' . _("not fount"), 'danger');
+                SysMessages::set(_("Block not fount"), 'danger');
                 $display->render('core/views/errors/404',false,true);
                 return true;
             }
@@ -173,9 +173,9 @@ class generalController extends SysController
             $blockName = $model->name;
 
             if (false !== $model->delete()) {
-                SysMessages::set(_("Block") . ' "'. $blockName .'" ' . _("has been deleted successfully"), 'success');
+                SysMessages::set(_("Block has been deleted successfully"), 'success');
             } else {
-                SysMessages::set('Block' . ' "'. $blockName .'" ' . _("can not be deleted"), 'danger');
+                SysMessages::set(_("Block can not be deleted"), 'danger');
             }
         }
 

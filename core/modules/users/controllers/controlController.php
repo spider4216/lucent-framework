@@ -192,13 +192,13 @@ class ControlController extends SysController
 
             if ($model->save()) {
                 if ($model->id == SysAuth::getCurrentUserId()) {
-                    SysMessages::set(_("User") . ' "' . ' ' . $post['username'] . '" ' . _("has been updated successfully.") .
+                    SysMessages::set(_("User has been updated successfully.") .
                         ' ' . _("Sign in system again"), 'success');
                     SysAuth::logout();
                     SysRequest::redirect('/users/control/login');
                 }
 
-                SysMessages::set(_("User") . ' "' . $post['username'] . '" ' . _("has been updated successfully"), 'success');
+                SysMessages::set(_("User has been updated successfully"), 'success');
                 SysRequest::redirect('/users/control/manage');
             }
 
@@ -232,7 +232,7 @@ class ControlController extends SysController
             $model = Users::findByPk($id);
             if (SysAuth::getCurrentUserId() != $model->id) {
                 if ($model->delete()) {
-                    SysMessages::set(_("User") . ' ' . $model->username . ' ' . _("has been deleted successfully"), 'success');
+                    SysMessages::set(_("User has been deleted successfully"), 'success');
                 } else {
                     //SysMessages::set(_("Ошибка при удалении пользователя"), 'danger');
                     SysMessages::set(_("user can not be removed"), 'danger');

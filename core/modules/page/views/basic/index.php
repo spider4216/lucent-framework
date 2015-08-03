@@ -12,7 +12,7 @@ use core\extensions\ExtBreadcrumbs;
 
 <div class="tool">
     <br/>
-    <p><a class="btn btn-default" href="/page/basic/create">Создать страницу</a></p>
+    <p><a class="btn btn-default" href="/page/basic/create"><?php echo _("Create page"); ?></a></p>
 </div>
 
 <div class="pages-list">

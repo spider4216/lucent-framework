@@ -70,7 +70,7 @@ class RolesController extends SysController
             $model->name = $post['name'];
 
             if ($model->save()) {
-                SysMessages::set(_("Role") . ' "' . $model->name . '" ' . _("has been created successfully"), 'success');
+                SysMessages::set(_("Role has been created successfully"), 'success');
                 SysRequest::redirect('/users/roles/');
             }
         }
@@ -96,7 +96,7 @@ class RolesController extends SysController
             $model->name = $post['name'];
 
             if ($model->save()) {
-                SysMessages::set(_("Role") . ' "' . $post['name'] . '" ' . _("has been updated successfully"), 'success');
+                SysMessages::set(_("Role has been updated successfully"), 'success');
                 SysRequest::redirect('/users/roles/');
             } else {
                 $model = Roles::findByPk($post['id']);
@@ -128,12 +128,12 @@ class RolesController extends SysController
             $model = Roles::findByPk($id);
 
             if ($model->id == '1' || $model->id == '2') {
-                SysMessages::set(_("System role") . ' "' . $model->name . '" ' . _("can not be deleted"), 'danger');
+                SysMessages::set(_("System role can not be deleted"), 'danger');
                 SysRequest::redirect('/users/roles/');
             }
 
             if ($model->delete()) {
-                SysMessages::set(_("Role") . ' "' . $model->name . '" ' . _("has been deleted successfully"), 'success');
+                SysMessages::set(_("Role has been deleted successfully"), 'success');
                 SysRequest::redirect('/users/roles/');
             }
         } else {

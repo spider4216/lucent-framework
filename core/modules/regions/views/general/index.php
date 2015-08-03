@@ -5,7 +5,7 @@
 %system_notifications%
 
 <div class="tools">
-    <a href="/regions/general/create">Добавить регион</a>
+    <a href="/regions/general/create"><?php echo _("Create region"); ?></a>
 </div>
 
 %regions_listAll%

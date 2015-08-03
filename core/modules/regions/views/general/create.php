@@ -10,14 +10,14 @@
         <div class="m-row">
             <label for="title"><?php echo $model->getLabel('name'); ?></label>
             <input type="text" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : ''; ?>"
-                   class="form-control name" placeholder="Введите имя"/>
-            <small>Наименование региона должно состоять из латинских букв и знаков подчеркивания</small>
+                   class="form-control name" placeholder="<?php echo _("name"); ?>"/>
+            <small><?php echo _("Name have to contain: a-z and/or _ symbols"); ?></small>
             <br/>
             <br/>
         </div>
 
         <div class="m-row">
-            <input type="submit" value="Сохранить" class="btn btn-primary"/>
+            <input type="submit" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

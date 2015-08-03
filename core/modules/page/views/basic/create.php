@@ -15,18 +15,18 @@ use core\classes\SysWidget;
 
         <div class="m-row">
             <label for="title"><?php echo $model->getLabel('title'); ?></label>
-            <input type="text" name="title" class="form-control title" placeholder="Введите заголовок"/>
+            <input type="text" name="title" class="form-control title" placeholder="<?php echo _("title"); ?>"/>
             <br/>
         </div>
 
         <div class="m-row">
             <label for="content"><?php echo $model->getLabel('content'); ?></label>
-            <textarea name="content" class="form-control content" rows="8" placeholder="Введите текст"></textarea>
+            <textarea name="content" class="form-control content" rows="8" placeholder="<?php echo _("content"); ?>"></textarea>
             <br/>
         </div>
 
         <div class="m-row">
-            <input type="submit" value="Сохранить" class="btn btn-primary"/>
+            <input type="submit" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>
