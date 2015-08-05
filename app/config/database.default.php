@@ -3,8 +3,8 @@
  * Конфигурационный файл для настройки базы данных
  */
 return [
-    'db_name' => 'lucent',
-    'db_username' => 'root',
+    'db_name' => '',
+    'db_username' => '',
     'db_password' => '',
     'db_host' => 'localhost',
 ];

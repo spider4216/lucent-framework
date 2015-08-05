@@ -22,7 +22,13 @@ class App
     {
         header('Content-Type: text/html; charset=utf-8');
         session_start();
-        static::$config = include __DIR__ . '/../../app/config/main.php';
+
+        $install = self::isInstall();
+
+        if (false !== $install) {
+            static::$config = include __DIR__ . '/../../app/config/main.php';
+        }
+        static::$config = include __DIR__ . '/../../app/config/main.default.php';
 
         self::initLanguage();
         SysAssets::filesAttach();
@@ -44,5 +50,22 @@ class App
 
         bind_textdomain_codeset($domain, 'UTF-8');
 
+    }
+
+    private static function isInstall()
+    {
+        if (SysModule::getCurrentModuleName() == 'install') {
+            return false;
+        }
+
+        $directory = SysPath::directory('app') . '/config/';
+        $configName = 'main.php';
+        $path = $directory . $configName;
+
+        if (!file_exists($path)) {
+            SysRequest::redirect('/install/setup/');
+        }
+
+        return true;
     }
 }

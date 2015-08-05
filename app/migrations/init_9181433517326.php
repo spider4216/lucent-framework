@@ -17,26 +17,6 @@ return [
     ],
 
     '1' => [
-        'insert' => [
-            'table' => 'users',
-            'columns' => [
-                'username',
-                'password',
-                'role_id',
-                'email',
-            ],
-
-            'values' => [
-                'admin',
-                //до тех пор, пока не будет реализована установка системы...
-                '21232f297a57a5a743894a0e4a801fc3', //admin
-                '1',
-                'admin@example.com',
-            ],
-        ],
-    ],
-
-    '2' => [
         'createTable' => [
             'name' => 'pages',
             'primary_key' => 'id',
@@ -48,7 +28,7 @@ return [
         ],
     ],
 
-    '3' => [
+    '2' => [
         'insert' => [
             'table' => 'pages',
             'columns' => [
@@ -57,19 +37,32 @@ return [
             ],
 
             'values' => [
-                'Добро пожаловать в систему Lucent',
-                'Вас привествует чрезвычайно простой, удобный и яркий фраемворк Lucent',
+                'Welcome to CM Lucent',
+                'Lucent - Content Management Framework (CMF)',
             ],
         ],
     ],
 
-    '4' => [
+    '3' => [
         'createTable' => [
             'name' => 'roles',
             'primary_key' => 'id',
             'columns' => [
                 'id' => 'serial',
                 'name' => 'varchar(255)',
+            ],
+        ],
+    ],
+
+    '4' => [
+        'insert' => [
+            'table' => 'roles',
+            'columns' => [
+                'name',
+            ],
+
+            'values' => [
+                'admin',
             ],
         ],
     ],
@@ -82,25 +75,12 @@ return [
             ],
 
             'values' => [
-                'admin',
-            ],
-        ],
-    ],
-
-    '6' => [
-        'insert' => [
-            'table' => 'roles',
-            'columns' => [
-                'name',
-            ],
-
-            'values' => [
                 'user',
             ],
         ],
     ],
 
-    '7' => [
+    '6' => [
         'createTable' => [
             'name' => 'regions',
             'primary_key' => 'id',
@@ -111,7 +91,7 @@ return [
         ],
     ],
 
-    '8' => [
+    '7' => [
         'insert' => [
             'table' => 'regions',
             'columns' => [
@@ -124,7 +104,7 @@ return [
         ],
     ],
 
-    '9' => [
+    '8' => [
         'insert' => [
             'table' => 'regions',
             'columns' => [
@@ -137,7 +117,7 @@ return [
         ],
     ],
 
-    '10' => [
+    '9' => [
         'createTable' => [
             'name' => 'blocks',
             'primary_key' => 'id',
@@ -151,7 +131,7 @@ return [
         ],
     ],
 
-    '11' => [
+    '10' => [
         'insert' => [
             'table' => 'blocks',
             'columns' => [
@@ -170,7 +150,7 @@ return [
         ],
     ],
 
-    '12' => [
+    '11' => [
         'insert' => [
             'table' => 'blocks',
             'columns' => [
@@ -189,7 +169,7 @@ return [
         ],
     ],
 
-    '13' => [
+    '12' => [
         'insert' => [
             'table' => 'blocks',
             'columns' => [
@@ -208,7 +188,7 @@ return [
         ],
     ],
 
-    '14' => [
+    '13' => [
         'insert' => [
             'table' => 'blocks',
             'columns' => [
@@ -221,7 +201,7 @@ return [
             'values' => [
                 'CMF Lucent',
                 '1',
-                'Изящный фундамент для ваших веб проектов',
+                'Amazing foundation for your projects',
                 '0',
             ],
         ],
