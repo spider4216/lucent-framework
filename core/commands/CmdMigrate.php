@@ -10,6 +10,8 @@ class CmdMigrate extends ConsoleCmd
     {
         $text = "Доступны следующие действия: \n";
         $text .= "- create [name] \n";
+        $text .= "- run [name] \n";
+        $text .= "- down [name] \n";
 
         return $text;
     }
@@ -47,6 +49,18 @@ class CmdMigrate extends ConsoleCmd
 
         $consoleMigration = new ConsoleMigration();
         $result = $consoleMigration->main(static::$param);
+
+        return 'Результат: ' . $result . "\n";
+    }
+
+    public function actionDown()
+    {
+        if (empty(static::$param)) {
+            return "Вы не передали обязательный параметр [name] \n";
+        }
+
+        $consoleMigration = new ConsoleMigration();
+        $result = $consoleMigration->down(static::$param);
 
         return 'Результат: ' . $result . "\n";
     }

@@ -9,9 +9,20 @@ class ConsoleMigration {
 
     private $pdo;
 
-    public function main($migrationName)
+
+
+    public function __construct()
     {
         $this->config = include __DIR__ . '/../../app/config/main.php';
+        $this->database();
+    }
+
+    public function main($migrationName)
+    {
+        if (!$this->pdo) {
+            return "Ошибка соединения с базой данных";
+        }
+
         $path =  __DIR__ . '/../../' . $this->config['path']['migration_directory'] . '/' . $migrationName. '.php';
 
         if (!file_exists($path)) {
@@ -19,14 +30,20 @@ class ConsoleMigration {
         }
 
         $data = include $path;
-
-        if (!$this->database()) {
-            return "Ошибка соединения с базой данных";
-        }
+        //todo проверка на empty
 
         $result = '';
 
-        foreach ($data as $item) {
+
+        if (!array_key_exists('up', $data)) {
+            return 'Не найден обязательный ключ "up" в миграции';
+        }
+
+        if (!array_key_exists('down', $data)) {
+            return 'Не найден обязательный ключ "down" в миграции';
+        }
+
+        foreach ($data['up'] as $item) {
             foreach ($item as $key => $value) {
                 switch ($key) {
                     case 'createTable':
@@ -45,6 +62,49 @@ class ConsoleMigration {
 
         return $result;
 
+    }
+
+    public function down($migrationName)
+    {
+        if (!$this->pdo) {
+            return "Ошибка соединения с базой данных";
+        }
+
+        $path =  __DIR__ . '/../../' . $this->config['path']['migration_directory'] . '/' . $migrationName. '.php';
+
+        if (!file_exists($path)) {
+            return 'Миграции "' . $migrationName . '" не существует';
+        }
+
+        $data = include $path;
+        //todo проверка на empty
+
+        $result = '';
+
+
+        if (!array_key_exists('up', $data)) {
+            return 'Не найден обязательный ключ "up" в миграции';
+        }
+
+        if (!array_key_exists('down', $data)) {
+            return 'Не найден обязательный ключ "down" в миграции';
+        }
+
+        foreach ($data['down'] as $item) {
+            foreach ($item as $key => $value) {
+                switch ($key) {
+                    case 'deleteTable':
+                        $result .= $this->dropTable($value);
+                        break;
+                }
+            }
+        }
+
+        if (empty($result)) {
+            $result = 'Непредвиденная ошибка';
+        }
+
+        return $result;
     }
 
     private function createTable($description)
@@ -88,6 +148,20 @@ class ConsoleMigration {
         }
 
         return 'Данные были успешно добавлены в таблицу "' . $description['table'] . '"' . "\n";
+    }
+
+    private function dropTable($description)
+    {
+        //todo check key name
+        $sql = 'DROP TABLE ' . $description['name'];
+
+        $result = $this->pdo->exec($sql);
+
+        if (false === $result) {
+            return 'Ошибка при удалении таблицы "' . $description['name'] . '"' . "\n";
+        }
+
+        return 'Таблицы "' . $description['name'] . '" была успешно удалена' . "\n";
     }
 
     private function database()

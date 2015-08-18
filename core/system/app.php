@@ -1,6 +1,9 @@
 <?php
 namespace core\system;
 use core\classes\SysAssets;
+use core\classes\SysDatabase;
+use core\classes\SysDisplay;
+use core\classes\SysMessages;
 use core\classes\SysModule;
 use core\classes\SysPath;
 use core\classes\SysRequest;
@@ -34,6 +37,15 @@ class App
         SysAssets::filesAttach();
         SysAssets::moduleFilesAttach();
 
+        if (false !== $install) {
+            if (false === self::checkDatabaseConnection()) {
+                $display = new SysDisplay('core/views/layouts/install');
+                SysMessages::set(_("Error: bad database connection"), 'danger');
+                $display->render('core/views/errors/403',false,true);
+                return false;
+            }
+        }
+
         SysUrl::semantic_url(static::$config['default_controller'], static::$config['default_action']);
     }
 
@@ -64,6 +76,17 @@ class App
 
         if (!file_exists($path)) {
             SysRequest::redirect('/install/setup/');
+        }
+
+        return true;
+    }
+
+    public static function checkDatabaseConnection()
+    {
+        try {
+            $db = SysDatabase::getObj();
+        } catch (\PDOException $e) {
+            return false;
         }
 
         return true;

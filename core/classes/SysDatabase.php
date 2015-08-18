@@ -113,4 +113,14 @@ class SysDatabase
     {
         return $this->pdo->lastInsertId();
     }
+
+    public static function checkDatabaseConnection($dbName, $dbHost, $dbUsername, $dbPassword)
+    {
+        $dsn = 'mysql:dbname=' . $dbName . ';host=' . $dbHost;
+        $pdo = new \PDO($dsn, $dbUsername, $dbPassword, [
+                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]
+        );
+
+        return $pdo;
+    }
 }

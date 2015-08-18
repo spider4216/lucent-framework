@@ -5,16 +5,15 @@ namespace core\classes;
 
 class SysDisplay {
 
-    protected static $layout;
+    protected $layout;
 
     protected $data = [];
 
     public function __construct($layout = false)
     {
-        if (true == $layout) {
-            static::$layout = SysPath::directory('app') . '/' . $layout . '.php';
-        } else {
-            static::$layout = SysPath::directory('core') . '/views/layouts/default.php';
+        $this->layout = SysPath::directory('core') . '/views/layouts/default.php';
+        if (false !== $layout) {
+            $this->layout = SysPath::directory('root') . '/' . $layout . '.php';
         }
     }
 
@@ -52,7 +51,7 @@ class SysDisplay {
         SysAssets::initCoreAssets();
         SysAssets::initModuleAssets();
         ob_start();
-        include SysDisplay::$layout;
+        include $this->layout;
         $content_final = SysTokens::apply(ob_get_contents());
         ob_end_clean();
 

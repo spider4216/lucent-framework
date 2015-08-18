@@ -1,12 +1,24 @@
 <?php
 /**
-* create_table - создание таблицы
-* insert - добавление записей в таблицу
+* up:
+* createTable - create table
+* insert - add record in table
+*
+* down:
+* deleteTable - delete table
 */
 
 return [
-    '0' => [
+    'up' => [
+        '0' => [
 
+         ],
+    ],
+
+    'down' => [
+        '0' => [
+
+        ]
     ],
 ];
 

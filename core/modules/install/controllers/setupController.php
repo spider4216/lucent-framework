@@ -4,6 +4,7 @@ namespace core\modules\install\controllers;
 use core\classes\SysAuth;
 use core\classes\SysCodeGenerate;
 use core\classes\SysController;
+use core\classes\SysDatabase;
 use core\classes\SysMessages;
 use core\classes\SysPassword;
 use core\classes\SysPath;
@@ -35,8 +36,6 @@ class setupController extends SysController
             SysRequest::redirect('/');
         }
 
-
-
         $view = new SysView();
         $view->display('index');
     }
@@ -56,24 +55,33 @@ class setupController extends SysController
                 }
             }
 
+            try {
+                SysDatabase::checkDatabaseConnection($post['dbname'], $post['dbhost'], $post['dbusername'],
+                    $post['dbpassword']);
+            } catch (\PDOException $e) {
+                SysMessages::set(_("Problem with database connection"), 'danger');
+                SysMessages::set($e->getMessage(), 'danger');
+                SysRequest::redirect('/install/setup/');
+            }
+
             //--
             $directory = SysPath::directory('app') . '/config/';
             $filename = 'database.php';
             $path = $directory . $filename;
 
             if (file_exists($path)) {
-                SysMessages::set(_("file with database information has already exist. Delete file and try it again"), 'danger');
+                SysMessages::set(_("file with database information has already exist. Delete file and try it again"),
+                    'danger');
                 SysRequest::redirect('/install/setup/');
             }
 
-            $databaseContent = SysCodeGenerate::dbFile($post['dbname'], $post['dbusername'], $post['dbpassword'], $post['dbhost']);
+            $databaseContent = SysCodeGenerate::dbFile($post['dbname'], $post['dbusername'], $post['dbpassword'],
+                $post['dbhost']);
 
             if (!is_writable($directory)) {
                 SysMessages::set(_("directory") . ' "app/config" ' . _("is not writable"), 'danger');
                 SysRequest::redirect('/install/setup/');
             }
-
-            file_put_contents($path, $databaseContent);
 
             $directoryConfig = SysPath::directory('app') . '/config/';
             $filenameConfig = 'main.php';
@@ -91,20 +99,15 @@ class setupController extends SysController
                 SysRequest::redirect('/install/setup/');
             }
 
+            file_put_contents($path, $databaseContent);
             file_put_contents($pathConfig, $configContent);
 
-            //--
-
-            //--
             //migration
             $migrate = new CmdMigrate();
             $migrate::$param = 'init_9181433517326';
 
 
             $result = $migrate->actionRun();
-
-            //--
-
 
             $user = new Users();
             $user->setScript('create');
@@ -114,7 +117,31 @@ class setupController extends SysController
             $user->password = SysPassword::hash($post['password']);
             $user->role_id = 1;
 
+            //rollback
             if (!$user->save()) {
+                $result = $migrate->actionDown();
+
+                if (!file_exists($path)) {
+                    SysMessages::set(_("Database file not found"), 'danger');
+                    SysRequest::redirect('/install/setup/');
+                }
+
+                if (!file_exists($pathConfig)) {
+                    SysMessages::set(_("Config file not found"), 'danger');
+                    SysRequest::redirect('/install/setup/');
+                }
+
+                if (!unlink($path)) {
+                    SysMessages::set(_("Database file cannot be deleted"), 'danger');
+                    SysRequest::redirect('/install/setup/');
+                }
+
+                if (!unlink($pathConfig)) {
+                    SysMessages::set(_("Config file cannot be deleted"), 'danger');
+                    SysRequest::redirect('/install/setup/');
+                }
+
+                SysMessages::set(_("Rollback has been done successfully"), 'success');
                 SysRequest::redirect('/install/setup/');
             }
 

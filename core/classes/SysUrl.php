@@ -41,6 +41,7 @@ class SySUrl
             if (!class_exists($controllerClassNameFull)) {
                 SysMessages::set('Страница '. $request_url .' не найдена','danger');
                 $display->render('core/views/errors/404', false, true);
+                return false;
             }
         } else {
             $namespace = 'app\\controllers\\';
@@ -54,6 +55,7 @@ class SySUrl
             if (!class_exists($controllerClassNameFull)) {
                 SysMessages::set('Страница '. $request_url .' не найдена','danger');
                 $display->render('core/views/errors/404', false, true);
+                return false;
             }
         }
 
