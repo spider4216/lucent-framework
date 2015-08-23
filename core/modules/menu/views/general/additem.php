@@ -8,7 +8,16 @@
 
     <div class="m-row">
         <label for="value"><?php echo $model->getLabel('name'); ?></label>
-        <input type="text" class="form-control" name="value" placeholder="<?php echo _("Name"); ?>">
+        <input type="text" class="form-control" name="value" placeholder="<?php echo _("Name"); ?>"
+               value="<?php echo (!empty($_POST['value'])) ? $_POST['value'] : ''; ?>">
+    </div>
+
+    <br>
+
+    <div class="m-row">
+        <label for="value"><?php echo _("Link"); ?></label>
+        <input type="text" class="form-control" name="link" placeholder="<?php echo _("Link"); ?>"
+               value="<?php echo (!empty($_POST['link'])) ? $_POST['link'] : ''; ?>">
     </div>
 
     <br>

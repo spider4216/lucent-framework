@@ -18,7 +18,7 @@ class WTree extends SysWidget
 
         $data['deleteParams'] = rtrim($deleteParams, '&');
 
-        //Âî âüþõå $data['nodes'] áóäåò äîñòóïíà êàê $data
+        //Ð’Ð¾ Ð²ÑŒÑŽÑ…Ðµ $data['nodes'] Ð±ÑƒÐ´ÐµÑ‚ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð° ÐºÐ°Ðº $data
         return $this->render($name, $model, $data);
     }
 }

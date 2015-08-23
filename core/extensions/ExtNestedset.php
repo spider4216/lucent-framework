@@ -13,7 +13,8 @@ class ExtNestedset
         self::$tableName = 'nestedset_' . $table;
     }
 
-    public function createDummy()
+    //fields - ['field name type']
+    public function createDummy($fields = [])
     {
         $db = SysDatabase::getObj();
         $sql = '';
@@ -26,8 +27,16 @@ class ExtNestedset
             $sql .= 'level int NOT NULL DEFAULT 0, ';
             $sql .= 'value text NOT NULL, ';
             $sql .= 'tree int NOT NULL DEFAULT 0, ';
+
+            if (!empty($fields)) {
+                foreach ($fields as $field) {
+                    $sql .= $field . ',';
+                }
+            }
+
             $sql .= 'PRIMARY KEY (id), ';
             $sql .= 'INDEX left_key (left_key, right_key, level) ';
+
         $sql .= ');';
 
         return $db->execute($sql);
@@ -42,22 +51,41 @@ class ExtNestedset
     }
 
     //todo transaction
-    public function createRoot($name)
+    //data = ['column' => 'value', ... ]
+    public function createRoot($name, $data = [])
     {
         $db = SysDatabase::getObj();
         $sql = '';
 
         $sql .= 'INSERT INTO ' . self::$tableName . ' ';
-        $sql .= '(left_key, right_key, level, value) ';
-        $sql .= 'VALUES(:q1, :q2, :q3, :q4);';
-        //echo $sql;
 
-        $res1 = $db->execute($sql, [
+        $sql .= '(left_key, right_key, level, value';
+
+        $params = [
             ':q1' => '1',
             ':q2' => '2',
             ':q3' => '0',
             ':q4' => $name,
-        ]);
+        ];
+        $indexParam = 5;
+        $prepareStrValues = '';
+
+        if (!empty($data)) {
+            foreach ($data as $column => $value) {
+                $sql .= ', ' . $column;
+                $params[':q' . $indexParam] = $value;
+                $prepareStrValues .= ', :q' . $indexParam;
+
+                $indexParam++;
+            }
+        }
+        $sql .= ') ';
+
+
+        $sql .= 'VALUES(:q1, :q2, :q3, :q4'.$prepareStrValues.');';
+        //echo $sql;
+
+        $res1 = $db->execute($sql, $params);
 
         $sql = '';
         $sql .= 'SELECT id FROM ' . self::$tableName . ' WHERE value = :v';
@@ -81,7 +109,8 @@ class ExtNestedset
 
     //todo need transaction
     //todo возможно нужно добавить еще один параметр глубины, для более точного поиска
-    public function appendChild($parentId, $name)
+    //data = ['column' => 'value', ... ] - т.к. nestedSet универсален, его использовать нужно в различных модулях
+    public function appendChild($parentId, $name, $data = [])
     {
         $db = SysDatabase::getObj();
         $sql = 'SELECT right_key, level, tree FROM ' . self::$tableName . ' WHERE id = :id';
@@ -108,13 +137,23 @@ class ExtNestedset
 
         $sql .= 'INSERT INTO ' . self::$tableName . ' SET left_key = :r1, right_key = :r2, level = :lvl, value = :v, tree = :tree';
 
-        $res3 = $db->execute($sql, [
+        $params = [
             ':r1' => $rightKey,
             ':r2' => $rightKey + 1,
             ':lvl' => $level + 1,
             ':v' => $name,
             ':tree' => $tree,
-        ]);
+        ];
+
+        $indexParam = 1;
+        if (!empty($data)) {
+            foreach ($data as $column => $value) {
+                $sql .= ', ' . $column . '=:' . $column;
+                $params[':' . $column] = $value;
+            }
+        }
+
+        $res3 = $db->execute($sql, $params);
     }
 
     public function deleteNode($id)

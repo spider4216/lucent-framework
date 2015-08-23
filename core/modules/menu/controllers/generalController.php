@@ -204,10 +204,10 @@ class generalController extends SysController
 
             $nestedSet = new ExtNestedset($model->machine_name);
 
-            if (empty($post['value'])) {
+            if (empty($post['value']) || empty ($post['link'])) {
                 $options = $nestedSet->findAllNodes();
 
-                SysMessages::set(_("Name cannot be empty"), 'danger');
+                SysMessages::set(_("Name and link cannot be empty"), 'danger');
                 $view->model = $model;
                 $view->options = $options;
                 $view->display('additem');
@@ -216,7 +216,7 @@ class generalController extends SysController
 
             if ($post['items'] == '-1') {
                 //todo check tru false
-                $nestedSet->createRoot($post['value']);
+                $nestedSet->createRoot($post['value'], ['link' => $post['link']]);
 
                 SysMessages::set(_("Menu item has been created successfully"), 'success');
                 SysRequest::redirect('/menu/general/manage?id=' . $post['id']);
@@ -224,7 +224,7 @@ class generalController extends SysController
             }
 
             //todo check true false
-            $nestedSet->appendChild($post['items'], $post['value']);
+            $nestedSet->appendChild($post['items'], $post['value'], ['link' => $post['link']]);
             SysMessages::set(_("Menu item has been created successfully"), 'success');
 
             SysRequest::redirect('/menu/general/manage?id=' . $post['id']);

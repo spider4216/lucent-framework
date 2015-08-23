@@ -42,7 +42,7 @@ class Menu extends SysModel
     {
         if ('create' == $this->getScript()) {
             $nestedSet = new ExtNestedset($this->machine_name);
-            return $nestedSet->createDummy();
+            return $nestedSet->createDummy(['link text NOT NULL']);
         }
 
         return true;
