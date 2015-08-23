@@ -50,3 +50,9 @@ footer .copyright {
 .block:hover .glyphicon-pencil {
     display: block;
 }
+
+.wtree-list-group .tools > a {
+    color: #343434;
+    cursor: pointer;
+    text-decoration: none;
+}

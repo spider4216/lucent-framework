@@ -175,6 +175,21 @@ abstract class SysModel implements IModel, Iterator
         return true;
     }
 
+    public function afterSave()
+    {
+        return true;
+    }
+
+    public function beforeValidate()
+    {
+        return true;
+    }
+
+    public function afterValidate()
+    {
+        return true;
+    }
+
     /**
      * @return bool
      * Публичный метод save(), который в зависимости от того, новая запись или нет
@@ -182,7 +197,7 @@ abstract class SysModel implements IModel, Iterator
      */
     public function save()
     {
-        if (!$this->beforeSave()) {
+        if (!$this->beforeValidate()) {
             return false;
         }
 
@@ -190,11 +205,30 @@ abstract class SysModel implements IModel, Iterator
             return false;
         }
 
-        if ($this->id) {
-            return $this->update();
-        } else {
-            return $this->insert();
+        if (!$this->afterValidate()) {
+            return false;
         }
+
+        if (!$this->beforeSave()) {
+            return false;
+        }
+
+        if ($this->id) {
+            $result = $this->update();
+        } else {
+            $result = $this->insert();
+        }
+
+        if (!$this->afterSave()) {
+            return false;
+        }
+
+        return $result;
+    }
+
+    public function beforeDelete()
+    {
+        return true;
     }
 
     /**
@@ -203,6 +237,10 @@ abstract class SysModel implements IModel, Iterator
      */
     public function delete()
     {
+        if (false === $this->beforeDelete()) {
+            return false;
+        }
+
         /** @var SysDatabase $db */
         $db = SysDatabase::getObj();
         $sql = 'DELETE FROM ' . static::$table . ' WHERE id=:id';

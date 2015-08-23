@@ -206,6 +206,19 @@ return [
                 ],
             ],
         ],
+
+        '14' => [
+            'createTable' => [
+                'name' => 'menu',
+                'primary_key' => 'id',
+                'columns' => [
+                    'id' => 'serial',
+                    'name' => 'varchar(255)',
+                    'machine_name' => 'varchar(255)',
+                    'description' => 'text',
+                ],
+            ],
+        ],
     ],
 
     'down' => [

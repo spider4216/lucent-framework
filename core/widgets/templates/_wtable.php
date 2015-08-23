@@ -66,6 +66,9 @@ use core\classes\SysWidget;
                         <?php if (isset($button['update'])): ?>
                             <a class="glyphicon glyphicon-pencil" href="<?php echo $button['update']['link'] . '?id=' . $item->id; ?>"></a>
                         <?php endif; ?>
+                        <?php if (isset($button['manage'])): ?>
+                            <a class="glyphicon glyphicon-edit" href="<?php echo $button['manage']['link'] . '?id=' . $item->id; ?>"></a>
+                        <?php endif; ?>
                         <?php if (isset($button['delete'])): ?>
                             <?php
                                 echo SysWidget::build('WBtnAsk', $model, [

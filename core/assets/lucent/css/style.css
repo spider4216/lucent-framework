@@ -51,3 +51,9 @@ footer .copyright {
     display: block;
     text-decoration: none;
 }
+
+.wtree-list-group .tools > a {
+    color: #343434;
+    cursor: pointer;
+    text-decoration: none;
+}

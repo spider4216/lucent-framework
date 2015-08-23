@@ -13,6 +13,10 @@ use core\classes\SysWidget;
         </li>
 
         <li>
+            <a href="/menu/general/"><?php echo _("Menu"); ?></a>
+        </li>
+
+        <li>
             <a href="/users/control/"><?php echo _("Users system"); ?></a>
         </li>
 
