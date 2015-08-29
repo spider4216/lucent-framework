@@ -1,48 +1,58 @@
 <?php
 namespace core\classes;
 
-
+/**
+ * Class SysCodeGenerate
+ * @package core\classes
+ * Класс генирации данных
+ */
 class SysCodeGenerate
 {
-    //of course I have to keep that sort of data in json or something like that. Need to rewrite
+    /**
+     * @param $db_name - Имя БД
+     * @param $db_username - Имя пользователя БД
+     * @param $db_password - Пароль пользователя
+     * @param string $db_host - Сервер
+     * @return string
+     * Генерирует конфигурационный файл с БД данными
+     * Возвразает json
+     */
     public static function dbFile($db_name, $db_username, $db_password, $db_host = 'localhost')
     {
-        $tpl = "<?php";
-            $tpl .= " return [";
-                $tpl .= "'db_name' => '" . $db_name . "',";
-                $tpl .= "'db_username' => '" . $db_username . "',";
-                $tpl .= "'db_password' => '" . $db_password . "',";
-                $tpl .= "'db_host' => '" . $db_host . "',";
-            $tpl .= "];";
-        $tpl .= "?>";
+        $tpl = [
+            'db_name' => $db_name,
+            'db_username' => $db_username,
+            'db_password' => $db_password,
+            'db_host' => $db_host,
+        ];
 
-        return $tpl;
+        return json_encode($tpl);
     }
 
-    public static function configMain($projectName, $lang = 'en')
+    /**
+     * @param $data - даные пришедшие из модуля установки (install)
+     * @return string
+     * Генерирует главнй конфигурационный файл проекта
+     * Возвразает json
+     */
+    public static function configMain($data)
     {
-        $tpl = "<?php";
-            $tpl .= " return [";
-                $tpl .= "'project_name' => '".$projectName."',";
-                $tpl .= "'project_system_name' => 'lucent',";
-                $tpl .= "'lang' => '".$lang."',";
-                $tpl .= "'default_controller' => 'home',";
-                $tpl .= "'default_action' => 'index',";
+        $tpl = [
+            'project_name' => $data['projectName'],
+            'project_system_name' => 'lucent',
+            'lang' => $data['lang'],
+            'default_controller' => 'home',
+            'default_action' => 'index',
+            'system_tables' => [
+                'users' => 'users',
+                'roles' => 'roles',
+            ],
+            'path' => [
+                'migration_directory' => 'app/migrations',
+            ],
+        ];
 
-                $tpl .= "'system_tables' => [";
-                    $tpl .= "'users' => 'users',";
-                    $tpl .= "'roles' => 'roles'";
-                $tpl .= "],";
-
-
-                $tpl .= "'path' => [";
-                    $tpl .= "'migration_directory' => 'app/migrations',";
-                $tpl .= "],";
-
-            $tpl .= "];";
-        $tpl .= "?>";
-
-        return $tpl;
+        return json_encode($tpl);
     }
 
 

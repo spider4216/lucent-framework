@@ -38,6 +38,11 @@ class SysModule
         return false;
     }
 
+    /**
+     * @param string $type - тип модулей: system - системный, в будущем будет пользовательский
+     * @return array - возвращается массив с конфигурационными данными модулей
+     * todo - сделать конфигурационный файлы модулей в json
+     */
     public static function getAllModules($type = 'system')
     {
         $fileManager = new ExtFileManager();
@@ -75,6 +80,10 @@ class SysModule
         return $path;
     }
 
+    /**
+     * @return bool|string
+     * Возвращает текущее наименование модуля или false - если пользователь находится не в модуле
+     */
     public static function getCurrentModuleName() {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $pathParts = explode('/', $path);

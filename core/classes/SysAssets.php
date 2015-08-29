@@ -43,6 +43,8 @@ class SysAssets {
     {
         SysAssets::setAssets('jquery/external/jquery/jquery.js', 'system');
         SysAssets::setAssets('jquery/jquery-ui.min.js', 'system');
+        SysAssets::setAssets('jquery/jquery.blockUI.js', 'system');
+        SysAssets::setAssets('jquery/notify.js', 'system');
         SysAssets::setAssets('jquery/jquery-ui.theme.min.css', 'system');
         SysAssets::setAssets('jquery/jquery-ui.structure.min.css', 'system');
         SysAssets::setAssets('jquery/jquery-ui.min.css', 'system');
@@ -116,6 +118,11 @@ class SysAssets {
         }
     }
 
+    /**
+     * @return array - массив с путями к стилям и скриптам модулей
+     * Сканирует все модули (в данный момент только системные) и "кеширует" все скрипты и стили в массив, затем
+     * вовзращает его
+     */
     private static function moduleScanAssets()
     {
         $moduleNames = SysModule::getAllModules();
@@ -141,6 +148,11 @@ class SysAssets {
         return $moduleAssets;
     }
 
+    /**
+     * @return array
+     * Переносит все скрипты и стили подключенных системных модулей с приватной core директории в
+     * публичную app директорию (если это необходимо)
+     */
     public static function moduleFilesAttach()
     {
         $files = static::moduleScanAssets();

@@ -10,6 +10,7 @@ class SysValidator
     private $compare_data = [];
     private $model;
     private $data;
+    private $errors = [];
 
     public function __construct($modelName)
     {
@@ -31,6 +32,11 @@ class SysValidator
         return false;
     }
 
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
     //$v - значение атрибута
     //$name - наименование атрибута
 
@@ -42,7 +48,10 @@ class SysValidator
 
         $attrLabel = $this->model->getLabel($name);
 
-        SysMessages::set(_("Field") . ' "' . $attrLabel . '" ' . 'can not be empty', 'danger');
+        $message = _("Field") . ' "' . $attrLabel . '" ' . 'can not be empty';
+
+        $this->errors[] = $message;
+        SysMessages::set($message, 'danger');
         return false;
     }
 
@@ -65,8 +74,11 @@ class SysValidator
         $attrLabel = $this->model->getLabel($name);
         $attrLabelAgain = $this->model->getLabel($this->compare_data['name']);
 
-        SysMessages::set(_("Field value") . ' "' . $attrLabelAgain . '" ' . _("does not match") . ' "' . $attrLabel .
-            '"', 'danger');
+        $message = _("Field value") . ' "' . $attrLabelAgain . '" ' . _("does not match") . ' "' . $attrLabel .
+            '"';
+
+        $this->errors[] = $message;
+        SysMessages::set($message, 'danger');
         return false;
     }
 
@@ -78,7 +90,10 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set(_("E-mail is not valid"), 'danger');
+        $message = _("E-mail is not valid");
+
+        $this->errors[] = $message;
+        SysMessages::set($message, 'danger');
         return false;
     }
 
@@ -91,7 +106,10 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set(_("Username or password is not valid"), 'danger');
+        $message = _("Username or password is not valid");
+
+        $this->errors[] = $message;
+        SysMessages::set($message, 'danger');
         return false;
     }
 
@@ -104,7 +122,11 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set(_("Password is not valid"), 'danger');
+        $message = _("Password is not valid");
+
+        $this->errors[] = $message;
+
+        SysMessages::set($message, 'danger');
         return false;
     }
 
@@ -119,7 +141,11 @@ class SysValidator
             return true;
         }
 
-        SysMessages::set(_("Record") . ' "' . $v . '" ' . _("has already exist"), 'danger');
+        $message = _("Record") . ' "' . $v . '" ' . _("has already exist");
+
+        $this->errors = $message;
+
+        SysMessages::set($message, 'danger');
         return false;
     }
 }

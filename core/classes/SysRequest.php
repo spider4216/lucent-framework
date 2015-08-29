@@ -1,7 +1,11 @@
 <?php
 namespace core\classes;
 
-
+/**
+ * Class SysRequest
+ * @package core\classes
+ * Класс для работы с запросами
+ */
 class SysRequest {
 
     public static function post()
@@ -29,11 +33,6 @@ class SysRequest {
     {
         header('Location: ' . $path, true, 303);
         exit();
-    }
-
-    public static function getUrl()
-    {
-        return $_SERVER['REQUEST_URI'];
     }
 
     public static function refresh()

@@ -1,0 +1,17 @@
+{
+  "project_name" : "CMF Lucent",
+  "project_system_name" : "lucent",
+  "lang" : "en",
+  "default_controller" : "home",
+  "default_action" : "index",
+
+  "system_tables" : {
+    "users" : "users",
+    "roles" : "roles"
+  },
+
+  "path" : {
+    "migration_directory" : "app/migrations"
+  }
+
+}

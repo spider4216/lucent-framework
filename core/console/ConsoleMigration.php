@@ -13,7 +13,8 @@ class ConsoleMigration {
 
     public function __construct()
     {
-        $this->config = include __DIR__ . '/../../app/config/main.php';
+        $mainConfig = file_get_contents(__DIR__ . '/../../app/config/main.json');
+        $this->config = json_decode($mainConfig, true);
         $this->database();
     }
 
@@ -166,7 +167,8 @@ class ConsoleMigration {
 
     private function database()
     {
-        $db_data = include __DIR__ . '/../../app/config/database.php';
+        $databaseConfig = file_get_contents(__DIR__ . '/../../app/config/database.json');
+        $db_data = json_decode($databaseConfig, true);
         $dsn = 'mysql:dbname=' . $db_data['db_name'] . ';host=' . $db_data['db_host'];
         $this->pdo = new \PDO($dsn, $db_data['db_username'], $db_data['db_password'],array(
                 \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")

@@ -3,8 +3,8 @@ namespace core\classes;
 
 /**
  * Class SysDatabase - класс для работы с БД на низком уровне
- * @package core\classes
- * @version 1.0
+ * @package core\system
+ * @version 1.1
  * @author farZa
  * @copyright 2015
  *
@@ -42,7 +42,9 @@ class SysDatabase
      */
     private function __construct()
     {
-        $db_data = include __DIR__ . '/../../app/config/database.php';
+        $databaseConfig = file_get_contents(__DIR__ . '/../../app/config/database.json');
+        $db_data = json_decode($databaseConfig, true);
+
         $dsn = 'mysql:dbname=' . $db_data['db_name'] . ';host=' . $db_data['db_host'];
         $this->pdo = new \PDO($dsn, $db_data['db_username'], $db_data['db_password'],array(
             \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
@@ -114,13 +116,40 @@ class SysDatabase
         return $this->pdo->lastInsertId();
     }
 
-    public static function checkDatabaseConnection($dbName, $dbHost, $dbUsername, $dbPassword)
+    /**
+     * @param $dbName - Имя БД
+     * @param $dbHost - Сервер БД
+     * @param $dbUsername - Имя пользователя
+     * @param $dbPassword - Пароль
+     * @return bool
+     * Метод проверяет соединение с конерктной базой данных
+     * Возвращает true - если соединение корректно, в обратном случае - false
+     */
+    public static function checkDatabaseConnectionByData($dbName, $dbHost, $dbUsername, $dbPassword)
     {
         $dsn = 'mysql:dbname=' . $dbName . ';host=' . $dbHost;
-        $pdo = new \PDO($dsn, $dbUsername, $dbPassword, [
-                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]
-        );
+        try {
+            $pdo = new \PDO($dsn, $dbUsername, $dbPassword);
+        } catch(\PDOException $e) {
+            return false;
+        }
 
-        return $pdo;
+        return true;
+    }
+
+    /**
+     * @return bool
+     * Метод проверяет соединение с базой данных.
+     * Возвращает true - если соединение корректно, в обратном случае - false
+     */
+    public static function checkDatabaseConnection()
+    {
+        try {
+            $db = SysDatabase::getObj();
+        } catch (\PDOException $e) {
+            return false;
+        }
+
+        return true;
     }
 }

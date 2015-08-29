@@ -26,6 +26,8 @@ abstract class SysModel implements IModel, Iterator
 
     protected static $innerJoin = false;
 
+    protected $validatorErrors = [];
+
     /**
      * @var array $data
      * Массив в который записываются и читаются данные при помощи __get и __set
@@ -164,6 +166,7 @@ abstract class SysModel implements IModel, Iterator
 
 
         if (in_array(false, $result)) {
+            $this->validatorErrors = $validator->getErrors();
             return false;
         }
 
@@ -438,6 +441,13 @@ abstract class SysModel implements IModel, Iterator
     public static function getScript()
     {
         return static::$script;
+    }
+
+    public function getErrors()
+    {
+        SysMessages::getAll();
+
+        return $this->validatorErrors;
     }
 
 }

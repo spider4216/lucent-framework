@@ -13,8 +13,13 @@
     <div class="m-row">
         <label for="lang"><?php echo _("Language"); ?></label>
         <select name="lang" id="lang" class="form-control">
-            <option value="en" selected><?php echo _("English"); ?></option>
-            <option value="ru"><?php echo _("Russian"); ?></option>
+            <option value="en" <?php echo (isset($_POST['lang']) && $_POST['lang'] == 'en') ? 'selected' : ''; ?>>
+                <?php echo _("English"); ?>
+            </option>
+
+            <option value="ru" <?php echo (isset($_POST['lang']) && $_POST['lang'] == 'ru') ? 'selected' : ''; ?>>
+                <?php echo _("Russian"); ?>
+            </option>
         </select>
     </div>
 
@@ -53,7 +58,8 @@
         <br/>
 
         <label for="dbusername"><?php echo _("Username"); ?></label>
-        <input type="text" name="dbusername" class="form-control" placeholder="<?php echo _("Username"); ?>"/>
+        <input type="text" name="dbusername" class="form-control" placeholder="<?php echo _("Username"); ?>"
+            value="<?php echo (isset($_POST['dbusername'])) ? $_POST['dbusername']: ''; ?>"/>
 
         <br/>
 
@@ -70,6 +76,7 @@
     <br/>
 
     <div class="m-row">
-        <input type="submit" class="btn btn-primary pull-right" value="<?php echo _("Install now"); ?>"/>
+        <input type="button" onclick="installProcess(this)" class="btn btn-primary pull-right"
+               value="<?php echo _("Install now"); ?>"/>
     </div>
 </form>

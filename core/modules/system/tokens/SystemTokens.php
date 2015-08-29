@@ -7,6 +7,7 @@ use core\classes\SysDisplay;
 use core\classes\SysMessages;
 use core\classes\SysPath;
 use core\extensions\ExtBreadcrumbs;
+use core\system\App;
 
 class SystemTokens {
 
@@ -21,7 +22,8 @@ class SystemTokens {
 
     public function headTitle()
     {
-        $config = include SysPath::directory('app') . '/config/main.php';
+        //$config = include SysPath::directory('app') . '/config/main.php';
+        $config = App::$config;
 
         $controller = new SysController();
         $suffix = $controller::$title;

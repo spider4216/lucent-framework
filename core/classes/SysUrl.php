@@ -7,20 +7,25 @@ use core\classes\SysMessages;
 use core\classes\exception\e404;
 use core\classes\SysRequest;
 
+/**
+ * Class SySUrl
+ * @package core\classes
+ * Класс для работы с URL
+ */
 class SySUrl
 {
     /**
-     * @param $default_ctrl
-     * @param $default_act
+     * @param $default_ctrl - контроллер по умолчанию - приходит из App
+     * @param $default_act - действие по умолчанию - приходит из App
      *
      * Метод распознавания url
      * шаблоны:
-     * <domain>/<controller>/<action>
-     * <domain>/<module>/<controller>/<action>
+     * <domain><controller><action>
+     * <domain><module><controller><action>
      */
     public static function semantic_url($default_ctrl, $default_act)
     {
-        $request_url = SysRequest::getUrl();
+        $request_url = self::getUrl();
         $display = new SysDisplay();
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $pathParts = explode('/', $path);
@@ -79,5 +84,10 @@ class SySUrl
             SysMessages::set('Страница '. $request_url .' не найдена','danger');
             $display->render('core/views/errors/404', false, true);
         }
+    }
+
+    public static function getUrl()
+    {
+        return $_SERVER['REQUEST_URI'];
     }
 }
