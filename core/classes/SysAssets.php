@@ -106,6 +106,11 @@ class SysAssets {
     {
         $fileManager = new ExtFileManager();
         $coreAssets = $fileManager->scanDir(SysPath::directory('core') . '/assets');
+
+        if (!file_exists(SysPath::directory('app') . '/assets/system')) {
+            mkdir(SysPath::directory('app') . '/assets/system');
+        }
+
         $appAssetsSystem =  $fileManager->scanDir(SysPath::directory('app') . '/assets/system');
 
         foreach ($coreAssets as $coreA) {
@@ -157,6 +162,11 @@ class SysAssets {
     {
         $files = static::moduleScanAssets();
         $publicAssetPath = SysPath::directory('app') . '/assets/modules/';
+
+        if (!file_exists($publicAssetPath)) {
+            mkdir(SysPath::directory('app') . '/assets/modules');
+        }
+
         $attached = [];
 
         foreach ($files as $moduleName => $moduleSet) {
