@@ -1,0 +1,6 @@
+{
+  "name" : "system",
+  "description" : "System module for core",
+  "version" : "1.0",
+  "core_version" : "1.0"
+}

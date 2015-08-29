@@ -3,7 +3,7 @@ namespace core\classes;
 
 /**
  * Class SysDatabase - класс для работы с БД на низком уровне
- * @package core\system
+ * @package core\classes
  * @version 1.1
  * @author farZa
  * @copyright 2015

@@ -26,13 +26,15 @@ class SysModule
 
     public static function getModuleInfo($name, $type = 'system')
     {
-        $file = SysPath::directory('core') . '/modules/' . $name . '/' . $name . '_info.php';
+        $file = SysPath::directory('core') . '/modules/' . $name . '/' . $name . '_info.json';
         if ('app' === $type) {
-            $file = SysPath::directory('app') . '/modules/' . $name . '/' . $name . '_info.php';
+            $file = SysPath::directory('app') . '/modules/' . $name . '/' . $name . '_info.json';
         }
 
         if (file_exists($file)) {
-            return include $file;
+            $moduleContent = file_get_contents($file);
+
+            return json_decode($moduleContent, true);
         }
 
         return false;
@@ -55,7 +57,8 @@ class SysModule
 
         $modules_info = [];
         foreach ($names as $name) {
-            $modules_info[] = include $directory . '/' . $name . '/' . $name . '_info.php';
+            $moduleContent = file_get_contents($directory . '/' . $name . '/' . $name . '_info.json');
+            $modules_info[] = json_decode($moduleContent, true);
         }
 
         return $modules_info;
