@@ -6,6 +6,10 @@
   "assets" : {
     "css" : [
       "assets/css/style.css"
+    ],
+
+    "js" : [
+      "assets/js/blocks.js"
     ]
   }
 }

@@ -66,6 +66,7 @@ class App
             }
         }
 
+        //Распознаем URL
         SysUrl::semantic_url(static::$config['default_controller'], static::$config['default_action']);
     }
 

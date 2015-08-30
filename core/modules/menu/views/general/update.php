@@ -28,7 +28,7 @@
         <br>
 
         <div class="m-row">
-            <input type="submit" class="btn btn-primary" value="<?php echo _("Save"); ?>">
+            <input type="button" onclick="ajaxUpdate()" class="btn btn-primary" value="<?php echo _("Save"); ?>">
             <?php
             echo \core\classes\SysWidget::build('WBtnAsk', $model, [
                 'link' => '/menu/general/delete?id=' . $model->id,

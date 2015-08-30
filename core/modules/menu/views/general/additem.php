@@ -37,7 +37,7 @@
     <br>
 
     <div class="m-row">
-        <input type="submit" class="btn btn-primary" value="<?php echo _("Save"); ?>">
+        <input type="button" onclick="AjaxAddItem()" class="btn btn-primary" value="<?php echo _("Save"); ?>">
         <input type="hidden" name="id" value="<?php echo $model->id; ?>">
     </div>
 

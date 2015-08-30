@@ -1,8 +1,10 @@
 <?php
 namespace core\modules\menu\controllers;
 
+use core\classes\exception\E403;
+use core\classes\exception\E404;
+use core\classes\SysAjax;
 use core\classes\SysController;
-use core\classes\SysDisplay;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
@@ -71,88 +73,107 @@ class generalController extends SysController
         $model->setScript('create');
         $view = new SysView();
 
-        if ($post = SysRequest::post()) {
-            $model->name = $post['name'];
-            $model->machine_name = $post['machine_name'];
-            $model->description = $post['description'];
-
-            if ($model->save()) {
-                SysMessages::set(_("Menu has been created successfully"), 'success');
-                SysRequest::redirect('/menu/general/');
-            }
-        }
-
         $view->model = $model;
         $view->display('create');
+    }
+
+    public function actionAjaxCreate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403(_("Forbidden"));
+        }
+
+        $post = $_POST;
+        $model = new Menu();
+        $model->setScript('create');
+
+        $model->name = $post['name'];
+        $model->machine_name = $post['machine_name'];
+        $model->description = $post['description'];
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Menu has been created successfully"));
     }
 
     public function actionUpdate()
     {
         static::$title = _("Create menu");
-        $display = new SysDisplay();
         $view = new SysView();
 
-        if ($post = SysRequest::post()) {
-            if (empty($post['id'])) {
-                $display->render('core/views/errors/400',false,true);
-                return false;
-            }
+        $id = SysRequest::get('id');
 
-            $model = Menu::findByPk($post['id']);
-
-            if (empty($model)) {
-                SysMessages::set(_("Menu does not exist"), 'danger');
-                SysRequest::redirect('/menu/general/');
-            }
-
-            $model->setScript('update');
-
-            $model->name = $post['name'];
-            $model->description = $post['description'];
-
-
-            if ($model->save()) {
-                SysMessages::set(_("Menu has been updated successfully"), 'success');
-                SysRequest::redirect('/menu/general/');
-            }
-
-            $view->model = $model;
-            $view->display('update');
-            return false;
+        if (empty($id)) {
+            throw new E404;
         }
 
-        if ($id = SysRequest::get('id')) {
-            $model = Menu::findByPk($id);
 
-            if (empty($model)) {
-                SysMessages::set(_("Page not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-                return false;
-            }
+        $model = Menu::findByPk($id);
 
-            $view->model = $model;
-            $view->display('update');
-            return false;
+        if (empty($model)) {
+            throw new E404;
         }
 
-        SysMessages::set(_("Page not found"), 'danger');
-        $display->render('core/views/errors/404',false,true);
+        $view->model = $model;
+        $view->display('update');
+    }
+
+    public function actionAjaxUpdate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403();
+        }
+
+        $post = $_POST;
+        $id = $post['id'];
+
+        if (empty($id)) {
+            throw new E404();
+        }
+
+        $model = Menu::findByPk($id);
+
+        if (empty($model)) {
+            throw new E404();
+        }
+
+        $model->setScript('update');
+
+        $model->name = $post['name'];
+        $model->description = $post['description'];
+
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Menu has been updated successfully"));
     }
 
     public function actionDelete()
     {
-        if ($id = SysRequest::get('id')) {
-            $model = new Menu();
-            $item = $model->findByPk($id);
+        $id = SysRequest::get('id');
 
-            if ($item->delete()) {
-                SysMessages::set(_("Menu has been deleted successfully"), 'success');
-                SysRequest::redirect('/menu/general/');
-            }
+        if (empty($id)) {
+            throw new E404;
+        }
 
-        } else {
+        $model = new Menu();
+        $item = $model->findByPk($id);
+
+        if (empty($item)) {
+            throw new E404;
+        }
+
+        if (!$item->delete()) {
+            SysMessages::set(_("Menu cannot be deleted for some reasons"), 'danger');
             SysRequest::redirect('/menu/general/');
         }
+
+        SysMessages::set(_("Menu has been deleted successfully"), 'success');
+        SysRequest::redirect('/menu/general/');
     }
 
     public function actionManage()
@@ -160,29 +181,25 @@ class generalController extends SysController
         static::$title = _("Manage menu");
 
         $view = new SysView();
-        $display = new SysDisplay();
+        $id = SysRequest::get('id');
 
-        if ($id = SysRequest::get('id')) {
-            $model = Menu::findByPk($id);
-
-            if (empty($model)) {
-                SysMessages::set(_("Page not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-                return false;
-            }
-
-            $nestedSet = new ExtNestedset($model->machine_name);
-
-            $data = $nestedSet->findAllNodes();
-
-            $view->nodes = $data;
-            $view->id = $id;
-            $view->display('manage');
-            return false;
+        if (empty($id)) {
+            throw new E404;
         }
 
-        SysMessages::set(_("Page not found"), 'danger');
-        $display->render('core/views/errors/404',false,true);
+        $model = Menu::findByPk($id);
+
+        if (empty($model)) {
+            throw new E404;
+        }
+
+        $nestedSet = new ExtNestedset($model->machine_name);
+
+        $data = $nestedSet->findAllNodes();
+
+        $view->nodes = $data;
+        $view->id = $id;
+        $view->display('manage');
     }
 
     public function actionAdditem()
@@ -190,103 +207,81 @@ class generalController extends SysController
         static::$title = _("Add item");
 
         $view = new SysView();
-        $display = new SysDisplay();
+        $id = SysRequest::get('id');
 
-        if ($post = SysRequest::post()) {
+        if (empty($id)) {
+            throw new E404;
+        }
 
-            $model = Menu::findByPk($post['id']);
+        $model = Menu::findByPk($id);
 
-            if (empty($model)) {
-                SysMessages::set(_("Page not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-                return false;
-            }
+        if (empty($model)) {
+            throw new E404;
+        }
 
-            $nestedSet = new ExtNestedset($model->machine_name);
+        $nestedSet = new ExtNestedset($model->machine_name);
+        $options = $nestedSet->findAllNodes();
 
-            if (empty($post['value']) || empty ($post['link'])) {
-                $options = $nestedSet->findAllNodes();
 
-                SysMessages::set(_("Name and link cannot be empty"), 'danger');
-                $view->model = $model;
-                $view->options = $options;
-                $view->display('additem');
-                return false;
-            }
+        $view->model = $model;
+        $view->options = $options;
+        $view->display('additem');
+    }
 
-            if ($post['items'] == '-1') {
-                //todo check tru false
-                $nestedSet->createRoot($post['value'], ['link' => $post['link']]);
+    public function actionAjaxAddItem()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403();
+        }
 
-                SysMessages::set(_("Menu item has been created successfully"), 'success');
-                SysRequest::redirect('/menu/general/manage?id=' . $post['id']);
-                //SysRequest::redirect('/menu/general/');
-            }
+        $post = $_POST;
+        $id = $post['id'];
 
+        $model = Menu::findByPk($id);
+
+        if (empty($model)) {
+            SysAjax::json_err(_("Bad Request"));
+        }
+
+        $nestedSet = new ExtNestedset($model->machine_name);
+
+        if (empty($post['value']) || empty ($post['link'])) {
+            SysAjax::json_err(_("Name and link cannot be empty"));
+        }
+
+        if ($post['items'] == '-1') {
             //todo check true false
-            $nestedSet->appendChild($post['items'], $post['value'], ['link' => $post['link']]);
-            SysMessages::set(_("Menu item has been created successfully"), 'success');
-
-            SysRequest::redirect('/menu/general/manage?id=' . $post['id']);
-
+            $nestedSet->createRoot($post['value'], ['link' => $post['link']]);
+            SysAjax::json_ok(_("Menu item has been created successfully"));
         }
 
-        if ($id = SysRequest::get('id')) {
-            $model = Menu::findByPk($id);
-
-            if (empty($model)) {
-                SysMessages::set(_("Page not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-                return false;
-            }
-
-            $nestedSet = new ExtNestedset($model->machine_name);
-            $options = $nestedSet->findAllNodes();
-
-
-            $view->model = $model;
-            $view->options = $options;
-            $view->display('additem');
-            return false;
-        }
-
-        SysMessages::set(_("Page not found"), 'danger');
-        $display->render('core/views/errors/404',false,true);
+        //todo check true false
+        $nestedSet->appendChild($post['items'], $post['value'], ['link' => $post['link']]);
+        SysAjax::json_ok(_("Menu item has been created successfully"));
     }
 
     public function actionDeleteitem()
     {
-        if ($id = SysRequest::get('id')) {
+        $id = SysRequest::get('id');
 
-            $menuId = SysRequest::get('menu_id');
-
-            $model = Menu::findByPk($menuId);
-
-            if (empty($model)) {
-                SysMessages::set(_("Menu is not correct"), 'danger');
-                SysRequest::redirect('/menu/general/');
-            }
-
-            $nestedSet = new ExtNestedset($model->machine_name);
-
-            //todo check true false
-            $nestedSet->deleteNode($id);
-
-            SysMessages::set(_("Menu item has been deleted successfully"), 'success');
-            SysRequest::redirect('/menu/general/manage?id=' . $menuId);
-
-        } else {
-            SysRequest::redirect('/menu/general/');
+        if (empty($id)) {
+            throw new E404;
         }
-    }
 
-    public function actionDemo()
-    {
-        //$nestedSet = new ExtNestedset('menu_main_menu');
+        $menuId = SysRequest::get('menu_id');
 
-        //$nestedSet->createRoot('cars');
-        //$nestedSet->appendChild('mercedes', 'auto');
+        $model = Menu::findByPk($menuId);
 
-        //$nestedSet->deleteNode('mercedes');
+        if (empty($model)) {
+            throw new E404;
+        }
+
+        $nestedSet = new ExtNestedset($model->machine_name);
+
+        //todo check true false
+        $nestedSet->deleteNode($id);
+
+        SysMessages::set(_("Menu item has been deleted successfully"), 'success');
+        SysRequest::redirect('/menu/general/manage?id=' . $menuId);
     }
 }

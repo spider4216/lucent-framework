@@ -1,12 +1,14 @@
 <?php
 namespace core\modules\regions\controllers;
 
+use core\classes\exception\E400;
+use core\classes\exception\E403;
+use core\classes\exception\E404;
+use core\classes\SysAjax;
 use core\classes\SysController;
-use core\classes\SysDisplay;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
-use core\extensions\ExtBreadcrumbs;
 use core\modules\regions\models\Regions;
 
 class generalController extends SysController
@@ -56,16 +58,26 @@ class generalController extends SysController
         $view = new SysView();
         $view->model = $model;
 
-        if ($post = SysRequest::post()) {
-            $model->name = $post['name'];
+        $view->display('create');
+    }
 
-            if ($model->save()) {
-                SysMessages::set(_("Region has been created successfully"), 'success');
-                SysRequest::redirect('/regions/general/');
-            }
+    public function actionAjaxCreate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
         }
 
-        $view->display('create');
+        $post = SysRequest::post();
+        $model = new Regions();
+        $model->setScript('create');
+
+            $model->name = $post['name'];
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Region has been created successfully"));
     }
 
     public function actionUpdate()
@@ -73,68 +85,65 @@ class generalController extends SysController
         static::$title = _("Update region");
 
         $view = new SysView();
-        $display = new SysDisplay();
-
         $id = SysRequest::get('id');
-        $post = SysRequest::post();
 
-        if (!empty($post)) {
-            $model = Regions::findByPk($post['id']);
-            if (empty($model)) {
-                SysMessages::set(_("Region not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-            }
-            $model->setScript('update');
-            $model->name = $post['name'];
-
-//            var_dump($model->isUniqueExceptRecord('name', $model->name));
-//            return true;
-
-            if ($model->save()) {
-                SysMessages::set(_("Region has been updated successfully"), 'success');
-                SysRequest::redirect('/regions/general/');
-            } else {
-                $view->item = $model;
-                $view->display('update');
-                return true;
-            }
+        if (empty($id)) {
+            throw new E404;
         }
 
-        if (!empty($id)) {
-            $model = Regions::findByPk($id);
-            if (empty($model)) {
-                SysMessages::set(_("Region not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-                return true;
-            }
+        $model = Regions::findByPk($id);
 
-            $view->item = $model;
-        } else {
-            SysMessages::set(_("Region not found"), 'danger');
-            $display->render('core/views/errors/404',false,true);
-            return true;
+        if (empty($model)) {
+            throw new E404;
         }
 
-
+        $view->item = $model;
         $view->display('update');
+    }
+
+    public function actionAjaxUpdate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
+        }
+
+        $post = $_POST;
+
+        $model = Regions::findByPk((int)$post['id']);
+
+        if (empty($model)) {
+            throw new E400;
+        }
+
+        $model->setScript('update');
+        $model->name = $post['name'];
+
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Region has been updated successfully"));
     }
 
     public function actionDelete()
     {
-        if ($id = SysRequest::get('id')) {
-            $model = Regions::findByPk($id);
-            if (empty($model)) {
-                SysMessages::set(_("Region not found"), 'danger');
-                SysRequest::redirect('/regions/general/');
-            }
+        $id = SysRequest::get('id');
 
-            $regionName = $model->name;
+        if (empty($id)) {
+            throw new E404;
+        }
 
-            if (false !== $model->delete()) {
-                SysMessages::set(_("Region has been deleted successfully"), 'success');
-            } else {
-                SysMessages::set(_("Region can not be deleted"), 'danger');
-            }
+        $model = Regions::findByPk($id);
+
+        if (empty($model)) {
+            throw new E404;
+        }
+
+        if ($model->delete()) {
+            SysMessages::set(_("Region has been deleted successfully"), 'success');
+        } else {
+            SysMessages::set(_("Region can not be deleted"), 'danger');
         }
 
         SysRequest::redirect('/regions/general/');

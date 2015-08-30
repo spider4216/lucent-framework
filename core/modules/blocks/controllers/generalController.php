@@ -2,8 +2,10 @@
 
 namespace core\modules\blocks\controllers;
 
+use core\classes\exception\E400;
+use core\classes\exception\E404;
+use core\classes\SysAjax;
 use core\classes\SysController;
-use core\classes\SysDisplay;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
@@ -51,7 +53,7 @@ class generalController extends SysController
 
         $regions = Regions::findAll();
         $i = 0;
-        $tt = [];
+
         foreach ($regions as $region) {
             $template[$i]['regionName'] = $region->name;
 
@@ -69,9 +71,7 @@ class generalController extends SysController
             $i++;
         }
 
-        //var_dump($template);
         $view->template = $template;
-        //--
 
         $view->blocks = $blocks;
         $view->display('index');
@@ -85,24 +85,33 @@ class generalController extends SysController
         $model = new Blocks();
         $regions = Regions::findAll();
 
-        if ($post = SysRequest::post()) {
-            $model->name = $post['name'];
-            $model->content = $post['content'];
-            $model->weight = $post['weight'];
-
-            if ('none' != $post['region_id']) {
-                $model->region_id = $post['region_id'];
-            }
-
-            if ($model->save()) {
-                SysMessages::set(_("Block has been created successfully"), 'success');
-                SysRequest::redirect('/blocks/general/');
-            }
-        }
-
         $view->model = $model;
         $view->regions = $regions;
         $view->display('create');
+    }
+
+    public function actionAjaxCreate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E400(_("Bad Request"));
+        }
+
+        $post = $_POST;
+
+        $model = new Blocks();
+        $model->name = $post['name'];
+        $model->content = $post['content'];
+        $model->weight = $post['weight'];
+
+        if ('none' != $post['region_id']) {
+            $model->region_id = $post['region_id'];
+        }
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Block has been created successfully"));
     }
 
     public function actionUpdate()
@@ -110,55 +119,49 @@ class generalController extends SysController
         static::$title = _("Update block");
 
         $view = new SysView();
-        $display = new SysDisplay();
         $regions = Regions::findAll();
 
-        if ($post = SysRequest::post()) {
-            $model = Blocks::findByPk($post['id']);
+        $id = SysRequest::get('id');
 
-            if (empty($model)) {
-                SysMessages::set(_("Block not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-                return true;
-            }
-
-            $model->name = $post['name'];
-            $model->content = $post['content'];
-            $model->region_id = $post['region_id'];
-            $model->weight = $post['weight'];
-
-            if ($model->save()) {
-                SysMessages::set(_("Block has been updated successfully"), 'success');
-                SysRequest::redirect('/blocks/general/');
-            } else {
-                $view->model = $model;
-                $view->regions = $regions;
-                $view->regionSelected = $model->region_id;
-
-                $view->display('update');
-                return true;
-            }
+        if (empty($id)) {
+            throw new E404(_("Block not found"));
         }
 
+        $model = Blocks::findByPk($id);
 
-        if ($id = SysRequest::get('id')) {
-            $model = Blocks::findByPk($id);
-
-            if (empty($model)) {
-                SysMessages::set(_("Block not fount"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-                return true;
-            }
-
-            $view->model = $model;
-            $view->regions = $regions;
-            $view->regionSelected = $model->region_id;
-
-            $view->display('update');
-        } else {
-            SysMessages::set(_("Block not found"), 'danger');
-            $display->render('core/views/errors/404',false,true);
+        if (empty($model)) {
+            throw new E404(_("Block not fount"));
         }
+
+        $view->model = $model;
+        $view->regions = $regions;
+        $view->regionSelected = $model->region_id;
+
+        $view->display('update');
+
+
+    }
+
+    public function actionAjaxUpdate()
+    {
+        $post = $_POST;
+
+        $model = Blocks::findByPk($post['id']);
+
+        if (empty($model)) {
+            throw new E404(_("Block not found"));
+        }
+
+        $model->name = $post['name'];
+        $model->content = $post['content'];
+        $model->region_id = $post['region_id'];
+        $model->weight = $post['weight'];
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Block has been updated successfully"));
     }
 
     public function actionDelete()
@@ -169,8 +172,6 @@ class generalController extends SysController
                 SysMessages::set(_("Block not found"), 'danger');
                 SysRequest::redirect('/blocks/general/');
             }
-
-            $blockName = $model->name;
 
             if (false !== $model->delete()) {
                 SysMessages::set(_("Block has been deleted successfully"), 'success');

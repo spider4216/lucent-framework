@@ -42,7 +42,7 @@ class SysDisplay {
         if (false == $layout) {
             if (!$return) {
                 echo $content;
-                return true;
+                exit();
             }
 
             return $content;
@@ -57,7 +57,7 @@ class SysDisplay {
 
         if (!$return) {
             echo $content_final;
-            return true;
+            exit();
         }
 
         return $content_final;

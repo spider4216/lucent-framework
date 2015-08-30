@@ -2,7 +2,7 @@
 
 namespace core\classes;
 
-use core\classes\exception\e404;
+use core\classes\exception\E404;
 use core\system\app;
 use core\extensions\ExtFileManager;
 

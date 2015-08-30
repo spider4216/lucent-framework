@@ -2,6 +2,8 @@
 
 namespace core\classes;
 
+use core\classes\exception\E400;
+use core\classes\exception\E403;
 use core\classes\SysDisplay;
 use core\classes\SysMessages;
 use core\classes\exception\e404;
@@ -25,6 +27,7 @@ class SySUrl
      */
     public static function semantic_url($default_ctrl, $default_act)
     {
+        //Получаю текущий url
         $request_url = self::getUrl();
         $display = new SysDisplay();
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -46,7 +49,6 @@ class SySUrl
             if (!class_exists($controllerClassNameFull)) {
                 SysMessages::set('Страница '. $request_url .' не найдена','danger');
                 $display->render('core/views/errors/404', false, true);
-                return false;
             }
         } else {
             $namespace = 'app\\controllers\\';
@@ -60,7 +62,6 @@ class SySUrl
             if (!class_exists($controllerClassNameFull)) {
                 SysMessages::set('Страница '. $request_url .' не найдена','danger');
                 $display->render('core/views/errors/404', false, true);
-                return false;
             }
         }
 
@@ -80,12 +81,24 @@ class SySUrl
                 SysMessages::set('Доступ запрещен','danger');
                 $display->render('core/views/errors/403', false, true);
             }
-        } catch (E404 $e) {
-            SysMessages::set('Страница '. $request_url .' не найдена','danger');
-            $display->render('core/views/errors/404', false, true);
+        } catch (\Exception $e) {
+            if ($e instanceof E404) {
+                SysMessages::set('Страница '. $request_url .' не найдена','danger');
+                $display->render('core/views/errors/404', false, true);
+            } elseif ($e instanceof E403) {
+                SysMessages::set('Доступ к странице '. $request_url .' запрещен','danger');
+                $display->render('core/views/errors/403', false, true);
+            } elseif ($e instanceof E400) {
+                SysMessages::set('Негодный запрос к странице '. $request_url,'danger');
+                $display->render('core/views/errors/400', false, true);
+            }
         }
     }
 
+    /**
+     * @return mixed
+     * Получаю текущий URL
+     */
     public static function getUrl()
     {
         return $_SERVER['REQUEST_URI'];

@@ -35,7 +35,7 @@
         <br>
 
         <div class="m-row">
-            <input type="submit" class="btn btn-primary" value="<?php echo _("Save"); ?>">
+            <input type="button" onclick="ajaxCreate()" class="btn btn-primary" value="<?php echo _("Save"); ?>">
         </div>
 
     </form>

@@ -1,8 +1,8 @@
 <?php
 namespace core\modules\install\controllers;
 
+use core\classes\exception\E403;
 use core\classes\SysAjax;
-use core\classes\SysAuth;
 use core\classes\SysCodeGenerate;
 use core\classes\SysController;
 use core\classes\SysDatabase;
@@ -44,6 +44,10 @@ class setupController extends SysController
     public function actionProcess()
     {
         //todo если не аякс выбросить исключение
+        if (!SysAjax::isAjax()) {
+            throw new E403(_("Forbidden"));
+        }
+
         $post = $_POST;
 
          foreach ($post as $key => $p) {

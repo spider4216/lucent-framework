@@ -4,7 +4,7 @@ function ajaxCreate() {
 
     $.ajax({
         type: 'post',
-        url: '/page/basic/ajaxcreate',
+        url: '/blocks/general/ajaxcreate',
         data: formData,
         dataType: 'json',
         beforeSend: function() {
@@ -26,7 +26,7 @@ function ajaxCreate() {
             if ('ok' == result.status) {
                 $.notify(result.text, "success");
                 setTimeout(function() {
-                    window.location.href = '/page/basic/';
+                    window.location.href = '/blocks/general/';
                 }, 1000);
             }
         },
@@ -42,7 +42,7 @@ function ajaxUpdate() {
 
     $.ajax({
         type: 'post',
-        url: '/page/basic/ajaxupdate',
+        url: '/blocks/general/ajaxupdate',
         data: formData,
         dataType: 'json',
         beforeSend: function() {
@@ -64,7 +64,7 @@ function ajaxUpdate() {
             if ('ok' == result.status) {
                 $.notify(result.text, "success");
                 setTimeout(function() {
-                    window.location.href = '/page/basic/';
+                    window.location.href = '/blocks/general/';
                 }, 1000);
             }
         },

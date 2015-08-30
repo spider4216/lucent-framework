@@ -1,8 +1,10 @@
 <?php
 namespace core\modules\page\controllers;
 
+use core\classes\exception\E403;
+use core\classes\exception\E404;
+use core\classes\SysAjax;
 use core\classes\SysController;
-use core\classes\SysDisplay;
 use core\classes\SysView;
 use core\modules\page\models\Page;
 use core\classes\SysRequest;
@@ -65,19 +67,29 @@ class basicController extends SysController{
 
         $view = new SysView();
         $model = new Page();
+
         $view->model = $model;
 
-        if ($post = SysRequest::post()) {
-            $model->title = $post['title'];
-            $model->content = $post['content'];
+        $view->display('create');
+    }
 
-            if ($model->save()) {
-                SysMessages::set(_("Page has been created successfully"), 'success');
-                SysRequest::redirect('/page/basic/');
-            }
+    public function actionAjaxCreate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
         }
 
-        $view->display('create');
+        $post = SysRequest::post();
+        $model = new Page();
+
+        $model->title = $post['title'];
+        $model->content = $post['content'];
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Page has been created successfully"));
     }
 
     public function actionUpdate()
@@ -85,92 +97,95 @@ class basicController extends SysController{
         static::$title = _("Edit page");
 
         $view = new SysView();
-        $display = new SysDisplay();
+        $id = SysRequest::get('id');
 
-        if ($post = SysRequest::post()) {
-            $model = Page::findByPk($post['id']);
-
-            if (empty($model)) {
-                SysMessages::set(_("Page not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-            }
-
-            $model->title = $post['title'];
-            $model->content = $post['content'];
-
-            $view->model = $model;
-
-            if ($model->save()) {
-                SysMessages::set(_("Page has been updated successfully"), 'success');
-                SysRequest::redirect('/page/basic/');
-            }
-
-            $view->display('update');
-            return true;
+        if (empty($id)) {
+            throw new E404;
         }
 
-        if ($id = SysRequest::get('id')) {
-            $model = Page::findByPk($id);
+        $model = Page::findByPk($id);
 
-            if (empty($model)) {
-                SysMessages::set(_("Page not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-            }
-
-            $view->model = $model;
-            $view->display('update');
-            return true;
+        if (empty($model)) {
+            throw new E404;
         }
 
-        SysMessages::set(_("Page not found"), 'danger');
-        $display->render('core/views/errors/404',false,true);
+        $view->model = $model;
+        $view->display('update');
 
+    }
+
+    public function actionAjaxUpdate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
+        }
+
+        $post = SysRequest::post();
+
+        $model = Page::findByPk((int)$post['id']);
+
+        if (empty($model)) {
+            SysAjax::json_err(_("Bad Request"));
+        }
+
+        $model->title = $post['title'];
+        $model->content = $post['content'];
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Page has been updated successfully"));
     }
 
     public function actionView()
     {
-        $display = new SysDisplay();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'view');
+        $id = SysRequest::get('id');
 
-        if ($id = SysRequest::get('id')) {
-            $model = new Page();
-            $view = new SysView();
-            $view->breadcrumbs = $breadcrumbs;
-
-            $view->model = $model;
-            $item = $model->findByPk($id);
-
-            if (!empty($item)) {
-                static::$title = $item->title;
-            }
-
-            if (!$item) {
-                SysMessages::set(_("Page not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-            }
-
-            $view->item = $item;
-
-            $view->display('view');
-        } else {
-            SysMessages::set(_("Page not found"), 'danger');
-            $display->render('core/views/errors/404',false,true);
+        if (empty($id)) {
+            throw new E404;
         }
+
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'view');
+        $model = new Page();
+        $view = new SysView();
+
+        $view->model = $model;
+        $item = $model->findByPk($id);
+
+        if (empty($item)) {
+            throw new E404;
+        }
+
+        static::$title = $item->title;
+
+        $view->item = $item;
+        $view->breadcrumbs = $breadcrumbs;
+
+        $view->display('view');
     }
 
     public function actionDelete()
     {
-        if ($id = SysRequest::get('id')) {
-            $model = new Page();
-            $item = $model->findByPk($id);
+        $id = SysRequest::get('id');
 
-            if ($item->delete()) {
-                SysMessages::set(_("Page has been deleted successfully"), 'success');
-                SysRequest::redirect('/page/basic/');
-            }
+        if (empty($id)) {
+            throw new E404;
+        }
 
-        } else {
+        $model = new Page();
+        $item = $model->findByPk($id);
+
+        if (empty($item)) {
+            throw new E404;
+        }
+
+        if (!$item->delete()) {
+            SysMessages::set(_("Page cannot be deleted"), 'danger');
             SysRequest::redirect('/page/basic/');
         }
+
+        SysMessages::set(_("Page has been deleted successfully"), 'success');
+        SysRequest::redirect('/page/basic/');
     }
 }

@@ -10,7 +10,8 @@ class SysAjax
 {
     public static function isAjax()
     {
-        if (filter_input(INPUT_SERVER, 'HTTP_X_REQUESTED_WITH') === 'xmlhttprequest') {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) ==
+            'xmlhttprequest') {
             return true;
         }
 
