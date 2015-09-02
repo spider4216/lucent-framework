@@ -10,7 +10,6 @@ use core\classes\SysView;
 use core\classes\SysRequest;
 use core\modules\users\models\Roles;
 use core\classes\SysDisplay;
-use core\extensions\ExtBreadcrumbs;
 
 class RolesController extends SysController
 {

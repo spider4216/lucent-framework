@@ -24,7 +24,8 @@ use core\classes\SysWidget;
 
         <div class="m-row">
             <input type="hidden" value="<?php echo $model->id; ?>" name="id" />
-            <input type="button" onclick="ajaxUpdate()" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
+            <input type="button" onclick="SysAjaxSave('/users/roles/ajaxupdate', '/users/roles/')"
+                   value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
             <?php
             echo SysWidget::build('WBtnAsk', $model, [
                 'link' => '/users/roles/delete?id=' . $model->id,

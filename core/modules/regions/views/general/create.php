@@ -17,7 +17,8 @@
         </div>
 
         <div class="m-row">
-            <input type="button" onclick="ajaxCreate()" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
+            <input type="button" onclick="SysAjaxSave('/regions/general/ajaxcreate', '/regions/general/')"
+                   value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

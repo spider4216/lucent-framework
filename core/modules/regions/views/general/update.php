@@ -22,7 +22,8 @@ use core\classes\SysWidget;
 
         <div class="m-row">
             <input type="hidden" name="id" value="<?php echo $item->id; ?>"/>
-            <input type="button" onclick="ajaxUpdate()" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
+            <input type="button" onclick="SysAjaxSave('/regions/general/ajaxupdate', '/regions/general/')"
+                   value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
             <?php
             echo SysWidget::build('WBtnAsk', $item, [
                 'link' => '/regions/general/delete?id=' . $item->id,

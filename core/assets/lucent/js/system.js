@@ -1,7 +1,7 @@
-function installProcess(e) {
-    var form = $('form');
-    var url = form.attr('action');
+function SysAjaxSave(url, redirect) {
+    var form = $("form");
     var formData = form.serialize();
+
     $.ajax({
         type: 'post',
         url: url,
@@ -26,11 +26,9 @@ function installProcess(e) {
             if ('ok' == result.status) {
                 $.notify(result.text, "success");
                 setTimeout(function() {
-                    window.location.href = '/install/setup/finish';
-                }, 500);
+                    window.location.href = redirect;
+                }, 1000);
             }
-
-            console.log(result);
         },
         complete: function() {
             $(window).unblock();

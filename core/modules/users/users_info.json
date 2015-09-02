@@ -5,8 +5,7 @@
   "core_version" : "1.0",
   "assets" : {
     "js" : [
-      "assets/js/users.js",
-      "assets/js/roles.js"
+      "assets/js/users.js"
     ]
   }
 }

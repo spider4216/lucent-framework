@@ -76,7 +76,7 @@
     <br/>
 
     <div class="m-row">
-        <input type="button" onclick="installProcess(this)" class="btn btn-primary pull-right"
-               value="<?php echo _("Install now"); ?>"/>
+        <input type="button" onclick="SysAjaxSave('/install/setup/process', '/install/setup/finish')"
+               class="btn btn-primary pull-right" value="<?php echo _("Install now"); ?>"/>
     </div>
 </form>

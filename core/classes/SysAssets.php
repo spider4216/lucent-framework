@@ -57,6 +57,7 @@ class SysAssets {
 
         SysAssets::setAssets('lucent/css/style.css', 'system');
         SysAssets::setAssets('lucent/js/script.js', 'system');
+        SysAssets::setAssets('lucent/js/system.js', 'system');
     }
 
     public static function initModuleAssets()
