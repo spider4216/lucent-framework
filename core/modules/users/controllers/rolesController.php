@@ -1,6 +1,9 @@
 <?php
 namespace core\modules\users\controllers;
 
+use core\classes\exception\E403;
+use core\classes\exception\E404;
+use core\classes\SysAjax;
 use core\classes\SysController;
 use core\classes\SysMessages;
 use core\classes\SysView;
@@ -65,17 +68,25 @@ class RolesController extends SysController
         $view = new SysView();
 
         $view->model = $model;
+        $view->display('create');
+    }
 
-        if ($post = SysRequest::post()) {
-            $model->name = $post['name'];
-
-            if ($model->save()) {
-                SysMessages::set(_("Role has been created successfully"), 'success');
-                SysRequest::redirect('/users/roles/');
-            }
+    public function actionAjaxCreate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
         }
 
-        $view->display('create');
+        $post = SysRequest::post();
+        $model = new Roles();
+
+        $model->name = $post['name'];
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Role has been created successfully"));
     }
 
     public function actionUpdate()
@@ -84,60 +95,61 @@ class RolesController extends SysController
 
         $view = new SysView();
         $display = new SysDisplay();
+        $id = SysRequest::get('id');
 
-        if($post = SysRequest::post()) {
-            $model = Roles::findByPk($post['id']);
-
-            if (empty($model)) {
-                SysMessages::set(_("Role not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-            }
-
-            $model->name = $post['name'];
-
-            if ($model->save()) {
-                SysMessages::set(_("Role has been updated successfully"), 'success');
-                SysRequest::redirect('/users/roles/');
-            } else {
-                $model = Roles::findByPk($post['id']);
-                $view->model = $model;
-                $view->display('update');
-            }
+        if (empty($id)) {
+            throw new E404;
         }
 
-        if ($id = SysRequest::get('id')) {
-            $model = Roles::findByPk($id);
+        $model = Roles::findByPk($id);
 
-            if (empty($model)) {
-                SysMessages::set(_("Role not found"), 'danger');
-                $display->render('core/views/errors/404',false,true);
-                return true;
-            }
-
-            $view->model = $model;
-            $view->display('update');
-        } else {
-            SysMessages::set(_("Role not found"), 'danger');
-            $display->render('core/views/errors/404',false,true);
+        if (empty($model)) {
+            throw new E404;
         }
+
+        $view->model = $model;
+        $view->display('update');
+    }
+
+    public function actionAjaxUpdate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
+        }
+
+        $post = SysRequest::post();
+        $model = Roles::findByPk($post['id']);
+
+        if (empty($model)) {
+            SysAjax::json_err(_("Role not found"));
+        }
+
+        $model->name = $post['name'];
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        SysAjax::json_ok(_("Role has been updated successfully"));
     }
 
     public function actionDelete()
     {
-        if ($id = SysRequest::get('id')) {
-            $model = Roles::findByPk($id);
+        $id = SysRequest::get('id');
 
-            if ($model->id == '1' || $model->id == '2') {
-                SysMessages::set(_("System role can not be deleted"), 'danger');
-                SysRequest::redirect('/users/roles/');
-            }
+        if (empty($id)) {
+            throw new E404;
+        }
 
-            if ($model->delete()) {
-                SysMessages::set(_("Role has been deleted successfully"), 'success');
-                SysRequest::redirect('/users/roles/');
-            }
-        } else {
-            SysMessages::set(_("Role can not be deleted"), 'danger');
+        $model = Roles::findByPk($id);
+
+        if ($model->id == '1' || $model->id == '2') {
+            SysMessages::set(_("System role can not be deleted"), 'danger');
+            SysRequest::redirect('/users/roles/');
+        }
+
+        if ($model->delete()) {
+            SysMessages::set(_("Role has been deleted successfully"), 'success');
             SysRequest::redirect('/users/roles/');
         }
     }

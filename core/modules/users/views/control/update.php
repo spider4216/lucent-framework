@@ -47,7 +47,7 @@ use core\classes\SysWidget;
         </div>
 
         <div class="m-row">
-            <input type="submit" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
+            <input type="button" onclick="ajaxUpdate()" value="<?php echo _("Save"); ?>" class="btn btn-primary"/>
             <?php
                 echo SysWidget::build('WBtnAsk', $model, [
                     'link' => '/users/control/delete?id=' . $model->id,

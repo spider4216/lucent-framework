@@ -44,7 +44,7 @@ use core\classes\SysWidget;
         </div>
 
         <div class="m-row">
-            <input type="submit" value="<?php echo _("Sign in"); ?>" class="btn btn-primary"/>
+            <input type="button" onclick="ajaxLogin()" value="<?php echo _("Sign in"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

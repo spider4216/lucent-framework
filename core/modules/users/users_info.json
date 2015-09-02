@@ -2,5 +2,11 @@
   "name" : "users",
   "description" : "Users system",
   "version" : "1.0",
-  "core_version" : "1.0"
+  "core_version" : "1.0",
+  "assets" : {
+    "js" : [
+      "assets/js/users.js",
+      "assets/js/roles.js"
+    ]
+  }
 }

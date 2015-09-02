@@ -22,7 +22,7 @@ use core\classes\SysWidget;
         </div>
 
         <div class="m-row">
-            <input type="submit" value="<?php echo _("Create"); ?>" class="btn btn-primary"/>
+            <input type="button" onclick="ajaxCreate()" value="<?php echo _("Create"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

@@ -1,11 +1,13 @@
 <?php
 namespace core\modules\users\controllers;
 
+use core\classes\exception\E403;
+use core\classes\exception\E404;
+use core\classes\SysAjax;
 use core\classes\SysAuth;
 use core\classes\SysController;
 use core\classes\SysMessages;
 use core\classes\SysPassword;
-use core\classes\SysDisplay;
 use core\classes\SysView;
 use core\classes\SysRequest;
 use core\modules\users\models\Roles;
@@ -63,7 +65,7 @@ class ControlController extends SysController
 
     public function actionIndex()
     {
-        static::$title = 'Система пользователей';
+        static::$title = _("Users system");
 
         $view = new SysView();
 
@@ -72,28 +74,27 @@ class ControlController extends SysController
 
     public function actionUser()
     {
-        $display = new SysDisplay();
-        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'user');
+        static::$title = _("Profile");
 
-        if ($id = SysRequest::get('id')) {
-            $view = new SysView();
-            $view->breadcrumbs = $breadcrumbs;
-            $user = Users::findByPk($id);
-            //static::$title = $user->username;
-            static::$title = _("Profile");
+        $id = SysRequest::get('id');
 
-            if (!$user) {
-                SysMessages::set(_("user not found"), 'danger');
-                $display->render('core/views/errors/404', false, true);
-            }
-
-            $view->user = $user;
-
-            $view->display('user');
-        } else {
-            SysMessages::set(_("user not found"), 'danger');
-            $display->render('core/views/errors/404', false, true);
+        if (empty($id)) {
+            throw new E404;
         }
+
+        $user = Users::findByPk($id);
+
+        if (empty($user)) {
+            throw new E404;
+        }
+
+        $breadcrumbs = ExtBreadcrumbs::getAll($this, 'user');
+        $view = new SysView();
+
+        $view->breadcrumbs = $breadcrumbs;
+        $view->user = $user;
+
+        $view->display('user');
     }
 
     public function actionRegister()
@@ -106,24 +107,39 @@ class ControlController extends SysController
 
         $view->model = $model;
 
-        if ($post = SysRequest::post()) {
-            $model->username = $post['username'];
-            $model->password = SysPassword::hash($post['password']);
-            $model->email = $post['email'];
-            $model->role_id = 2;
-
-            if ($model->save()) {
-                SysMessages::set(_("User has been created successfully"), 'success');
-                SysAuth::login($model, $post['username'], $post['password']);
-                SysRequest::redirect('/users/control/user?id=' . $model->id);
-            }
-        }
-
         if (SysAuth::is_login()) {
             SysMessages::set(_("You have already signed up"), 'info');
         }
 
         $view->display('register');
+    }
+
+    public function actionAjaxRegister()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
+        }
+
+        $model = new Users();
+        $model->setScript('create');
+        $post = SysRequest::post();
+
+        $model->username = $post['username'];
+        $model->password = SysPassword::hash($post['password']);
+        $model->email = $post['email'];
+        $model->role_id = 2;
+
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
+        }
+
+        $id = SysAuth::login($model, $post['username'], $post['password']);
+
+        if (!$id) {
+            SysAjax::json_err(_("cannot signed in"));
+        }
+
+        SysAjax::json_ok(_("User has been created successfully"), ['id' => $id]);
     }
 
     public function actionLogin()
@@ -133,21 +149,28 @@ class ControlController extends SysController
         $view = new SysView();
         $model = new Users();
 
-        if ($post = SysRequest::post()) {
-            if ($id = SysAuth::login($model, $post['username'], $post['password'])) {
-                SysMessages::set(_("You signed in as") . ' "' . $post['username'] . '"', 'success');
-                SysRequest::redirect('/users/control/user?id=' . $id);
-            } else {
-                SysMessages::set(_("username or password is not suitable"), 'danger');
-            }
-        }
-
         if (SysAuth::is_login()) {
             SysMessages::set(_("you have already logged in"), 'info');
         }
 
         $view->model = $model;
         $view->display('login');
+    }
+
+    public function actionAjaxLogin()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
+        }
+
+        $model = new Users();
+        $post = SysRequest::post();
+
+        if ($id = SysAuth::login($model, $post['username'], $post['password'])) {
+            SysAjax::json_ok(_("You signed in as") . ' "' . $post['username'] . '"', ['id' => $id]);
+        }
+
+        SysAjax::json_err(_("username or password is not suitable"));
     }
 
     public function actionLogout()
@@ -176,76 +199,76 @@ class ControlController extends SysController
         static::$title = _("Edit user");
 
         $roleList = Roles::findAll();
-        $display = new SysDisplay();
         $view = new SysView();
+        $id = SysRequest::get('id');
+
+        if (empty($id)) {
+            throw new E404;
+        }
+
+        $model = Users::findByPk($id);
+
+        if (!$model) {
+            throw new E404;
+        }
 
         $view->roleList = $roleList;
+        $view->model = $model;
+        $view->display('update');
+    }
 
-        if ($post = SysRequest::post()) {
-            $model = Users::findByPk($post['id']);
-            $model->setScript('update');
-
-            $model->username = $post['username'];
-            $model->email = $post['email'];
-            $model->password = SysPassword::hash($post['password']);
-            $model->role_id = $post['roles'];
-
-            if ($model->save()) {
-                if ($model->id == SysAuth::getCurrentUserId()) {
-                    SysMessages::set(_("User has been updated successfully.") .
-                        ' ' . _("Sign in system again"), 'success');
-                    SysAuth::logout();
-                    SysRequest::redirect('/users/control/login');
-                }
-
-                SysMessages::set(_("User has been updated successfully"), 'success');
-                SysRequest::redirect('/users/control/manage');
-            }
-
-            $view->model = $model;
-
-            $view->display('update');
-            return true;
+    public function actionAjaxUpdate()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
         }
 
-        if ($id = SysRequest::get('id')) {
-            $model = Users::findByPk($id);
+        $post = SysRequest::post();
+        $model = Users::findByPk($post['id']);
+        $model->setScript('update');
 
-            if (!$model) {
-                SysMessages::set(_("user not found"), 'danger');
-                $display->render('core/views/errors/404', false, true);
-                return true;
-            }
+        $model->username = $post['username'];
+        $model->email = $post['email'];
+        $model->password = SysPassword::hash($post['password']);
+        $model->role_id = $post['roles'];
 
-            $view->model = $model;
-            $view->display('update');
-        } else {
-            SysMessages::set(_("user not found"), 'danger');
-            $display->render('core/views/errors/404', false, true);
-            return true;
+        if (!$model->save()) {
+            SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
+
+        if ($model->id == SysAuth::getCurrentUserId()) {
+            SysAjax::json_ok(_("User has been updated successfully. Sign in system again"), ['login' => 'true']);
+            SysAuth::logout();
+        }
+
+        SysAjax::json_ok(_("User has been updated successfully"));
     }
 
     public function actionDelete()
     {
-        if ($id = SysRequest::get('id')) {
-            $model = Users::findByPk($id);
-            if (SysAuth::getCurrentUserId() != $model->id) {
-                if ($model->delete()) {
-                    SysMessages::set(_("User has been deleted successfully"), 'success');
-                } else {
-                    //SysMessages::set(_("Ошибка при удалении пользователя"), 'danger');
-                    SysMessages::set(_("user can not be removed"), 'danger');
-                }
-            } else {
-                SysMessages::set(_("authorized user can not be removed"), 'danger');
-                SysRequest::redirect('/users/control/manage');
-            }
-            SysRequest::redirect('/users/control/manage');
-        } else {
-            $display = new SysDisplay();
-            SysMessages::set(_("unidentified user"), 'danger');
-            $display->render('core/views/errors/404', false, true);
+        $id = SysRequest::get('id');
+
+        if (empty($id)) {
+            throw new E404;
         }
+
+        $model = Users::findByPk($id);
+
+        if (empty($model)) {
+            throw new E404;
+        }
+
+        if (SysAuth::getCurrentUserId() == $model->id) {
+            SysMessages::set(_("authorized user can not be removed"), 'danger');
+            SysRequest::redirect('/users/control/manage');
+        }
+
+        if ($model->delete()) {
+            SysMessages::set(_("User has been deleted successfully"), 'success');
+        } else {
+            SysMessages::set(_("user can not be removed"), 'danger');
+        }
+
+        SysRequest::redirect('/users/control/manage');
     }
 }

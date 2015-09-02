@@ -143,7 +143,7 @@ class SysValidator
 
         $message = _("Record") . ' "' . $v . '" ' . _("has already exist");
 
-        $this->errors = $message;
+        $this->errors[] = $message;
 
         SysMessages::set($message, 'danger');
         return false;

@@ -18,15 +18,33 @@ class SysAjax
         return false;
     }
 
-    public static function json_ok($message)
+    public static function json_ok($message, $data = [])
     {
-        echo json_encode(['status' => 'ok', 'text' => $message]);
+        $result = [
+            'status' => 'ok',
+            'text' => $message
+        ];
+
+        if (!empty($data)) {
+            $result = array_merge($result, $data);
+        }
+
+        echo json_encode($result);
         exit();
     }
 
-    public static function json_err($message)
+    public static function json_err($message, $data = [])
     {
-        echo json_encode(['status' => 'err', 'text' => $message]);
+        $result = [
+            'status' => 'err',
+            'text' => $message
+        ];
+
+        if (!empty($data)) {
+            $result = array_merge($result, $data);
+        }
+
+        echo json_encode($result);
         exit();
     }
 }
