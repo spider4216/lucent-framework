@@ -7,7 +7,12 @@ class Users extends SysModel
 {
     public static $table = 'users';
 
-    public $password_again;
+    public function additionalFields()
+    {
+        return [
+            'password_again' => '',
+        ];
+    }
 
     public static function labels()
     {
@@ -17,6 +22,7 @@ class Users extends SysModel
             'password_again' => _("Repeat password again"),
             'email' => _("E-mail"),
             'roles' => _("Role"),
+            'hash' => _("Hash"),
         ];
     }
 
@@ -29,8 +35,10 @@ class Users extends SysModel
 
             ['username' => ['required', 'username', 'unique', 'script' => ['create']]],
             ['password' => ['required', 'compare', 'script' => ['create']]],
-            ['password_again' => ['compared', 'script' => ['create']]],
+            ['password_again' => ['comparedPassword', 'script' => ['create']]],
             ['email' => ['required', 'email', 'unique', 'script' => ['create']]],
+
+            ['hash' => ['required', 'script' => ['signin']]],
         ];
     }
 

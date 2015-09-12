@@ -11,6 +11,7 @@ return [
                     'username' => 'varchar(255)',
                     'password' => 'text',
                     'role_id' => 'int',
+                    'hash' => 'text',
                     'email' => 'varchar(255)',
                 ],
             ],

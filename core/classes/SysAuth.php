@@ -1,23 +1,49 @@
 <?php
 namespace core\classes;
 
+use core\modules\users\models\Roles;
+use core\modules\users\models\Users;
 use core\system\app;
 
 class SysAuth {
 
+    /**
+     * @param $model - Users
+     * @param $username - username
+     * @param $password - password
+     * @return bool|string
+     * Авторизует пользователя
+     */
     public static function login($model, $username, $password)
     {
         if (static::check($model, $username, $password)) {
-            $user_data = $model->findByColumn('username', $username);
-            setcookie('users', $username, 0, '/');
-            setcookie('user_id', $user_data->id, 0, '/');
+            $user = $model->findByColumn('username', $username);
 
-            return $user_data->id;
+            $user->setScript('signin');
+
+            $user->hash = md5(time());
+
+            if (!$user->save()) {
+                return false;
+            }
+
+            setcookie('users', $username, 0, '/');
+            setcookie('user_id', $user->id, 0, '/');
+            setcookie('user_hash', $user->hash, 0, '/');
+
+            return $user->id;
         }
 
         return false;
     }
 
+    /**
+     * @param $model - Users
+     * @param $username
+     * @param $password
+     * @return bool
+     * Аутентификация
+     */
     public static function check($model, $username, $password)
     {
         $user_data = $model->findByColumn('username', $username);
@@ -46,13 +72,25 @@ class SysAuth {
         return false;
     }
 
+    /**
+     * @return bool|string
+     * Получить id текущего пользователя по его хэш полученного при авторизации
+     */
     public static function getCurrentUserId()
     {
-        if (static::is_login()) {
-            return $_COOKIE['user_id'];
+        if (!static::is_login()) {
+            return false;
         }
 
-        return false;
+        $userHash = $_COOKIE['user_hash'];
+
+        $user = Users::findByColumn('hash', $userHash);
+
+        if (!$user) {
+            return false;
+        }
+
+        return $user->id;
     }
 
     public static function logout()
@@ -70,21 +108,27 @@ class SysAuth {
 
     public static function getCurrentRole()
     {
-        $db = SysDatabase::getObj();
-        $sql = 'SELECT * FROM ' . App::$config['system_tables']['users'] . ' WHERE id=:user_id';
-        $result = $db->query($sql, [':user_id' => static::getCurrentUserId()]);
+        $userId = static::getCurrentUserId();
 
-        if (!$result) {
+        if (false === $userId) {
             return false;
         }
 
-        $result = $result[0];
+        $user = Users::findByPk((int)$userId);
 
-        $user_role_id = $result->role_id;
+        if (empty($user)) {
+            return false;
+        }
 
-        $sql = 'SELECT * FROM ' . App::$config['system_tables']['roles'] . ' WHERE id=:role_id';
-        $result = $db->query($sql, [':role_id' => $user_role_id])[0];
+        $userRoleId = $user->role_id;
 
-        return $result->name;
+
+        $role = Roles::findByPk($userRoleId);
+
+        if (empty($role)) {
+            return false;
+        }
+
+        return $role->name;
     }
 }

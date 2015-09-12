@@ -87,6 +87,16 @@ abstract class SysModel implements IModel, Iterator
     }
 
     /**
+     * @return array - ['fieldName' => 'value']
+     * Дополнительные поля описывать здесь. Например если в таблице нет необходимости заводить поля
+     * но есть такие поля, которые нуждаются в валидации или доступе из других частей проекта
+     */
+    public function additionalFields()
+    {
+        return [];
+    }
+
+    /**
      * @return bool
      * Приватное свойство, которое напрямую используется в методе save()
      * Добавляет новую запись в базу данных
@@ -151,7 +161,13 @@ abstract class SysModel implements IModel, Iterator
                             if (is_array($v_name)) {
                                 continue;
                             }
-                            $result[] = $validator->check($attr, $v_name, $this->data);
+
+                            $additionalFields = $this->postFieldsExist();
+                            $generalFields = $this->data;
+                            if (false !== $additionalFields) {
+                                $generalFields = array_merge($additionalFields, $this->data);
+                            }
+                            $result[] = $validator->check($attr, $v_name, $generalFields);
                         }
                     }
                     continue;
@@ -448,6 +464,36 @@ abstract class SysModel implements IModel, Iterator
         SysMessages::getAll();
 
         return $this->validatorErrors;
+    }
+
+    private function postFieldsExist()
+    {
+        $post = SysRequest::post();
+
+        if (!$post || empty($this->data)) {
+            return false;
+        }
+
+        if (empty($post)) {
+            return false;
+        }
+
+        $data = $this->additionalFields();
+
+        $arr = [];
+        foreach ($post as $field => $value) {
+            foreach ($data as $field2 => $value2) {
+                if ($field2 == $field) {
+                    $arr[$field2] = $value;
+                }
+            }
+        }
+
+        if (empty($arr)) {
+            return false;
+        }
+
+        return $arr;
     }
 
 }

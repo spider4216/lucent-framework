@@ -66,16 +66,28 @@ class SysController
         $this->getActionName();
     }
 
+    /**
+     * @return bool
+     * Права доступа к действиям контроллера
+     */
     public static function permission()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     * Метод который вызывается до запуска действия
+     */
     public function beforeAction()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     * Метод который запускается после запуска действия
+     */
     public function afterAction()
     {
         return true;
@@ -86,6 +98,15 @@ class SysController
         return false;
     }
 
+    /**
+     * @param $action_name - имя действия
+     * @return bool
+     * Проверяет права доступа к действию (права для каждого действия описываются в контроллере)
+     * 'index' => ['user', '-'], где
+     * 'index' - действие, 'user' - роль, '-' - неавторизованный пользователь
+     * В методе permission желаемого контроллера указываются действия и роли, которым доступ запрещен
+     * Возвращает true - если доступ рпзрещен, в противном случае false
+     */
     public function allow_action($action_name)
     {
         $permissions = static::permission();

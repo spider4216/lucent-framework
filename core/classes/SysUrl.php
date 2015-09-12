@@ -4,10 +4,7 @@ namespace core\classes;
 
 use core\classes\exception\E400;
 use core\classes\exception\E403;
-use core\classes\SysDisplay;
-use core\classes\SysMessages;
 use core\classes\exception\e404;
-use core\classes\SysRequest;
 
 /**
  * Class SySUrl
@@ -30,7 +27,9 @@ class SySUrl
         //Получаю текущий url
         $request_url = self::getUrl();
         $display = new SysDisplay();
+        //Распарсиваю ссылку
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        //И разбиваю ее по частям
         $pathParts = explode('/', $path);
 
         //Если в урл передали больше или равно 4 частей (первый нулевой), тогда это модуль
@@ -40,6 +39,8 @@ class SySUrl
             SysModule::$moduleName = $module;
             $namespace = 'core\\modules\\'. $module .'\\controllers\\';
 
+            //Если контроллер или действие не были переданы - устанавливаем их по умолчанию (те, что в
+            // конфигурационном файле)
             $ctrl = !empty($pathParts[2]) ? $pathParts[2] : $default_ctrl;
             $act = !empty($pathParts[3]) ? $pathParts[3] : $default_act;
 
@@ -51,6 +52,7 @@ class SySUrl
                 $display->render('core/views/errors/404', false, true);
             }
         } else {
+            //В случае если были открыт не модуль - то получаем другие части url
             $namespace = 'app\\controllers\\';
 
             $ctrl = !empty($pathParts[1]) ? $pathParts[1] : $default_ctrl;
@@ -71,16 +73,23 @@ class SySUrl
         $method = 'action' . $act;
 
 
+        /** @var SysController $controller*/
         try {
+            //Проверяется доступ к действию
             if ($controller->allow_action($act)) {
+                //Если доступ разрешен, запускается предварительный метод, который может быть
+                //переопределен в желаемом контроллере
                 $controller->beforeAction();
-
+                //Запуск действия
                 $controller->$method();
+                //Запускается метод, который может быть переопределен в желаемом контроллере
                 $controller->afterAction();
             } else {
+                //Если доступ запрещен - отображается ошибка
                 SysMessages::set('Доступ запрещен','danger');
                 $display->render('core/views/errors/403', false, true);
             }
+            //Отлов выброшенных исключений
         } catch (\Exception $e) {
             if ($e instanceof E404) {
                 SysMessages::set('Страница '. $request_url .' не найдена','danger');

@@ -21,9 +21,9 @@ class SysValidator
     {
         $this->data = $data;
         $post = SysRequest::post();
-        if (isset($post[$name])) {
+        if (isset($this->data[$name])) {
             if (method_exists($this, $v_name)) {
-                return $this->$v_name($post[$name], $name);
+                return $this->$v_name($this->data[$name], $name);
             } else {
                 SysMessages::set(_("Rule") . ' ' . $v_name . ' ' . _("does not exist"), 'danger');
             }
@@ -68,6 +68,23 @@ class SysValidator
     private function compared($v, $name)
     {
         if ($this->compare_data['value'] == $v) {
+            return true;
+        }
+
+        $attrLabel = $this->model->getLabel($name);
+        $attrLabelAgain = $this->model->getLabel($this->compare_data['name']);
+
+        $message = _("Field value") . ' "' . $attrLabelAgain . '" ' . _("does not match") . ' "' . $attrLabel .
+            '"';
+
+        $this->errors[] = $message;
+        SysMessages::set($message, 'danger');
+        return false;
+    }
+
+    private function comparedPassword($v, $name)
+    {
+        if ($this->compare_data['value'] == SysPassword::hash($v)) {
             return true;
         }
 
@@ -147,5 +164,10 @@ class SysValidator
 
         SysMessages::set($message, 'danger');
         return false;
+    }
+
+    private function safe()
+    {
+        return true;
     }
 }

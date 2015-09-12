@@ -9,16 +9,27 @@ use core\classes\SysDisplay;
  * @package core\classes
  *
  * type: success, info, warning, danger
+ * Класс для работы с пуш сообщениями (уведомлениями)
  */
 
 class SysMessages
 {
 
+    /**
+     * @param string $text - тест сообщения
+     * @param string $type - 1 из 4 типов (success, info, warning, danger)
+     * Позволяет задать сообщение
+     */
     public static function set($text, $type)
     {
         $_SESSION['messages'][$type][] = $text;
     }
 
+    /**
+     * @param string $type - тип сообщения (success, info, warning, danger)
+     * @return array|bool
+     * Позволяет получить конкретный тип сообщения
+     */
     public static function get($type)
     {
         $message = [];
@@ -33,6 +44,10 @@ class SysMessages
         return false;
     }
 
+    /**
+     * @return array|bool
+     * Получить все типы сообщений
+     */
     public static function getAll()
     {
         if (isset($_SESSION['messages']) && $session = $_SESSION['messages']) {
@@ -50,6 +65,11 @@ class SysMessages
         return false;
     }
 
+    /**
+     * @param $messagesArray - массив с сообщениями - результат метода getAll()
+     * @return mixed
+     * Возвращает красивый вариант сообщений
+     */
     public static function pretty($messagesArray)
     {
         $display = new SysDisplay();

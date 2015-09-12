@@ -2,7 +2,11 @@
 
 namespace core\classes;
 
-
+/**
+ * Class SysDisplay
+ * @package core\classes
+ * Класс для работы с отображением пользовательского представления по ссылке
+ */
 class SysDisplay {
 
     protected $layout;
