@@ -148,6 +148,7 @@ class ControlController extends SysController
 
         $view = new SysView();
         $model = new Users();
+        //$url = V
 
         if (SysAuth::is_login()) {
             SysMessages::set(_("you have already logged in"), 'info');

@@ -39,6 +39,10 @@ class Users extends SysModel
             ['email' => ['required', 'email', 'unique', 'script' => ['create']]],
 
             ['hash' => ['required', 'script' => ['signin']]],
+
+            ['username' => ['required', 'username', 'unique', 'script' => ['vkAuth']]],
+            ['email' => ['required', 'email', 'unique', 'script' => ['vkAuth']]],
+            ['password' => ['required', 'script' => ['vkAuth']]],
         ];
     }
 

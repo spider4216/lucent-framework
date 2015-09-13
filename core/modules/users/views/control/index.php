@@ -15,5 +15,9 @@ use core\classes\SysWidget;
         <li>
             <a href="/users/roles/"><?php echo _("Manage roles"); ?></a>
         </li>
+
+        <li>
+            <a href="/vkauth/general/"><?php echo _("VK Auth"); ?></a>
+        </li>
     </ul>
 </div>

@@ -220,6 +220,19 @@ return [
                 ],
             ],
         ],
+
+        '15' => [
+            'createTable' => [
+                'name' => 'vkauth',
+                'primary_key' => 'id',
+                'columns' => [
+                    'id' => 'serial',
+                    'client_id' => 'int',
+                    'client_secret' => 'text',
+                    'redirect_uri' => 'text',
+                ],
+            ],
+        ]
     ],
 
     'down' => [

@@ -40,6 +40,9 @@ use core\classes\SysWidget;
         </div>
 
         <div class="m-row">
+            <?php if (false !== \core\modules\vkauth\components\CmVkAuth::getUrl()): ?>
+                <a href="<?= \core\modules\vkauth\components\CmVkAuth::getUrl(); ?>"><?= _("Sign in via VK"); ?></a>
+            <?php endif; ?>
             <p><a href="/users/control/register"><?php echo _("Registration"); ?></a></p>
         </div>
 
