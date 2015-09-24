@@ -50,11 +50,12 @@ class ExtNestedset
         return $db->execute($sql);
     }
 
-    //todo transaction
     //data = ['column' => 'value', ... ]
     public function createRoot($name, $data = [])
     {
         $db = SysDatabase::getObj();
+        $db->beginTransaction();
+
         $sql = '';
 
         $sql .= 'INSERT INTO ' . self::$tableName . ' ';
@@ -85,7 +86,10 @@ class ExtNestedset
         $sql .= 'VALUES(:q1, :q2, :q3, :q4'.$prepareStrValues.');';
         //echo $sql;
 
-        $res1 = $db->execute($sql, $params);
+        if (!$db->execute($sql, $params)) {
+            $db->rollBack();
+            return false;
+        }
 
         $sql = '';
         $sql .= 'SELECT id FROM ' . self::$tableName . ' WHERE value = :v';
@@ -94,7 +98,11 @@ class ExtNestedset
             ':v' => $name,
         ]);
 
-        //todo check on empty
+        if (empty($res1)) {
+            $db->rollBack();
+            return false;
+        }
+
         $id = $res1[0]->id;
 
         $sql = '';
@@ -104,21 +112,33 @@ class ExtNestedset
             ':id' => $id,
         ]);
 
+        if (!$res2) {
+            $db->rollBack();
+            return false;
+        }
 
+        $db->commit();
+
+        return true;
     }
 
-    //todo need transaction
     //todo возможно нужно добавить еще один параметр глубины, для более точного поиска
+    //todo Сообщения об ошибах
     //data = ['column' => 'value', ... ] - т.к. nestedSet универсален, его использовать нужно в различных модулях
     public function appendChild($parentId, $name, $data = [])
     {
         $db = SysDatabase::getObj();
+        $db->beginTransaction();
+
         $sql = 'SELECT right_key, level, tree FROM ' . self::$tableName . ' WHERE id = :id';
         $res1 = $db->query($sql, [
             ':id' => $parentId,
         ]);
 
-        //todo check on empty
+        if (empty($res1)) {
+            return false;
+        }
+
         $rightKey = $res1[0]->right_key;
         $level = $res1[0]->level;
         $tree = $res1[0]->tree;
@@ -132,6 +152,11 @@ class ExtNestedset
             ':r' => $rightKey,
             ':tree' => $tree,
         ]);
+
+        if (!$res2) {
+            $db->rollBack();
+            return false;
+        }
 
         $sql = '';
 
@@ -154,15 +179,29 @@ class ExtNestedset
         }
 
         $res3 = $db->execute($sql, $params);
+
+        if (!$res3) {
+            $db->rollBack();
+            return false;
+        }
+
+        $db->commit();
+        return true;
     }
 
     public function deleteNode($id)
     {
         $db = SysDatabase::getObj();
+        $db->beginTransaction();
+
         $sql = 'SELECT right_key, left_key, tree FROM ' . self::$tableName . ' WHERE id = :id';
         $res1 = $db->query($sql, [
             ':id' => $id,
         ]);
+
+        if (empty($res1)) {
+            return false;
+        }
 
         $rightKey = $res1[0]->right_key;
         $leftKey = $res1[0]->left_key;
@@ -177,6 +216,11 @@ class ExtNestedset
             ':tree' => $tree,
         ]);
 
+        if (!$res2) {
+            $db->rollBack();
+            return false;
+        }
+
         $sql = '';
         $sql .= 'UPDATE ' . self::$tableName . ' SET left_key = IF(left_key > :l, left_key - (:r - :l + 1), '.
             'left_key), right_key = right_key - (:r - :l + 1) WHERE right_key > :r AND tree = :tree';
@@ -187,6 +231,13 @@ class ExtNestedset
             ':tree' => $tree,
         ]);
 
+        if (!$res3) {
+            $db->rollBack();
+            return false;
+        }
+
+        $db->commit();
+        return true;
     }
 
     public function findAllNodes()

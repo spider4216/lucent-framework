@@ -278,10 +278,12 @@ class generalController extends SysController
 
         $nestedSet = new ExtNestedset($model->machine_name);
 
-        //todo check true false
-        $nestedSet->deleteNode($id);
+        if (!$nestedSet->deleteNode($id)) {
+            SysMessages::set(_("Menu item cannot be deleted"), 'danger');
+        } else {
+            SysMessages::set(_("Menu item has been deleted successfully"), 'success');
+        }
 
-        SysMessages::set(_("Menu item has been deleted successfully"), 'success');
         SysRequest::redirect('/menu/general/manage?id=' . $menuId);
     }
 }
