@@ -46,8 +46,11 @@ class PanelController extends SysController
         static::$title = _("Modules list");
 
         $view = new SysView();
-        $modules = SysModule::getAllModules();
-        $view->modules = $modules;
+        $systemModules = SysModule::getAllModules('system');
+		$appModules = SysModule::getAllModules('app');
+
+        $view->systemModules = $systemModules;
+        $view->appModules = $appModules;
 
         $view->display('modules');
     }

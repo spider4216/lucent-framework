@@ -24,6 +24,12 @@ class SysModule
      */
     public static $moduleName;
 
+	/**
+	 * @var string $moduleType
+	 * Тип текущего модуля - системный или пользовательский app или core
+	 */
+	public static $moduleType;
+
     public static function getModuleInfo($name, $type = 'system')
     {
         $file = SysPath::directory('core') . '/modules/' . $name . '/' . $name . '_info.json';

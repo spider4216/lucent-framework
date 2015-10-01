@@ -37,7 +37,14 @@ class SySUrl
             $module = $pathParts[1];
             //Даем знать классу SysModule о наименовании текущего модуля
             SysModule::$moduleName = $module;
-            $namespace = 'core\\modules\\'. $module .'\\controllers\\';
+
+			if (false === SysModule::getModuleInfo($module, 'system')) {
+				SysModule::$moduleType = 'app';
+			} else {
+				SysModule::$moduleType = 'core';
+			}
+
+            $namespace = SysModule::$moduleType . '\\modules\\'. $module .'\\controllers\\';
 
             //Если контроллер или действие не были переданы - устанавливаем их по умолчанию (те, что в
             // конфигурационном файле)

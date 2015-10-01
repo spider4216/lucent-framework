@@ -1,0 +1,4 @@
+.modules-panel .tab-content {
+    height: 400px;
+    overflow-y: scroll;
+}
