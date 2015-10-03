@@ -4,6 +4,7 @@ namespace core\modules\regions\models;
 
 use core\classes\SysModel;
 use core\modules\blocks\models\Blocks;
+use core\modules\menu\models\Menu;
 
 class Regions extends SysModel
 {
@@ -43,6 +44,19 @@ class Regions extends SysModel
 
         $blocks = Blocks::findAll(['region_id = :id', [':id' => $regionID->id]], [], ['weight' => 'ASC']);
 
-        return $blocks;
+		$menus = Menu::findAll(['region_id = :id', [':id' => $regionID->id]], [], ['weight' => 'ASC']);
+
+		$allBlocks = [];
+		foreach ($blocks as $block) {
+			$allBlocks[$block->weight][] = $block;
+		}
+
+		foreach ($menus as $menu) {
+			$allBlocks[$menu->weight][] = $menu;
+		}
+
+		ksort($allBlocks);
+
+        return $allBlocks;
     }
 }

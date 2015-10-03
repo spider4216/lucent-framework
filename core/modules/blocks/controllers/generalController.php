@@ -10,6 +10,7 @@ use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
 use core\modules\blocks\models\Blocks;
+use core\modules\menu\models\Menu;
 use core\modules\regions\models\Regions;
 
 class generalController extends SysController
@@ -47,6 +48,7 @@ class generalController extends SysController
         static::$title = _("Blocks");
         $view = new SysView();
         $blocks = Blocks::findAll();
+		$menu = Menu::findAll();
 
         //--
         $template = [];
@@ -68,12 +70,24 @@ class generalController extends SysController
                 $template[$i]['blocks'][] = $block->name;
             }
 
+            $menuRegion = Menu::findAll(['region_id = :r_id',
+                [':r_id' => $region->id]], [], ['weight' => 'ASC']);
+
+            if (empty($menuRegion)) {
+                continue;
+            }
+
+            foreach ($menuRegion as $menu) {
+                $template[$i]['blocks'][] = $menu->name;
+            }
+
             $i++;
         }
 
         $view->template = $template;
 
         $view->blocks = $blocks;
+        $view->menu = $menu;
         $view->display('index');
     }
 

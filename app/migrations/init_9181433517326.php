@@ -217,6 +217,8 @@ return [
                     'name' => 'varchar(255)',
                     'machine_name' => 'varchar(255)',
                     'description' => 'text',
+                    'weight' => 'int',
+                    'region_id' => 'int',
                 ],
             ],
         ],

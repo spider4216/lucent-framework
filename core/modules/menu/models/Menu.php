@@ -15,6 +15,8 @@ class Menu extends SysModel
             'name' => _("Name"),
             'machine_name' => _("Machine name"),
             'description' => _("Description"),
+            'weight' => _("Weight"),
+            'region_id' => _("Region"),
         ];
     }
 

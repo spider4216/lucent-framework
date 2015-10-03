@@ -10,6 +10,7 @@ use core\classes\SysRequest;
 use core\classes\SysView;
 use core\extensions\ExtNestedset;
 use core\modules\menu\models\Menu;
+use core\modules\regions\models\Regions;
 
 class generalController extends SysController
 {
@@ -72,8 +73,10 @@ class generalController extends SysController
         $model = new Menu();
         $model->setScript('create');
         $view = new SysView();
+		$regions = Regions::findAll();
 
         $view->model = $model;
+        $view->regions = $regions;
         $view->display('create');
     }
 
@@ -90,6 +93,8 @@ class generalController extends SysController
         $model->name = $post['name'];
         $model->machine_name = $post['machine_name'];
         $model->description = $post['description'];
+        $model->weight = $post['weight'];
+        $model->region_id = $post['region_id'];
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
@@ -111,12 +116,15 @@ class generalController extends SysController
 
 
         $model = Menu::findByPk($id);
+		$regions = Regions::findAll();
 
         if (empty($model)) {
             throw new E404;
         }
 
         $view->model = $model;
+        $view->regions = $regions;
+		$view->regionSelected = $model->region_id;
         $view->display('update');
     }
 
@@ -143,6 +151,8 @@ class generalController extends SysController
 
         $model->name = $post['name'];
         $model->description = $post['description'];
+        $model->weight = $post['weight'];
+        $model->region_id = $post['region_id'];
 
 
         if (!$model->save()) {
