@@ -303,6 +303,12 @@ return [
 				'name' => 'page_types',
 			]
 		],
+
+		'6' => [
+			'deleteTable' => [
+				'name' => 'page_collections',
+			]
+		],
     ],
 ];
 
