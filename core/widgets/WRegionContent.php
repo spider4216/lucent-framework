@@ -24,6 +24,8 @@ class WRegionContent extends SysWidget
             return '';
         }
 
+		//var_dump($items);
+
         return $this->render($name, $model, [
             'items' => $items,
             'regionName' => $data['regionName'],

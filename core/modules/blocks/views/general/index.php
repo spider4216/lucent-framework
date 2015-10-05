@@ -64,18 +64,43 @@
 		<div class="block-menus-list">
 			<ul class="list-group">
 				<?php if (!empty($menu)): ?>
-                    <li class="list-group-item">
-                        <span><?php echo $menu->name; ?></span>
-                        <a href="/menu/general/update?id=<?php echo $menu->id; ?>">
-                            <i class="pull-right glyphicon glyphicon-pencil"></i>
-                        </a>
-                    </li>
+                    <?php foreach ($menu as $m): ?>
+						<li class="list-group-item">
+							<span><?php echo $m->name; ?></span>
+							<a href="/menu/general/update?id=<?php echo $m->id; ?>">
+								<i class="pull-right glyphicon glyphicon-pencil"></i>
+							</a>
+						</li>
+					<?php endforeach; ?>
                 <?php else: ?>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <span><?= _("There aren't any menu available"); ?></span>
                         </div>
                     </div>
+				<?php endif; ?>
+			</ul>
+		</div>
+
+		<h4><?php echo _("Available collections"); ?></h4>
+
+		<div class="block-collections-list">
+			<ul class="list-group">
+				<?php if (!empty($collections)): ?>
+					<?php foreach ($collections as $collection): ?>
+						<li class="list-group-item">
+							<span><?= $collection->name; ?></span>
+							<a href="/page/collection/update?id=<?= $collection->id; ?>">
+								<i class="pull-right glyphicon glyphicon-pencil"></i>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				<?php else: ?>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<span><?= _("There aren't any collections available"); ?></span>
+						</div>
+					</div>
 				<?php endif; ?>
 			</ul>
 		</div>

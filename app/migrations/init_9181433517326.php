@@ -248,6 +248,23 @@ return [
 				],
 			],
 		],
+
+		'17' => [
+			'createTable' => [
+				'name' => 'page_collections',
+				'primary_key' => 'id',
+				'columns' => [
+					'id' => 'serial',
+					'name' => 'text',
+					'description' => 'text',
+					'page_type_id' => 'int',
+					'pagination' => 'int',
+					'region_id' => 'int',
+					'links' => 'text',
+					'weight' => 'int',
+				],
+			],
+		],
     ],
 
     'down' => [

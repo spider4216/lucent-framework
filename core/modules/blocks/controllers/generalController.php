@@ -11,6 +11,7 @@ use core\classes\SysRequest;
 use core\classes\SysView;
 use core\modules\blocks\models\Blocks;
 use core\modules\menu\models\Menu;
+use core\modules\page\models\PageCollections;
 use core\modules\regions\models\Regions;
 
 class generalController extends SysController
@@ -49,6 +50,7 @@ class generalController extends SysController
         $view = new SysView();
         $blocks = Blocks::findAll();
 		$menu = Menu::findAll();
+		$collections = PageCollections::findAll();
 
         //--
         $template = [];
@@ -62,10 +64,6 @@ class generalController extends SysController
             $blocksRegion = Blocks::findAll(['region_id = :r_id',
                 [':r_id' => $region->id]], [], ['weight' => 'ASC']);
 
-            if (empty($blocksRegion)) {
-                continue;
-            }
-
             foreach ($blocksRegion as $block) {
                 $template[$i]['blocks'][] = $block->name;
             }
@@ -73,13 +71,16 @@ class generalController extends SysController
             $menuRegion = Menu::findAll(['region_id = :r_id',
                 [':r_id' => $region->id]], [], ['weight' => 'ASC']);
 
-            if (empty($menuRegion)) {
-                continue;
+            foreach ($menuRegion as $m) {
+                $template[$i]['blocks'][] = $m->name;
             }
 
-            foreach ($menuRegion as $menu) {
-                $template[$i]['blocks'][] = $menu->name;
-            }
+			$collectionRegion = PageCollections::findAll(['region_id = :r_id',
+				[':r_id' => $region->id]]);
+
+			foreach ($collectionRegion as $collection) {
+				$template[$i]['blocks'][] = $collection->name;
+			}
 
             $i++;
         }
@@ -88,6 +89,7 @@ class generalController extends SysController
 
         $view->blocks = $blocks;
         $view->menu = $menu;
+        $view->collections = $collections;
         $view->display('index');
     }
 
