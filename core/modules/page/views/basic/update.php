@@ -25,6 +25,21 @@ use core\classes\SysWidget;
             <br/>
         </div>
 
+		<div class="m-row">
+			<label for="title"><?= $model->getLabel('page_type_id'); ?></label>
+			<select class="form-control" name="page_type_id" id="page_type_id">
+				<?php if (!empty($pageTypes)): ?>
+					<?php foreach ($pageTypes as $type): ?>
+						<option <?= $model->page_type_id == $type->id ? 'selected' : '' ?> value="<?= $type->id ?>"><?= $type->title; ?></option>
+					<?php endforeach; ?>
+				<?php else: ?>
+					<option value="-1"><?= _("Not found"); ?></option>
+				<?php endif; ?>
+			</select>
+		</div>
+
+		<br>
+
         <div class="m-row">
             <input type="hidden" name="id" value="<?php echo $model->id; ?>"/>
             <input type="button" onclick="SysAjaxSave('/page/basic/ajaxupdate', '/page/basic/')"

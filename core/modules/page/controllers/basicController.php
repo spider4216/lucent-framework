@@ -10,6 +10,7 @@ use core\modules\page\models\Page;
 use core\classes\SysRequest;
 use core\classes\SysMessages;
 use core\extensions\ExtBreadcrumbs;
+use core\modules\page\models\PageType;
 
 class basicController extends SysController{
 
@@ -67,8 +68,10 @@ class basicController extends SysController{
 
         $view = new SysView();
         $model = new Page();
+		$pageTypes = PageType::findAll();
 
         $view->model = $model;
+        $view->pageTypes = $pageTypes;
 
         $view->display('create');
     }
@@ -84,6 +87,7 @@ class basicController extends SysController{
 
         $model->title = $post['title'];
         $model->content = $post['content'];
+        $model->page_type_id = $post['page_type_id'];
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
@@ -98,6 +102,7 @@ class basicController extends SysController{
 
         $view = new SysView();
         $id = SysRequest::get('id');
+		$pageTypes = PageType::findAll();
 
         if (empty($id)) {
             throw new E404;
@@ -110,6 +115,8 @@ class basicController extends SysController{
         }
 
         $view->model = $model;
+		$view->pageTypes = $pageTypes;
+
         $view->display('update');
 
     }
@@ -130,6 +137,7 @@ class basicController extends SysController{
 
         $model->title = $post['title'];
         $model->content = $post['content'];
+		$model->page_type_id = $post['page_type_id'];
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));

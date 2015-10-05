@@ -12,6 +12,7 @@ class Page extends SysModel
         return [
             'title' => _("Title"),
             'content' => _("Content"),
+            'page_type_id' => _("Type"),
         ];
     }
 
@@ -20,6 +21,7 @@ class Page extends SysModel
         return [
             ['title' => ['required']],
             ['content' => ['required']],
+            ['page_type_id' => ['required']],
         ];
     }
 

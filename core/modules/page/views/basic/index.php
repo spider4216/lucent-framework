@@ -12,7 +12,8 @@ use core\extensions\ExtBreadcrumbs;
 
 <div class="tool">
     <br/>
-    <p><a class="btn btn-default" href="/page/basic/create"><?php echo _("Create page"); ?></a></p>
+    <a class="btn btn-success" href="/page/basic/create"><?php echo _("Create page"); ?></a>
+    <a class="btn btn-default" href="/page/type/"><?php echo _("Page types"); ?></a>
 </div>
 
 <div class="pages-list">

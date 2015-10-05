@@ -25,6 +25,7 @@ return [
                     'id' => 'serial',
                     'title' => 'varchar(255)',
                     'content' => 'text',
+                    'page_type_id' => 'int',
                 ],
             ],
         ],
@@ -234,7 +235,19 @@ return [
                     'redirect_uri' => 'text',
                 ],
             ],
-        ]
+        ],
+
+		'16' => [
+			'createTable' => [
+				'name' => 'page_types',
+				'primary_key' => 'id',
+				'columns' => [
+					'id' => 'serial',
+					'title' => 'text',
+					'description' => 'text',
+				],
+			],
+		],
     ],
 
     'down' => [
@@ -267,6 +280,12 @@ return [
                 'name' => 'blocks',
             ]
         ],
+
+		'5' => [
+			'deleteTable' => [
+				'name' => 'page_types',
+			]
+		],
     ],
 ];
 

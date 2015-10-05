@@ -8,6 +8,7 @@ use core\classes\SysPath;
 use core\classes\SysWidget;
 use core\classes\SysController;
 use core\modules\page\models\Page;
+use core\modules\page\models\PageType;
 
 class PageTokens {
 
@@ -35,4 +36,26 @@ class PageTokens {
 
         return $pagesList;
     }
+
+	public function listTypesAll()
+	{
+		$model = new PageType();
+
+		$pagesList = SysWidget::build('WTable', $model, [
+			'columns' => [
+				'title',
+			],
+
+			'buttons' => [
+				'update' => [
+					'link' => '/page/type/update',
+				],
+				'delete' => [
+					'link' => '/page/type/delete',
+				],
+			],
+		]);
+
+		return $pagesList;
+	}
 }
