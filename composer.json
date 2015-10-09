@@ -1,0 +1,9 @@
+{
+  "config": {
+    "vendor-dir": "core/vendor"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "5.0.*"
+  }
+}

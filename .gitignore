@@ -3,3 +3,4 @@ app/config/database.json
 app/config/main.json
 app/assets/modules
 app/assets/system
+core/vendor

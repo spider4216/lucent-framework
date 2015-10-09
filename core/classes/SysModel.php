@@ -189,6 +189,11 @@ abstract class SysModel implements IModel, Iterator
         return true;
     }
 
+    public function validate($field)
+    {
+        return false;
+    }
+
     public function beforeSave()
     {
         return true;

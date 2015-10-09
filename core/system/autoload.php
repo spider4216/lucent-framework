@@ -1,7 +1,10 @@
 <?php
 
-function autoload($myClassName)
-{
+function dependency() {
+    require_once __DIR__ . '/../vendor/autoload.php';
+}
+
+function autoload($myClassName) {
     $classParts = explode('\\', $myClassName);
 
     switch ($classParts[0]) {
@@ -14,10 +17,15 @@ function autoload($myClassName)
 
     $path = implode(DIRECTORY_SEPARATOR, $classParts) . '.php';
     //echo $path;
+
+    //small trick for cli (I mean for phpunit)
+    if ('cli' == PHP_SAPI) {
+        $path = __DIR__ . '/../../'. $path;
+    }
+
     if (file_exists($path)) {
         require $path;
     }
 }
 spl_autoload_register('autoload');
-
-?>
+dependency();
