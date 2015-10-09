@@ -1,7 +1,11 @@
 <?php
 
 function dependency() {
-    require_once __DIR__ . '/../vendor/autoload.php';
+    $dir = __DIR__ . '/../vendor/';
+
+    if (is_dir($dir)) {
+        require_once $dir . 'autoload.php';
+    }
 }
 
 function autoload($myClassName) {
