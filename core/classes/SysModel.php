@@ -143,18 +143,14 @@ abstract class SysModel implements IModel, Iterator
         return  $db->execute($sql, $dataExec);
     }
 
-    public function form_validate()
-    {
-        $rules = static::rules();
+    protected function validator($rules) {
         $modelName = get_called_class();
-
         $validator = new SysValidator($modelName);
-
         $result = [];
 
-        foreach ($rules as $part) {
-            foreach ($part as $attr => $rule) {
-
+        //foreach ($rules as $attr => $rule) {
+        foreach ($rules as $r) {
+            foreach ($r as $attr => $rule) {
                 if (array_key_exists('script', $rule)) {
                     if ($modelName::getScript() == $rule['script'][0]) {
                         foreach ($rule as $v_name) {
@@ -176,7 +172,6 @@ abstract class SysModel implements IModel, Iterator
                 foreach ($rule as $v_name) {
                     $result[] = $validator->check($attr, $v_name, $this->data);
                 }
-
             }
         }
 
@@ -189,8 +184,71 @@ abstract class SysModel implements IModel, Iterator
         return true;
     }
 
+    /**
+     * @return bool
+     * Общая валидация полей
+     */
+    public function form_validate()
+    {
+        $rules = static::rules();
+
+        return $this->validator($rules);
+
+    }
+
+    /**
+     * @param $field - имя поля для валидации
+     * @return bool
+     * Валидация отдельного (переданного поля)
+     */
     public function validate($field)
     {
+        $rule = $this->getRule($field);
+
+        if (!$rule) {
+            return false;
+        }
+
+        $arr = [];
+        $arr[] = $rule;
+
+        return $this->validator($arr);
+    }
+
+    /**
+     * @param $field - наименование поля
+     * @param string $script - наименование сценария
+     * @return bool|array
+     */
+    protected function getRule($field, $script = '')
+    {
+        $rules = static::rules();
+        $script = self::$script;
+
+        foreach ($rules as $rule) {
+            foreach ($rule as $fieldName => $validators) {
+
+                if (false === $script) {
+                    if ($fieldName == $field) {
+                        return $rule;
+                    }
+
+                    continue;
+                }
+
+                foreach ($validators as $key => $validator) {
+                    if (false !== $script) {
+                        if (is_array($validator)) {
+                            //script
+                            if ($field == $fieldName && $key == 'script' && $validator[0] == $script) {
+                                return $rule;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         return false;
     }
 
