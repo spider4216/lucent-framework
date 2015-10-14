@@ -49,7 +49,7 @@ class SysAuth {
         $user_data = $model->findByColumn('username', $username);
 
         if (is_object($user_data)) {
-            if ($user_data->username == $username && SysPassword::verify($password, SysPassword::hash($user_data->password))) {
+            if ($user_data->username == $username && SysPassword::verify($password, $user_data->password)) {
                 return true;
             }
         }

@@ -125,7 +125,7 @@ class ControlController extends SysController
         $post = SysRequest::post();
 
         $model->username = $post['username'];
-        $model->password = $post['password'];
+        $model->password = SysPassword::hash($post['password']);
         $model->email = $post['email'];
         $model->role_id = 2;
 
@@ -135,6 +135,7 @@ class ControlController extends SysController
 
         $id = SysAuth::login($model, $post['username'], $post['password']);
 
+        //todo В случае ошибки транзакцию
         if (!$id) {
             SysAjax::json_err(_("cannot signed in"));
         }
