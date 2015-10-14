@@ -84,7 +84,7 @@ class SysValidator
 
     private function comparedPassword($v, $name)
     {
-        if ($this->compare_data['value'] == SysPassword::hash($v)) {
+        if (SysPassword::verify($this->compare_data['value'], SysPassword::hash($v))) {
             return true;
         }
 

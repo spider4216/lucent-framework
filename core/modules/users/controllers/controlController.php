@@ -125,7 +125,7 @@ class ControlController extends SysController
         $post = SysRequest::post();
 
         $model->username = $post['username'];
-        $model->password = SysPassword::hash($post['password']);
+        $model->password = $post['password'];
         $model->email = $post['email'];
         $model->role_id = 2;
 
