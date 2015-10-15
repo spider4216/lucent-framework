@@ -54,6 +54,9 @@
 									<div class="panel-body">
 										<?= $content['content'] ?>
 									</div>
+									<div class="panel-footer">
+										<a href="/page/basic/view?id=<?= $content['id'] ?>"><?= _("more") ?></a>
+									</div>
 								</div>
 							<?php endforeach; ?>
 						<?php endif; ?>

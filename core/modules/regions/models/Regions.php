@@ -97,6 +97,7 @@ class Regions extends SysModel
 							$setPages[] = [
 								'title' => $page->title,
 								'content' => $page->content,
+								'id' => $page->id,
 							];
 						}
 

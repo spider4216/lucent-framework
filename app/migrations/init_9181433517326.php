@@ -35,17 +35,91 @@ return [
                 'table' => 'pages',
                 'columns' => [
                     'title',
-                    'content'
+                    'content',
+                    'page_type_id',
                 ],
 
                 'values' => [
-                    'Welcome to CM Lucent',
-                    'Lucent - Content Management Framework (CMF)',
+                    'Welcome to CMF Lucent',
+                    'Lucent - Amazing foundation for your projects',
+                    '1',
                 ],
             ],
         ],
 
         '3' => [
+            'insert' => [
+                'table' => 'pages',
+                'columns' => [
+                    'title',
+                    'content',
+                    'page_type_id',
+                ],
+
+                'values' => [
+                    'CMF Lucent - Plans',
+                    'Plans will be appeared soon',
+                    '1',
+                ],
+            ],
+        ],
+
+        '4' => [
+            'insert' => [
+                'table' => 'pages',
+                'columns' => [
+                    'title',
+                    'content',
+                    'page_type_id',
+                ],
+
+                'values' => [
+                    'CMF Lucent - Features',
+                    'Features will be appeared soon',
+                    '1',
+                ],
+            ],
+        ],
+
+        '5' => [
+            'insert' => [
+                'table' => 'pages',
+                'columns' => [
+                    'title',
+                    'content',
+                    'page_type_id',
+                ],
+
+                'values' => [
+                    'CMF Lucent',
+                    'Lucent is open source PHP Content Management Framework which can help to create web sites, '.
+                    'information systems or web applications very quickly and easily. Lucent based on MVC '.
+                    'architectural pattern and has module structure, so everyone can extend and improve that '.
+                    'system very easily',
+                    '2',
+                ],
+            ],
+        ],
+
+        '6' => [
+            'insert' => [
+                'table' => 'pages',
+                'columns' => [
+                    'title',
+                    'content',
+                    'page_type_id',
+                ],
+
+                'values' => [
+                    'Welcome to CMF Lucent',
+                    'Visit our <a target="_blank" href="http://github.com/spider4216/lucent-framework">github</a>. ' .
+                    'Everyone can contribute CMF Lucent, improve and modify it',
+                    '2',
+                ],
+            ],
+        ],
+
+        '7' => [
             'createTable' => [
                 'name' => 'roles',
                 'primary_key' => 'id',
@@ -56,7 +130,7 @@ return [
             ],
         ],
 
-        '4' => [
+        '8' => [
             'insert' => [
                 'table' => 'roles',
                 'columns' => [
@@ -69,7 +143,7 @@ return [
             ],
         ],
 
-        '5' => [
+        '9' => [
             'insert' => [
                 'table' => 'roles',
                 'columns' => [
@@ -82,7 +156,7 @@ return [
             ],
         ],
 
-        '6' => [
+        '10' => [
             'createTable' => [
                 'name' => 'regions',
                 'primary_key' => 'id',
@@ -93,7 +167,7 @@ return [
             ],
         ],
 
-        '7' => [
+        '11' => [
             'insert' => [
                 'table' => 'regions',
                 'columns' => [
@@ -106,7 +180,7 @@ return [
             ],
         ],
 
-        '8' => [
+        '12' => [
             'insert' => [
                 'table' => 'regions',
                 'columns' => [
@@ -119,7 +193,7 @@ return [
             ],
         ],
 
-        '9' => [
+        '13' => [
             'createTable' => [
                 'name' => 'blocks',
                 'primary_key' => 'id',
@@ -133,7 +207,7 @@ return [
             ],
         ],
 
-        '10' => [
+        '14' => [
             'insert' => [
                 'table' => 'blocks',
                 'columns' => [
@@ -146,70 +220,13 @@ return [
                 'values' => [
                     'Information',
                     '2',
-                    'Content here',
+                    'This is information block',
                     '2',
                 ],
             ],
         ],
 
-        '11' => [
-            'insert' => [
-                'table' => 'blocks',
-                'columns' => [
-                    'name',
-                    'region_id',
-                    'content',
-                    'weight',
-                ],
-
-                'values' => [
-                    'Statistic',
-                    '2',
-                    'Statistic here',
-                    '1',
-                ],
-            ],
-        ],
-
-        '12' => [
-            'insert' => [
-                'table' => 'blocks',
-                'columns' => [
-                    'name',
-                    'region_id',
-                    'content',
-                    'weight',
-                ],
-
-                'values' => [
-                    'Main menu',
-                    '2',
-                    'Content menu here',
-                    '0',
-                ],
-            ],
-        ],
-
-        '13' => [
-            'insert' => [
-                'table' => 'blocks',
-                'columns' => [
-                    'name',
-                    'region_id',
-                    'content',
-                    'weight',
-                ],
-
-                'values' => [
-                    'CMF Lucent',
-                    '1',
-                    'Amazing foundation for your projects',
-                    '0',
-                ],
-            ],
-        ],
-
-        '14' => [
+        '15' => [
             'createTable' => [
                 'name' => 'menu',
                 'primary_key' => 'id',
@@ -224,7 +241,113 @@ return [
             ],
         ],
 
-        '15' => [
+        '16' => [
+            'insert' => [
+                'table' => 'menu',
+                'columns' => [
+                    'name',
+                    'machine_name',
+                    'description',
+                    'weight',
+                    'region_id',
+                ],
+
+                'values' => [
+                    'Main menu',
+                    'menu_main_menu',
+                    'Menu for important CMF items',
+                    '0',
+                    '2',
+                ],
+            ],
+        ],
+
+        '17' => [
+            'createTable' => [
+                'name' => 'nestedset_menu_main_menu',
+                'primary_key' => 'id',
+                'columns' => [
+                    'id' => 'serial',
+                    'left_key' => 'int',
+                    'right_key' => 'int',
+                    'level' => 'int',
+                    'value' => 'text',
+                    'tree' => 'int',
+                    'link' => 'text',
+                ],
+            ],
+        ],
+
+        '18' => [
+            'insert' => [
+                'table' => 'nestedset_menu_main_menu',
+                'columns' => [
+                    'left_key',
+                    'right_key',
+                    'level',
+                    'value',
+                    'tree',
+                    'link',
+                ],
+
+                'values' => [
+                    '1',
+                    '6',
+                    '0',
+                    'About',
+                    '1',
+                    '/page/basic/view?id=1',
+                ],
+            ],
+        ],
+
+        '19' => [
+            'insert' => [
+                'table' => 'nestedset_menu_main_menu',
+                'columns' => [
+                    'left_key',
+                    'right_key',
+                    'level',
+                    'value',
+                    'tree',
+                    'link',
+                ],
+
+                'values' => [
+                    '2',
+                    '3',
+                    '1',
+                    'Plans',
+                    '1',
+                    '/page/basic/view?id=2',
+                ],
+            ],
+        ],
+
+        '20' => [
+            'insert' => [
+                'table' => 'nestedset_menu_main_menu',
+                'columns' => [
+                    'left_key',
+                    'right_key',
+                    'level',
+                    'value',
+                    'tree',
+                    'link',
+                ],
+
+                'values' => [
+                    '4',
+                    '5',
+                    '1',
+                    'Features',
+                    '1',
+                    '/page/basic/view?id=3',
+                ],
+            ],
+        ],
+
+        '21' => [
             'createTable' => [
                 'name' => 'vkauth',
                 'primary_key' => 'id',
@@ -237,7 +360,7 @@ return [
             ],
         ],
 
-		'16' => [
+		'22' => [
 			'createTable' => [
 				'name' => 'page_types',
 				'primary_key' => 'id',
@@ -249,7 +372,37 @@ return [
 			],
 		],
 
-		'17' => [
+        '23' => [
+            'insert' => [
+                'table' => 'page_types',
+                'columns' => [
+                    'title',
+                    'description',
+                ],
+
+                'values' => [
+                    'Basic page',
+                    'Simple basic page',
+                ],
+            ],
+        ],
+
+        '24' => [
+            'insert' => [
+                'table' => 'page_types',
+                'columns' => [
+                    'title',
+                    'description',
+                ],
+
+                'values' => [
+                    'News',
+                    'Simple news',
+                ],
+            ],
+        ],
+
+		'25' => [
 			'createTable' => [
 				'name' => 'page_collections',
 				'primary_key' => 'id',
@@ -265,6 +418,31 @@ return [
 				],
 			],
 		],
+
+        '26' => [
+            'insert' => [
+                'table' => 'page_collections',
+                'columns' => [
+                    'name',
+                    'description',
+                    'page_type_id',
+                    'pagination',
+                    'region_id',
+                    'links',
+                    'weight',
+                ],
+
+                'values' => [
+                    'News',
+                    'Simple news collection',
+                    '2',
+                    '0',
+                    '1',
+                    'null',
+                    '0',
+                ],
+            ],
+        ],
     ],
 
     'down' => [
@@ -307,6 +485,18 @@ return [
 		'6' => [
 			'deleteTable' => [
 				'name' => 'page_collections',
+			]
+		],
+
+        '7' => [
+			'deleteTable' => [
+				'name' => 'nestedset_menu_main_menu',
+			]
+		],
+
+        '8' => [
+			'deleteTable' => [
+				'name' => 'menu',
 			]
 		],
     ],

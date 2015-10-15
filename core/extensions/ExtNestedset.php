@@ -244,7 +244,7 @@ class ExtNestedset
     {
         $db = SysDatabase::getObj();
 
-        $sql = 'SELECT id, value, level FROM ' . self::$tableName . ' ORDER BY tree, left_key';
+        $sql = 'SELECT id, value, level, link FROM ' . self::$tableName . ' ORDER BY tree, left_key';
 
         return $db->query($sql);
     }
