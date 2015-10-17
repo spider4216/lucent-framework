@@ -1,3 +1,7 @@
+<?php if ($isGuide): ?>
+    <?php \core\modules\guide\components\guideManage::showModal(); ?>
+<?php endif; ?>
+
 <div class="content">
     <div class="jumbotron">
         <h1><?php echo $title; ?></h1>

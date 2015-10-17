@@ -28,15 +28,15 @@ use core\classes\SysAuth;
 
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#"><?php echo _("Features"); ?></a>
+                    <a href="/page/basic/view?id=1"><?php echo _("About"); ?></a>
                 </li>
 
                 <li>
-                    <a href="#"><?php echo _("Documentation"); ?></a>
+                    <a href="/page/basic/view?id=2"><?php echo _("Plans"); ?></a>
                 </li>
 
                 <li>
-                    <a href="#"><?php echo _("Plans"); ?></a>
+                    <a href="/page/basic/view?id=3"><?php echo _("Features"); ?></a>
                 </li>
             </ul>
 

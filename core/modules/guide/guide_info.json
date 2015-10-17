@@ -2,5 +2,18 @@
   "name" : "guide",
   "description" : "Introduction to system",
   "version" : "1.0",
-  "core_version" : "1.0"
+  "core_version" : "1.0",
+  "assets" : {
+    "images" : [
+      "assets/images"
+    ],
+
+    "js" : [
+      "assets/js/guide.js"
+    ],
+
+    "css" : [
+      "assets/css/guide.css"
+    ]
+  }
 }

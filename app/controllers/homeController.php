@@ -7,6 +7,7 @@ use core\classes\SysController;
 use core\classes\SysModule;
 use core\classes\SysView;
 use core\classes\SysWidget;
+use core\modules\guide\models\Guide;
 use core\modules\page\models\Page;
 
 /**
@@ -27,6 +28,14 @@ class homeController extends SysController
     {
         $view = new SysView();
         $view->title = _('Welcome to CMF Lucent');
+
+        $isGuide = false;
+        $guide = Guide::findByColumn('name', 'start');
+        if (!empty($guide) && SysAuth::is_login()) {
+            $isGuide = $guide->switch == 1 ? true : false;
+        }
+
+        $view->isGuide = $isGuide;
         $view->display('index');
     }
 

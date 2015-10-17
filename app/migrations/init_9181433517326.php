@@ -443,6 +443,33 @@ return [
                 ],
             ],
         ],
+
+        '27' => [
+            'createTable' => [
+                'name' => 'guide',
+                'primary_key' => 'id',
+                'columns' => [
+                    'id' => 'serial',
+                    'name' => 'text',
+                    'switch' => 'int',
+                ],
+            ],
+        ],
+
+        '28' => [
+            'insert' => [
+                'table' => 'guide',
+                'columns' => [
+                    'name',
+                    'switch',
+                ],
+
+                'values' => [
+                    'start',
+                    '1',
+                ],
+            ],
+        ],
     ],
 
     'down' => [
@@ -497,6 +524,12 @@ return [
         '8' => [
 			'deleteTable' => [
 				'name' => 'menu',
+			]
+		],
+
+        '9' => [
+			'deleteTable' => [
+				'name' => 'guide',
 			]
 		],
     ],

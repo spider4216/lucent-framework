@@ -148,6 +148,13 @@ class SysAssets {
                             '/modules/' . strtolower($module['name']) . '/' . $moduleCss;
                     }
                 }
+
+                if (isset($module['assets']['images'])) {
+                    foreach ($module['assets']['images'] as $moduleImage) {
+                        $moduleAssets[$module['name']]['images'][] = SysPath::directory('core') .
+                            '/modules/' . strtolower($module['name']) . '/' . $moduleImage;
+                    }
+                }
             }
         }
 
@@ -163,12 +170,16 @@ class SysAssets {
     {
         $files = static::moduleScanAssets();
         $publicAssetPath = SysPath::directory('app') . '/assets/modules/';
+        $fileManager = new ExtFileManager();
+
 
         if (!file_exists($publicAssetPath)) {
             mkdir(SysPath::directory('app') . '/assets/modules');
         }
 
         $attached = [];
+
+        //var_dump($files);
 
         foreach ($files as $moduleName => $moduleSet) {
             if (!file_exists($publicAssetPath . $moduleName)) {
@@ -200,6 +211,18 @@ class SysAssets {
 
                         copy($jsPack, $publicAssetPath . $moduleName . '/js/' . basename($jsPack));
                         $attached['js'][] = $publicAssetPath . $moduleName . '/js/' . basename($jsPack);
+                    }
+                }
+
+                if (isset($moduleSet['images'])) {
+                    foreach ($moduleSet['images'] as $imagePack) {
+                        if (!is_dir($publicAssetPath . $moduleName)) {
+                            mkdir($publicAssetPath . $moduleName, 0777);
+                        }
+
+                        $fileManager->recurse_copy($imagePack, $publicAssetPath . $moduleName . '/images');
+
+                        $attached['images'][] = $publicAssetPath . $moduleName . '/images';
                     }
                 }
             }

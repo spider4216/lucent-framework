@@ -49,7 +49,6 @@ class SysModule
     /**
      * @param string $type - тип модулей: system - системный, в будущем будет пользовательский
      * @return array - возвращается массив с конфигурационными данными модулей
-     * todo - сделать конфигурационный файлы модулей в json
      */
     public static function getAllModules($type = 'system')
     {

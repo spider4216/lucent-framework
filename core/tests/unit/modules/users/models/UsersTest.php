@@ -91,7 +91,7 @@ class UsersTest extends \PHPUnit_Framework_TestCase
         $password = 'admin';
         $passwordAgain = 'admin';
 
-        $difference = SysPassword::hash($password) == SysPassword::hash($passwordAgain);
+        $difference = SysPassword::verify($password, SysPassword::hash($passwordAgain));
 
         $this->assertTrue($difference);
     }
