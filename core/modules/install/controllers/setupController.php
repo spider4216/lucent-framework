@@ -3,6 +3,7 @@ namespace core\modules\install\controllers;
 
 use core\classes\exception\E403;
 use core\classes\SysAjax;
+use core\classes\SysAuth;
 use core\classes\SysCodeGenerate;
 use core\classes\SysController;
 use core\classes\SysDatabase;
@@ -137,6 +138,11 @@ class setupController extends SysController
 
             //get validator errors
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($user->getErrors()));
+        }
+
+        if (!SysAuth::login($user, $post['username'], $post['password'])) {
+            $result = $migrate->actionDown();
+            SysAjax::json_err(_("Cannot auth for some reasons"));
         }
 
         SysMessages::set(_("All configuration files were created"), 'success');
