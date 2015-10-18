@@ -101,7 +101,7 @@ class basicController extends SysController{
         static::$title = _("Edit page");
 
         $view = new SysView();
-        $id = SysRequest::get('id');
+        $id = (int)SysRequest::get('id');
 		$pageTypes = PageType::findAll();
 
         if (empty($id)) {
@@ -148,7 +148,7 @@ class basicController extends SysController{
 
     public function actionView()
     {
-        $id = SysRequest::get('id');
+        $id = (int)SysRequest::get('id');
 
         if (empty($id)) {
             throw new E404;
@@ -175,7 +175,7 @@ class basicController extends SysController{
 
     public function actionDelete()
     {
-        $id = SysRequest::get('id');
+        $id = (int)SysRequest::get('id');
 
         if (empty($id)) {
             throw new E404;

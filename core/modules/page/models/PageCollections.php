@@ -25,8 +25,8 @@ class PageCollections extends SysModel
 	{
 		return [
 			['name' => ['required']],
-			['page_type_id' => ['required']],
-			['region_id' => ['required']],
+			['page_type_id' => ['required', 'numeric']],
+			['region_id' => ['required', 'numeric']],
 		];
 	}
 }

@@ -170,4 +170,17 @@ class SysValidator
     {
         return true;
     }
+
+    private function numeric($v, $name)
+    {
+        if (is_numeric($v)) {
+            return true;
+        }
+
+        $message = '"' . $v . '" in "' . $name . '" ' . _("have to be numeric");
+        $this->errors[] = $message;
+        SysMessages::set($message, 'danger');
+
+        return false;
+    }
 }
