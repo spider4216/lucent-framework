@@ -199,6 +199,7 @@ return [
                 'primary_key' => 'id',
                 'columns' => [
                     'id' => 'serial',
+                    'machine_name' => 'varchar(255)',
                     'name' => 'varchar(255)',
                     'region_id' => 'varchar(255)',
                     'content' => 'text',
@@ -211,6 +212,7 @@ return [
             'insert' => [
                 'table' => 'blocks',
                 'columns' => [
+                    'machine_name',
                     'name',
                     'region_id',
                     'content',
@@ -218,6 +220,7 @@ return [
                 ],
 
                 'values' => [
+                    'information',
                     'Information',
                     '2',
                     'This is information block',
@@ -450,7 +453,7 @@ return [
                 'primary_key' => 'id',
                 'columns' => [
                     'id' => 'serial',
-                    'name' => 'text',
+                    'machine_name' => 'text',
                     'switch' => 'int',
                 ],
             ],

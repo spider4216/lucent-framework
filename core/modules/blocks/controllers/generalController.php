@@ -118,6 +118,7 @@ class generalController extends SysController
         $model->name = $post['name'];
         $model->content = $post['content'];
         $model->weight = $post['weight'];
+        $model->machine_name = $post['machine_name'];
 
         if ('none' != $post['region_id']) {
             $model->region_id = $post['region_id'];
@@ -137,7 +138,7 @@ class generalController extends SysController
         $view = new SysView();
         $regions = Regions::findAll();
 
-        $id = SysRequest::get('id');
+        $id = (int)SysRequest::get('id');
 
         if (empty($id)) {
             throw new E404(_("Block not found"));
@@ -152,6 +153,7 @@ class generalController extends SysController
         $view->model = $model;
         $view->regions = $regions;
         $view->regionSelected = $model->region_id;
+        $view->machine_name = $model->machine_name;
 
         $view->display('update');
 
@@ -162,7 +164,7 @@ class generalController extends SysController
     {
         $post = $_POST;
 
-        $model = Blocks::findByPk($post['id']);
+        $model = Blocks::findByPk((int)$post['id']);
 
         if (empty($model)) {
             throw new E404(_("Block not found"));
@@ -172,6 +174,7 @@ class generalController extends SysController
         $model->content = $post['content'];
         $model->region_id = $post['region_id'];
         $model->weight = $post['weight'];
+        $model->machine_name = $post['machine_name'];
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
@@ -182,7 +185,7 @@ class generalController extends SysController
 
     public function actionDelete()
     {
-        if ($id = SysRequest::get('id')) {
+        if ($id = (int)SysRequest::get('id')) {
             $model = Blocks::findByPk($id);
             if (empty($model)) {
                 SysMessages::set(_("Block not found"), 'danger');

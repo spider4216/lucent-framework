@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Юрий
- * Date: 24.07.2015
- * Time: 22:08
- */
 
 namespace core\modules\blocks\models;
 
@@ -17,6 +11,7 @@ class Blocks extends SysModel
     protected static function labels()
     {
         return [
+            'machine_name' => _("Machine name"),
             'name' => _("Block name"),
             'region_id' => _("Region"),
             'content' => _("Content"),
@@ -27,8 +22,9 @@ class Blocks extends SysModel
     public static function rules()
     {
         return [
-            ['name' => ['required', 'unique']],
+            ['name' => ['required']],
             ['content' => ['required']],
+            ['machine_name' => ['required', 'unique', 'machine_name']],
         ];
     }
 }

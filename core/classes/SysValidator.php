@@ -42,7 +42,7 @@ class SysValidator
 
     private function required($v, $name)
     {
-        if (!empty($v)) {
+        if ($v !== '') {
             return true;
         }
 
@@ -178,6 +178,23 @@ class SysValidator
         }
 
         $message = '"' . $v . '" in "' . $name . '" ' . _("have to be numeric");
+        $this->errors[] = $message;
+        SysMessages::set($message, 'danger');
+
+        return false;
+    }
+
+    private function machine_name($v, $name)
+    {
+        $result = preg_match('/^[a-z_]+$/',$v);
+
+        if ($result) {
+            return true;
+        }
+
+        $attrLabelAgain = $this->model->getLabel($name);
+
+        $message = 'Field "' . $attrLabelAgain . '" ' . _("is not valid");
         $this->errors[] = $message;
         SysMessages::set($message, 'danger');
 

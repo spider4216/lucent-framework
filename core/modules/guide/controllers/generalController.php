@@ -28,7 +28,7 @@ class generalController extends SysController
             SysAjax::json_err(_("expected type but did not pass"));
         }
 
-        $model = Guide::findByColumn('name', $post['type']);
+        $model = Guide::findByColumn('machine_name', $post['type']);
 
         if (empty($model)) {
             SysAjax::json_err(_("guide was not found"));

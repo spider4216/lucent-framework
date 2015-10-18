@@ -12,10 +12,17 @@ use core\classes\SysWidget;
     <form action="" method="post">
 
         <div class="m-row">
-            <label for="title"><?php echo $model->getLabel('name'); ?></label>
-            <input type="text" name="name" value="<?php echo $model->name; ?>"
+            <label for="title"><?= $model->getLabel('name'); ?></label>
+            <input type="text" name="name" value="<?= $model->name; ?>"
                    class="form-control name" placeholder="Введите имя"/>
-            <small><?php echo _("Name of block have to contain: a-z and/or _"); ?></small>
+            <br/>
+        </div>
+
+        <div class="m-row">
+            <label for="machine_name"><?= $model->getLabel('machine_name'); ?></label>
+            <input type="text" name="machine_name" value="<?= $model->machine_name;; ?>"
+                   class="form-control machine_name" placeholder="<?php echo _("Machine name"); ?>"/>
+            <small><?php echo _("Machine name of block have to contain: a-z and/or _"); ?></small>
             <br/>
             <br/>
         </div>

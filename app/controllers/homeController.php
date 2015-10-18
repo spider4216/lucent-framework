@@ -30,7 +30,7 @@ class homeController extends SysController
         $view->title = _('Welcome to CMF Lucent');
 
         $isGuide = false;
-        $guide = Guide::findByColumn('name', 'start');
+        $guide = Guide::findByColumn('machine_name', 'start');
         if (!empty($guide) && SysAuth::is_login()) {
             $isGuide = $guide->switch == 1 ? true : false;
         }
