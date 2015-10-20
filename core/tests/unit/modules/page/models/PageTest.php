@@ -11,6 +11,7 @@ class PageTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->page = new Page();
+        $this->page->setScript(false);
     }
 
     public function testTitleValid()

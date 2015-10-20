@@ -21,7 +21,7 @@ class Page extends SysModel
         return [
             ['title' => ['required']],
             ['content' => ['required']],
-            ['page_type_id' => ['required']],
+            ['page_type_id' => ['required', 'numeric']],
         ];
     }
 

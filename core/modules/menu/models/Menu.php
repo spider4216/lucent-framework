@@ -24,8 +24,7 @@ class Menu extends SysModel
     {
         return [
             ['name' => ['required', 'script' => ['create']]],
-            //todo need only latin symbols and _ validator
-            ['machine_name' => ['required', 'script' => ['create']]],
+            ['machine_name' => ['required', 'machine_name', 'script' => ['create']]],
 
             ['name' => ['required', 'script' => ['update']]],
         ];
