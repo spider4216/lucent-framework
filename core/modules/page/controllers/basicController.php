@@ -5,6 +5,7 @@ use core\classes\exception\E403;
 use core\classes\exception\E404;
 use core\classes\SysAjax;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysView;
 use core\modules\page\models\Page;
 use core\classes\SysRequest;
@@ -52,7 +53,7 @@ class basicController extends SysController{
 
     public function actionIndex()
     {
-        static::$title = ("Pages");
+        static::$title = SysLocale::t("Pages");
 
         $model = new Page();
 
@@ -64,7 +65,7 @@ class basicController extends SysController{
 
     public function actionCreate()
     {
-        static::$title = _("Create page");
+        static::$title = SysLocale::t("Create page");
 
         $view = new SysView();
         $model = new Page();
@@ -93,12 +94,12 @@ class basicController extends SysController{
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Page has been created successfully"));
+        SysAjax::json_ok(SysLocale::t("Page \"{:title}\" has been created successfully", ['{:title}' => $post['title']]));
     }
 
     public function actionUpdate()
     {
-        static::$title = _("Edit page");
+        static::$title = SysLocale::t("Edit page");
 
         $view = new SysView();
         $id = (int)SysRequest::get('id');
@@ -143,7 +144,9 @@ class basicController extends SysController{
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Page has been updated successfully"));
+        SysAjax::json_ok(SysLocale::t("Page \"{:title}\" has been updated successfully", [
+            '{:title}' => $post['title'],
+        ]));
     }
 
     public function actionView()
@@ -188,12 +191,18 @@ class basicController extends SysController{
             throw new E404;
         }
 
+        $title = $item->title;
+
         if (!$item->delete()) {
-            SysMessages::set(_("Page cannot be deleted"), 'danger');
+            SysMessages::set(SysLocale::t("Page \"{:title}\" cannot be deleted", [
+                '{:title}' => $title,
+            ]), 'danger');
             SysRequest::redirect('/page/basic/');
         }
 
-        SysMessages::set(_("Page has been deleted successfully"), 'success');
+        SysMessages::set(SysLocale::t("Page \"{:title}\" has been deleted successfully", [
+            '{:title}' => $title,
+        ]), 'success');
         SysRequest::redirect('/page/basic/');
     }
 }

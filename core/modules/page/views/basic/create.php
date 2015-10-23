@@ -1,6 +1,7 @@
 <?php
 use core\classes\SysMessages;
 use core\classes\SysWidget;
+use core\classes\SysLocale as locale;
 ?>
 
 %system_title%
@@ -15,13 +16,14 @@ use core\classes\SysWidget;
 
         <div class="m-row">
             <label for="title"><?= $model->getLabel('title'); ?></label>
-            <input type="text" name="title" class="form-control title" placeholder="<?= _("title"); ?>"/>
+            <input type="text" name="title" class="form-control title" placeholder="<?= locale::t("title"); ?>"/>
             <br/>
         </div>
 
         <div class="m-row">
             <label for="content"><?= $model->getLabel('content'); ?></label>
-            <textarea name="content" class="form-control content" rows="8" placeholder="<?= _("content"); ?>"></textarea>
+            <textarea name="content" class="form-control content" rows="8"
+                      placeholder="<?= locale::t("content"); ?>"></textarea>
             <br/>
         </div>
 
@@ -33,7 +35,7 @@ use core\classes\SysWidget;
 						<option value="<?= $type->id ?>"><?= $type->title; ?></option>
 					<?php endforeach; ?>
 				<?php else: ?>
-					<option value="-1"><?= _("Not found"); ?></option>
+					<option value="-1"><?= locale::t("Not found"); ?></option>
 				<?php endif; ?>
 			</select>
 		</div>
@@ -42,7 +44,7 @@ use core\classes\SysWidget;
 
         <div class="m-row">
             <input type="button" onclick="SysAjaxSave('/page/basic/ajaxcreate', '/page/basic/')"
-                   value="<?= _("Save"); ?>" class="btn btn-primary"/>
+                   value="<?= locale::t("Save"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

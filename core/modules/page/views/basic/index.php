@@ -2,6 +2,7 @@
 use core\classes\SysWidget;
 use core\classes\SysMessages;
 use core\extensions\ExtBreadcrumbs;
+use core\classes\SysLocale as locale;
 ?>
 
 %system_title%
@@ -12,9 +13,9 @@ use core\extensions\ExtBreadcrumbs;
 
 <div class="tool">
     <br/>
-    <a class="btn btn-success" href="/page/basic/create"><?php echo _("Create page"); ?></a>
-    <a class="btn btn-default" href="/page/type/"><?php echo _("Types"); ?></a>
-    <a class="btn btn-default" href="/page/collection/"><?php echo _("Collections"); ?></a>
+    <a class="btn btn-success" href="/page/basic/create"><?= locale::t("Create page"); ?></a>
+    <a class="btn btn-default" href="/page/type/"><?= locale::t("Types"); ?></a>
+    <a class="btn btn-default" href="/page/collection/"><?= locale::t("Collections"); ?></a>
 </div>
 
 <div class="pages-list">

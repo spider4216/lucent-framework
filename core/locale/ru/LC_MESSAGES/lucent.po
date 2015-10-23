@@ -1,601 +1,67 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-08-03 20:26+0600\n"
-"PO-Revision-Date: 2015-08-03 20:42+0600\n"
+"POT-Creation-Date: 2015-10-22 22:25+0600\n"
+"PO-Revision-Date: 2015-10-23 22:11+0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Basepath: ../../../..\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: app/assets/system/jquery/jquery-ui.min.js:8
-#: core/assets/jquery/jquery-ui.min.js:8
 msgid "'"
 msgstr ""
 
-#: app/controllers/homeController.php:29
-msgid "Welcome to CMF Lucent"
-msgstr "Добро пожаловать в систему CMF Lucent"
+msgid "Page \"{:title}\" has been created successfully"
+msgstr "Страница \"{:title}\" была успешно создана"
 
-#: app/views/home/index.php:6
-msgid ""
-"Lucent - Content Management Framework (CMF). With this system you can create "
-"web sites, information systems or web applications very quickly and easily"
-msgstr ""
-"Lucent - это среда для создания веб-приложений (CMF). При помощи этой "
-"системы вы сможете быстро и не принужденно создавать сайты, информационные "
-"системы или веб-приложения различной сложности"
+msgid "Pages"
+msgstr "Страницы"
 
-#: app/views/home/index.php:9
-msgid "Read more"
-msgstr "Подробнее"
-
-#: core/classes/SysValidator.php:27
-msgid "Rule"
-msgstr "Правило"
-
-#: core/classes/SysValidator.php:27
-msgid "does not exist"
-msgstr "не существует"
-
-#: core/classes/SysValidator.php:45
-msgid "Field"
-msgstr "Поле"
-
-#: core/classes/SysValidator.php:68
-msgid "Field value"
-msgstr "Значение поля"
-
-#: core/classes/SysValidator.php:68
-msgid "does not match"
-msgstr "не соответствует"
-
-#: core/classes/SysValidator.php:81
-msgid "E-mail is not valid"
-msgstr "Электронная почта не корректна"
-
-#: core/classes/SysValidator.php:94
-msgid "Username or password is not valid"
-msgstr "Имя пользователя или пароль не корректен"
-
-#: core/classes/SysValidator.php:107
-msgid "Password is not valid"
-msgstr "Пароль не корректен"
-
-#: core/classes/SysValidator.php:122
-msgid "Record"
-msgstr "Запись"
-
-#: core/classes/SysValidator.php:122
-msgid "has already exist"
-msgstr "уже существует"
-
-#: core/modules/admin/controllers/panelController.php:26
-#: core/modules/admin/controllers/panelController.php:30
-msgid "admin panel"
-msgstr "админ панель"
-
-#: core/modules/admin/controllers/panelController.php:31
-#: core/modules/admin/controllers/panelController.php:46
-msgid "Modules list"
-msgstr "Список модулей"
-
-#: core/modules/admin/controllers/panelController.php:38
-#: core/views/layouts/default.php:53
-msgid "Admin panel"
-msgstr "Админ панель"
-
-#: core/modules/admin/views/panel/index.php:12
-msgid "Basic page"
-msgstr "Базовые страницы"
-
-#: core/modules/admin/views/panel/index.php:16
-msgid "Users system"
-msgstr "Система пользователей"
-
-#: core/modules/admin/views/panel/index.php:20
-#: core/modules/regions/controllers/generalController.php:44
-msgid "Regions"
-msgstr "Регионы"
-
-#: core/modules/admin/views/panel/index.php:24
-#: core/modules/blocks/controllers/generalController.php:45
-msgid "Blocks"
-msgstr "Блоки"
-
-#: core/modules/admin/views/panel/index.php:28
-msgid "Modules"
-msgstr "Модули"
-
-#: core/modules/admin/views/panel/modules.php:13
-msgid "System modules"
-msgstr "Система модулей"
-
-#: core/modules/admin/views/panel/modules.php:14
-msgid "User modules"
-msgstr "Пользовательские модули"
-
-#: core/modules/admin/views/panel/modules.php:34
-msgid "modules shop"
-msgstr "магазин модулей"
-
-#: core/modules/admin/views/panel/modules.php:38
-msgid "iframe here"
-msgstr "здесь iframe"
-
-#: core/modules/blocks/controllers/generalController.php:28
-#: core/modules/blocks/controllers/generalController.php:32
-#: core/modules/blocks/controllers/generalController.php:37
-msgid "blocks"
-msgstr "блоки"
-
-#: core/modules/blocks/controllers/generalController.php:33
-msgid "create block"
-msgstr "создать блок"
-
-#: core/modules/blocks/controllers/generalController.php:38
-msgid "update block"
-msgstr "обновить блок"
-
-#: core/modules/blocks/controllers/generalController.php:82
-#: core/modules/blocks/views/general/index.php:9
-msgid "Create block"
-msgstr "Создать блок"
-
-#: core/modules/blocks/controllers/generalController.php:98
-msgid "Block has been created successfully"
-msgstr "Блок был успешно создан"
-
-#: core/modules/blocks/controllers/generalController.php:110
-msgid "Update block"
-msgstr "Обновить блок"
-
-#: core/modules/blocks/controllers/generalController.php:120
-#: core/modules/blocks/controllers/generalController.php:159
-#: core/modules/blocks/controllers/generalController.php:169
-msgid "Block not found"
-msgstr "Блок не найден"
-
-#: core/modules/blocks/controllers/generalController.php:131
-msgid "Block has been updated successfully"
-msgstr "Блок был успешно обновлен"
-
-#: core/modules/blocks/controllers/generalController.php:148
-msgid "Block not fount"
-msgstr "Блок не найден"
-
-#: core/modules/blocks/controllers/generalController.php:176
-msgid "Block has been deleted successfully"
-msgstr "Блок был успешно удален"
-
-#: core/modules/blocks/controllers/generalController.php:178
-msgid "Block can not be deleted"
-msgstr "Блок не может быть удален"
-
-#: core/modules/blocks/models/Blocks.php:20
-#: core/modules/blocks/views/general/create.php:13
-msgid "Block name"
-msgstr "Имя блока"
-
-#: core/modules/blocks/models/Blocks.php:21
-msgid "Region"
-msgstr "Регион"
-
-#: core/modules/blocks/models/Blocks.php:22
-#: core/modules/blocks/views/general/create.php:22
-#: core/modules/page/models/Page.php:14
-msgid "Content"
-msgstr "Содержимое"
-
-#: core/modules/blocks/models/Blocks.php:23
-#: core/modules/blocks/views/general/create.php:45
-#: core/modules/blocks/views/general/update.php:51
-msgid "Weight"
-msgstr "Вес"
-
-#: core/modules/blocks/views/general/create.php:14
-#: core/modules/blocks/views/general/update.php:18
-msgid "Name of block have to contain: a-z and/or _"
-msgstr "Имя блока должно содержать: a-z и/или _"
-
-#: core/modules/blocks/views/general/create.php:33
-#: core/modules/blocks/views/general/update.php:38
-msgid "not selected"
-msgstr "не выбрано"
-
-#: core/modules/blocks/views/general/create.php:51
-#: core/modules/blocks/views/general/update.php:58
-#: core/modules/page/views/basic/create.php:29
-#: core/modules/page/views/basic/update.php:30
-#: core/modules/regions/views/general/create.php:20
-#: core/modules/regions/views/general/update.php:25
-#: core/modules/users/views/control/update.php:50
-#: core/modules/users/views/roles/update.php:27
-msgid "Save"
-msgstr "Сохранить"
-
-#: core/modules/blocks/views/general/index.php:15
-msgid "Available regions"
-msgstr "Доступные регионы"
-
-#: core/modules/blocks/views/general/index.php:39
-msgid "Available blocks"
-msgstr "Доступные блоки"
-
-#: core/modules/blocks/views/general/update.php:26
-#: core/modules/page/views/basic/create.php:24
-#: core/modules/page/views/basic/update.php:24
-msgid "content"
-msgstr "содержимое"
-
-#: core/modules/page/controllers/basicController.php:30
-#: core/modules/page/controllers/basicController.php:34
-#: core/modules/page/controllers/basicController.php:39
-#: core/modules/page/controllers/basicController.php:44
-msgid "pages"
-msgstr "страницы"
-
-#: core/modules/page/controllers/basicController.php:35
-msgid "create page"
-msgstr "создать страницу"
-
-#: core/modules/page/controllers/basicController.php:40
-msgid "edit page"
-msgstr "редактировать страницу"
-
-#: core/modules/page/controllers/basicController.php:64
-#: core/modules/page/views/basic/index.php:15
 msgid "Create page"
-msgstr "Создать страницу"
+msgstr "Создание страницы"
 
-#: core/modules/page/controllers/basicController.php:75
-msgid "Page has been created successfully"
-msgstr "Страница была успешно создана"
-
-#: core/modules/page/controllers/basicController.php:85
 msgid "Edit page"
-msgstr "Редактировать страницу"
+msgstr "Редактирование страницы"
 
-#: core/modules/page/controllers/basicController.php:94
-#: core/modules/page/controllers/basicController.php:116
-#: core/modules/page/controllers/basicController.php:125
-#: core/modules/page/controllers/basicController.php:148
-#: core/modules/page/controllers/basicController.php:156
-msgid "Page not found"
-msgstr "Страница не найдена"
+msgid "Page \"{:title}\" has been updated successfully"
+msgstr "Страница \"{:title}\" была успешно обновлена"
 
-#: core/modules/page/controllers/basicController.php:104
-msgid "Page has been updated successfully"
-msgstr "Страница была успешно обновлена"
+msgid "Page \"{:title}\" cannot be deleted"
+msgstr "Страница \"{:title}\" не может быть удалена"
 
-#: core/modules/page/controllers/basicController.php:168
-msgid "Page has been deleted successfully"
-msgstr "Страница была успешно удалена"
+msgid "Page \"{:title}\" has been deleted successfully"
+msgstr "Страница \"{:title}\" была успешно удалена"
 
-#: core/modules/page/models/Page.php:13
 msgid "Title"
 msgstr "Заголовок"
 
-#: core/modules/page/views/basic/create.php:18
-#: core/modules/page/views/basic/update.php:16
+msgid "Content"
+msgstr "Содержимое"
+
+msgid "Type"
+msgstr "Тип"
+
 msgid "title"
 msgstr "заголовок"
 
-#: core/modules/regions/controllers/generalController.php:27
-#: core/modules/regions/controllers/generalController.php:31
-#: core/modules/regions/controllers/generalController.php:36
-msgid "regions"
-msgstr "регионы"
+msgid "content"
+msgstr "содержимое"
 
-#: core/modules/regions/controllers/generalController.php:32
-msgid "create"
-msgstr "создать"
+msgid "Not found"
+msgstr "Не найдено"
 
-#: core/modules/regions/controllers/generalController.php:37
-msgid "update"
-msgstr "обновить"
+msgid "Save"
+msgstr "Сохранить"
 
-#: core/modules/regions/controllers/generalController.php:52
-#: core/modules/regions/views/general/index.php:8
-msgid "Create region"
-msgstr "Создать регион"
+msgid "Types"
+msgstr "Типы"
 
-#: core/modules/regions/controllers/generalController.php:63
-msgid "Region has been created successfully"
-msgstr "Регион был успешно создан"
-
-#: core/modules/regions/controllers/generalController.php:73
-msgid "Update region"
-msgstr "Обновить регион"
-
-#: core/modules/regions/controllers/generalController.php:84
-#: core/modules/regions/controllers/generalController.php:106
-#: core/modules/regions/controllers/generalController.php:113
-#: core/modules/regions/controllers/generalController.php:127
-msgid "Region not found"
-msgstr "Регион не найден"
-
-#: core/modules/regions/controllers/generalController.php:94
-msgid "Region has been updated successfully"
-msgstr "Регион был успешно обновлен"
-
-#: core/modules/regions/controllers/generalController.php:134
-msgid "Region has been deleted successfully"
-msgstr "Регион был успешно удален"
-
-#: core/modules/regions/controllers/generalController.php:136
-msgid "Region can not be deleted"
-msgstr "Регион не может быть удален"
-
-#: core/modules/regions/models/Regions.php:15
-msgid "Name"
-msgstr "Имя"
-
-#: core/modules/regions/views/general/create.php:13
-#: core/modules/regions/views/general/update.php:17
-msgid "name"
-msgstr "имя"
-
-#: core/modules/regions/views/general/create.php:14
-#: core/modules/regions/views/general/update.php:18
-msgid "Name have to contain: a-z and/or _ symbols"
-msgstr "Имя должно содержать: a-z и/или _"
-
-#: core/modules/users/controllers/controlController.php:33
-#: core/modules/users/controllers/controlController.php:37
-#: core/modules/users/controllers/controlController.php:42
-#: core/modules/users/controllers/controlController.php:47
-#: core/modules/users/controllers/controlController.php:52
-#: core/modules/users/controllers/controlController.php:57
-#: core/modules/users/controllers/rolesController.php:30
-#: core/modules/users/controllers/rolesController.php:35
-#: core/modules/users/controllers/rolesController.php:41
-msgid "users"
-msgstr "пользователи"
-
-#: core/modules/users/controllers/controlController.php:43
-msgid "registration"
-msgstr "регистрация"
-
-#: core/modules/users/controllers/controlController.php:48
-msgid "sign in"
-msgstr "войти"
-
-#: core/modules/users/controllers/controlController.php:53
-#: core/modules/users/controllers/controlController.php:58
-msgid "manage users"
-msgstr "управление пользователями"
-
-#: core/modules/users/controllers/controlController.php:59
-msgid "edit user"
-msgstr "изменить пользователя"
-
-#: core/modules/users/controllers/controlController.php:83
-#: core/views/layouts/default.php:55
-msgid "Profile"
-msgstr "Профайл"
-
-#: core/modules/users/controllers/controlController.php:86
-#: core/modules/users/controllers/controlController.php:94
-#: core/modules/users/controllers/controlController.php:215
-#: core/modules/users/controllers/controlController.php:223
-msgid "user not found"
-msgstr "пользователь не найден"
-
-#: core/modules/users/controllers/controlController.php:101
-#: core/modules/users/views/control/login.php:43
-#: core/modules/users/views/control/register.php:49
-msgid "Registration"
-msgstr "Регистрация"
-
-#: core/modules/users/controllers/controlController.php:116
-msgid "User has been created successfully"
-msgstr "Пользователь был успешно создан"
-
-#: core/modules/users/controllers/controlController.php:123
-msgid "You have already signed up"
-msgstr "Вы уже зарегистрированы"
-
-#: core/modules/users/controllers/controlController.php:131
-#: core/modules/users/views/control/login.php:47
-#: core/views/layouts/default.php:62
-msgid "Sign in"
-msgstr "Войти в систему"
-
-#: core/modules/users/controllers/controlController.php:138
-msgid "You signed in as"
-msgstr "Вы вошли как"
-
-#: core/modules/users/controllers/controlController.php:141
-msgid "username or password is not suitable"
-msgstr "имя пользователя или пароль не подходят"
-
-#: core/modules/users/controllers/controlController.php:146
-msgid "you have already logged in"
-msgstr "вы уже вошли"
-
-#: core/modules/users/controllers/controlController.php:158
-msgid "Exit from system is not possible"
-msgstr "Выйти из системы не предоставляется возможным"
-
-#: core/modules/users/controllers/controlController.php:164
-#: core/modules/users/views/control/index.php:12
-msgid "Manage users"
-msgstr "Управление пользователями"
-
-#: core/modules/users/controllers/controlController.php:176
-msgid "Edit user"
-msgstr "Изменить пользователя"
-
-#: core/modules/users/controllers/controlController.php:195
-msgid "User has been updated successfully."
-msgstr "Пользователь был успешно обновлен"
-
-#: core/modules/users/controllers/controlController.php:196
-msgid "Sign in system again"
-msgstr "Войдите в систему сново"
-
-#: core/modules/users/controllers/controlController.php:201
-msgid "User has been updated successfully"
-msgstr "Пользователь был успешно обновлен"
-
-#: core/modules/users/controllers/controlController.php:235
-msgid "User has been deleted successfully"
-msgstr "Пользователь был успешно удален"
-
-#: core/modules/users/controllers/controlController.php:238
-msgid "user can not be removed"
-msgstr "пользователь не может быть удален"
-
-#: core/modules/users/controllers/controlController.php:241
-msgid "authorized user can not be removed"
-msgstr "авторизованный пользователь не может быть удален"
-
-#: core/modules/users/controllers/controlController.php:247
-msgid "unidentified user"
-msgstr "неопознанный пользователь"
-
-#: core/modules/users/controllers/rolesController.php:31
-#: core/modules/users/controllers/rolesController.php:36
-#: core/modules/users/controllers/rolesController.php:42
-msgid "manage roles"
-msgstr "управление ролями"
-
-#: core/modules/users/controllers/rolesController.php:37
-msgid "create role"
-msgstr "создать роль"
-
-#: core/modules/users/controllers/rolesController.php:43
-msgid "edit role"
-msgstr "изменить роль"
-
-#: core/modules/users/controllers/rolesController.php:50
-#: core/modules/users/views/control/index.php:16
-msgid "Manage roles"
-msgstr "Управление ролями"
-
-#: core/modules/users/controllers/rolesController.php:62
-#: core/modules/users/views/roles/index.php:13
-msgid "Create role"
-msgstr "Создать роль"
-
-#: core/modules/users/controllers/rolesController.php:73
-msgid "Role has been created successfully"
-msgstr "Роль была успешно создана"
-
-#: core/modules/users/controllers/rolesController.php:83
-msgid "Edit role"
-msgstr "Изменить роль"
-
-#: core/modules/users/controllers/rolesController.php:92
-#: core/modules/users/controllers/rolesController.php:112
-#: core/modules/users/controllers/rolesController.php:120
-msgid "Role not found"
-msgstr "Роль не найдена"
-
-#: core/modules/users/controllers/rolesController.php:99
-msgid "Role has been updated successfully"
-msgstr "Роль была успешно обновлена"
-
-#: core/modules/users/controllers/rolesController.php:131
-msgid "System role can not be deleted"
-msgstr "Системная роль не может быть удалена"
-
-#: core/modules/users/controllers/rolesController.php:136
-msgid "Role has been deleted successfully"
-msgstr "Роль была успешно удалена"
-
-#: core/modules/users/controllers/rolesController.php:140
-msgid "Role can not be deleted"
-msgstr "Роль не может быть удалена"
-
-#: core/modules/users/models/Roles.php:13
-#: core/modules/users/views/roles/create.php:20
-#: core/modules/users/views/roles/update.php:21
-msgid "Role name"
-msgstr "Имя роли"
-
-#: core/modules/users/models/Users.php:15
-#: core/modules/users/views/control/register.php:21
-#: core/modules/users/views/control/update.php:20
-msgid "Username"
-msgstr "Имя пользователя"
-
-#: core/modules/users/models/Users.php:16
-#: core/modules/users/views/control/register.php:29
-#: core/modules/users/views/control/update.php:28
-msgid "Password"
-msgstr "Пароль"
-
-#: core/modules/users/models/Users.php:17
-#: core/modules/users/views/control/register.php:36
-msgid "Repeat password again"
-msgstr "Повторить пароль"
-
-#: core/modules/users/models/Users.php:18
-#: core/modules/users/views/control/register.php:43
-#: core/modules/users/views/control/update.php:35
-msgid "E-mail"
-msgstr "Электронная почта"
-
-#: core/modules/users/models/Users.php:19
-msgid "Role"
-msgstr "Роль"
-
-#: core/modules/users/views/roles/create.php:25
-msgid "Create"
-msgstr "Создать"
-
-#: core/views/layouts/default.php:31
-msgid "Features"
-msgstr "Возможности"
-
-#: core/views/layouts/default.php:35
-msgid "Documentation"
-msgstr "Документация"
-
-#: core/views/layouts/default.php:39
-msgid "Plans"
-msgstr "Планы"
-
-#: core/views/layouts/default.php:47
-msgid "User"
-msgstr "Пользователь"
-
-#: core/views/layouts/default.php:56
-msgid "Logout"
-msgstr "Выйти"
-
-#: core/widgets/WBtnAsk.php:20
-msgid "Delete"
-msgstr "Удалить"
-
-#: core/widgets/WBtnAsk.php:21
-msgid "Are you sure?"
-msgstr "Вы уверены?"
-
-#: core/widgets/WBtnAsk.php:24
-msgid "Yes"
-msgstr "Да"
-
-#: core/widgets/WBtnAsk.php:26
-msgid "No"
-msgstr "Нет"
-
-#: core/widgets/templates/_wbreadcrumbs.php:3
-msgid "Main"
-msgstr "Главная"
-
-#~ msgid "edit users"
-#~ msgstr "редактировать пользователей"
-
-#~ msgid "Welcome"
-#~ msgstr "Добро пожаловать"
+msgid "Collections"
+msgstr "Коллекции"
