@@ -3,6 +3,7 @@ namespace core\modules\admin\controllers;
 
 
 use core\classes\SysAuth;
+use core\classes\SysLocale;
 use core\extensions\ExtBreadcrumbs;
 use core\classes\SysController;
 use core\classes\SysModule;
@@ -23,19 +24,19 @@ class PanelController extends SysController
     {
         return [
             'index' => [
-                _("admin panel") => '-',
+                SysLocale::t("admin panel") => '-',
             ],
 
             'modules' => [
-                _("admin panel") => '/admin/panel/',
-                _("Modules list") => '-',
+                SysLocale::t("admin panel") => '/admin/panel/',
+                SysLocale::t("Modules list") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = _("Admin panel");
+        static::$title = SysLocale::t("Admin panel");
         $view = new SysView();
 
         $view->display('index');
@@ -43,7 +44,7 @@ class PanelController extends SysController
 
     public function actionModules()
     {
-        static::$title = _("Modules list");
+        static::$title = SysLocale::t("Modules list");
 
         $view = new SysView();
         $systemModules = SysModule::getAllModules('system');

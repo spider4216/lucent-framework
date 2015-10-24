@@ -2,6 +2,7 @@
 
 namespace core\modules\blocks\models;
 
+use core\classes\SysLocale;
 use core\classes\SysModel;
 
 class Blocks extends SysModel
@@ -11,11 +12,11 @@ class Blocks extends SysModel
     protected static function labels()
     {
         return [
-            'machine_name' => _("Machine name"),
-            'name' => _("Block name"),
-            'region_id' => _("Region"),
-            'content' => _("Content"),
-            'weight' => _("Weight"),
+            'machine_name' => SysLocale::t("Machine name"),
+            'name' => SysLocale::t("Block name"),
+            'region_id' => SysLocale::t("Region"),
+            'content' => SysLocale::t("Content"),
+            'weight' => SysLocale::t("Weight"),
         ];
     }
 

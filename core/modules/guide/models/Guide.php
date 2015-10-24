@@ -2,6 +2,7 @@
 
 namespace core\modules\guide\models;
 
+use core\classes\SysLocale;
 use core\classes\SysModel;
 
 class Guide extends SysModel
@@ -11,8 +12,8 @@ class Guide extends SysModel
     protected static function labels()
     {
         return [
-            'machine_name' => _("Machine name"),
-            'switch' => _("Switch"),
+            'machine_name' => SysLocale::t("Machine name"),
+            'switch' => SysLocale::t("Switch"),
         ];
     }
 

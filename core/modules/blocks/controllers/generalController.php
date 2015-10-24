@@ -6,6 +6,7 @@ use core\classes\exception\E400;
 use core\classes\exception\E404;
 use core\classes\SysAjax;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
@@ -29,24 +30,24 @@ class generalController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                _("blocks") => '-',
+                SysLocale::t("blocks") => '-',
             ],
 
             'create' => [
-                _("blocks") => '/blocks/general/',
-                _("create block") => '-',
+                SysLocale::t("blocks") => '/blocks/general/',
+                SysLocale::t("create block") => '-',
             ],
 
             'update' => [
-                _("blocks") => '/blocks/general/',
-                _("update block") => '-',
+                SysLocale::t("blocks") => '/blocks/general/',
+                SysLocale::t("update block") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = _("Blocks");
+        static::$title = SysLocale::t("Blocks");
         $view = new SysView();
         $blocks = Blocks::findAll();
 		$menu = Menu::findAll();
@@ -95,7 +96,7 @@ class generalController extends SysController
 
     public function actionCreate()
     {
-        static::$title = _("Create block");
+        static::$title = SysLocale::t("Create block");
 
         $view = new SysView();
         $model = new Blocks();
@@ -109,7 +110,7 @@ class generalController extends SysController
     public function actionAjaxCreate()
     {
         if (!SysAjax::isAjax()) {
-            throw new E400(_("Bad Request"));
+            throw new E400(SysLocale::t("Bad Request"));
         }
 
         $post = $_POST;
@@ -128,12 +129,14 @@ class generalController extends SysController
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Block has been created successfully"));
+        SysAjax::json_ok(SysLocale::t("Block \"{:name}\" has been created successfully", [
+            '{:name}' => $post['name'],
+        ]));
     }
 
     public function actionUpdate()
     {
-        static::$title = _("Update block");
+        static::$title = SysLocale::t("Update block");
 
         $view = new SysView();
         $regions = Regions::findAll();
@@ -141,13 +144,17 @@ class generalController extends SysController
         $id = (int)SysRequest::get('id');
 
         if (empty($id)) {
-            throw new E404(_("Block not found"));
+            throw new E404(SysLocale::t("Block with id \"{:id}\" not found", [
+                '{:id)' => $id,
+            ]));
         }
 
         $model = Blocks::findByPk($id);
 
         if (empty($model)) {
-            throw new E404(_("Block not fount"));
+            throw new E404(SysLocale::t("Block with id \"{:id}\" not found", [
+                '{:id)' => $id,
+            ]));
         }
 
         $view->model = $model;
@@ -156,8 +163,6 @@ class generalController extends SysController
         $view->machine_name = $model->machine_name;
 
         $view->display('update');
-
-
     }
 
     public function actionAjaxUpdate()
@@ -167,7 +172,9 @@ class generalController extends SysController
         $model = Blocks::findByPk((int)$post['id']);
 
         if (empty($model)) {
-            throw new E404(_("Block not found"));
+            throw new E404(SysLocale::t("Block with id \"{:id}\" not found", [
+                '{:id}' => $post['id'],
+            ]));
         }
 
         $model->name = $post['name'];
@@ -180,22 +187,31 @@ class generalController extends SysController
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Block has been updated successfully"));
+        SysAjax::json_ok(SysLocale::t("Block \"{:name}\" has been updated successfully", [
+            '{:name}' => $post['name'],
+        ]));
     }
 
     public function actionDelete()
     {
         if ($id = (int)SysRequest::get('id')) {
             $model = Blocks::findByPk($id);
+
             if (empty($model)) {
-                SysMessages::set(_("Block not found"), 'danger');
+                SysMessages::set(SysLocale::t("Block with id \"{:id}\" not found", [
+                    '{:id}' => $id,
+                ]), 'danger');
                 SysRequest::redirect('/blocks/general/');
             }
 
             if (false !== $model->delete()) {
-                SysMessages::set(_("Block has been deleted successfully"), 'success');
+                SysMessages::set(SysLocale::t("Block \"{:name}\" has been deleted successfully", [
+                    '{:name}' => $model->name,
+                ]), 'success');
             } else {
-                SysMessages::set(_("Block can not be deleted"), 'danger');
+                SysMessages::set(SysLocale::t("Block \"{:name}\" can not be deleted", [
+                    '{:name}' => $model->name,
+                ]), 'danger');
             }
         }
 

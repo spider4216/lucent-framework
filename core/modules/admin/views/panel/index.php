@@ -1,5 +1,6 @@
 <?php
 use core\classes\SysWidget;
+use core\classes\SysLocale as locale;
 ?>
 
 %system_title%
@@ -9,27 +10,27 @@ use core\classes\SysWidget;
 <div class="admin-menu-content">
     <ul>
         <li>
-            <a href="/page/basic/"><?php echo _("Basic page"); ?></a>
+            <a href="/page/basic/"><?= locale::t("Basic page"); ?></a>
         </li>
 
         <li>
-            <a href="/menu/general/"><?php echo _("Menu"); ?></a>
+            <a href="/menu/general/"><?= locale::t("Menu"); ?></a>
         </li>
 
         <li>
-            <a href="/users/control/"><?php echo _("Users system"); ?></a>
+            <a href="/users/control/"><?= locale::t("Users system"); ?></a>
         </li>
 
         <li>
-            <a href="/regions/general/"><?php echo _("Regions"); ?></a>
+            <a href="/regions/general/"><?= locale::t("Regions"); ?></a>
         </li>
 
         <li>
-            <a href="/blocks/general/"><?php echo _("Blocks"); ?></a>
+            <a href="/blocks/general/"><?= locale::t("Blocks"); ?></a>
         </li>
 
         <li>
-            <a href="/admin/panel/modules"><?php echo _("Modules"); ?></a>
+            <a href="/admin/panel/modules"><?= locale::t("Modules"); ?></a>
         </li>
     </ul>
 </div>

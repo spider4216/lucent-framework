@@ -6,6 +6,7 @@ use core\classes\exception\E403;
 use core\classes\exception\E404;
 use core\classes\SysAjax;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
@@ -29,27 +30,27 @@ class typeController extends SysController
 		//% - замещение. Например Хочу передать виджету никий заголовок для принта
 		return [
 			'index' => [
-				_("pages") => '/page/basic/',
-				_("pages types") => '-',
+				SysLocale::t("pages") => '/page/basic/',
+				SysLocale::t("pages types") => '-',
 			],
 
 			'create' => [
-				_("pages") => '/page/basic/',
-				_("pages types") => '/page/type/',
-				_("create page's type") => '-',
+				SysLocale::t("pages") => '/page/basic/',
+				SysLocale::t("pages types") => '/page/type/',
+				SysLocale::t("create page's type") => '-',
 			],
 
 			'update' => [
-				_("pages") => '/page/basic/',
-				_("pages types") => '/page/type/',
-				_("update page's type") => '-',
+				SysLocale::t("pages") => '/page/basic/',
+				SysLocale::t("pages types") => '/page/type/',
+				SysLocale::t("update page's type") => '-',
 			],
 		];
 	}
 
 	public function actionIndex()
 	{
-		static::$title = ("Page types");
+		static::$title = SysLocale::t("Page types");
 
 		$view = new SysView();
 		$view->display('index');
@@ -57,7 +58,7 @@ class typeController extends SysController
 
 	public function actionCreate()
 	{
-		static::$title = ("Create page type");
+		static::$title = SysLocale::t("Create page type");
 
 		$view = new SysView();
 		$model = new PageType();
@@ -82,12 +83,14 @@ class typeController extends SysController
 			SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
 		}
 
-		SysAjax::json_ok(_("Page type has been created successfully"));
+		SysAjax::json_ok(SysLocale::t("Page \"{:title}\" type has been created successfully", [
+			'{:title}' => $post['title'],
+		]));
 	}
 
 	public function actionUpdate()
 	{
-		static::$title = ("Update page type");
+		static::$title = SysLocale::t("Update page type");
 
 		$id = SysRequest::get('id');
 
@@ -128,7 +131,9 @@ class typeController extends SysController
 			SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
 		}
 
-		SysAjax::json_ok(_("Page type has been updated successfully"));
+		SysAjax::json_ok(SysLocale::t("Page \"{:title}\" type has been updated successfully", [
+			'{:title}' => $post['title'],
+		]));
 	}
 
 	public function actionDelete()
@@ -145,12 +150,18 @@ class typeController extends SysController
 			throw new E404;
 		}
 
+		$title = $item->title;
+
 		if (!$item->delete()) {
-			SysMessages::set(_("Page type cannot be deleted"), 'danger');
+			SysMessages::set(SysLocale::t("Page \"{:title}\" type cannot be deleted", [
+				'{:title}' => $title,
+			]), 'danger');
 			SysRequest::redirect('/page/type/');
 		}
 
-		SysMessages::set(_("Page type has been deleted successfully"), 'success');
+		SysMessages::set(SysLocale::t("Page \"{:title}\" type has been deleted successfully", [
+			'{:title}' => $item->title,
+		]), 'success');
 		SysRequest::redirect('/page/type/');
 	}
 }

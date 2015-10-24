@@ -1,3 +1,7 @@
+<?php
+use core\classes\SysLocale as locale;
+?>
+
 %system_title%
 
 %system_breadcrumbs%
@@ -5,7 +9,7 @@
 %system_notifications%
 
 <div class="tool">
-    <a href="/menu/general/additem?id=<?php echo $id; ?>"><?php echo _("Add item"); ?></a>
+    <a href="/menu/general/additem?id=<?php echo $id; ?>"><?= locale::t("Add item"); ?></a>
 </div>
 
 <br>

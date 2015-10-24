@@ -5,6 +5,7 @@ use core\classes\exception\E403;
 use core\classes\exception\E404;
 use core\classes\SysAjax;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
@@ -31,35 +32,35 @@ class generalController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                _("menu") => '-',
+                SysLocale::t("menu") => '-',
             ],
 
             'create' => [
-                _("menu") => '/menu/general/',
-                _("create menu") => '-',
+                SysLocale::t("menu") => '/menu/general/',
+                SysLocale::t("create menu") => '-',
             ],
 
             'update' => [
-                _("menu") => '/menu/general/',
-                _("update menu") => '-',
+                SysLocale::t("menu") => '/menu/general/',
+                SysLocale::t("update menu") => '-',
             ],
 
             'manage' => [
-                _("menu") => '/menu/general/',
-                _("manage menu") => '-',
+                SysLocale::t("menu") => '/menu/general/',
+                SysLocale::t("manage menu") => '-',
             ],
 
             'additem' => [
-                _("menu") => '/menu/general/',
-                _("manage menu") => '-',
-                _("add link") => '-',
+                SysLocale::t("menu") => '/menu/general/',
+                SysLocale::t("manage menu") => '-',
+                SysLocale::t("add link") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = _("Menu");
+        static::$title = SysLocale::t("Menu");
 
         $view = new SysView();
 
@@ -68,7 +69,7 @@ class generalController extends SysController
 
     public function actionCreate()
     {
-        static::$title = _("Create menu");
+        static::$title = SysLocale::t("Create menu");
 
         $model = new Menu();
         $model->setScript('create');
@@ -83,7 +84,7 @@ class generalController extends SysController
     public function actionAjaxCreate()
     {
         if (!SysAjax::isAjax()) {
-            throw new E403(_("Forbidden"));
+            throw new E403(SysLocale::t("Forbidden"));
         }
 
         $post = $_POST;
@@ -100,12 +101,14 @@ class generalController extends SysController
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Menu has been created successfully"));
+        SysAjax::json_ok(SysLocale::t("Menu \"{:name}\" has been created successfully", [
+            '{:name}' => $post['name'],
+        ]));
     }
 
     public function actionUpdate()
     {
-        static::$title = _("Create menu");
+        static::$title = SysLocale::t("Create menu");
         $view = new SysView();
 
         $id = SysRequest::get('id');
@@ -159,7 +162,9 @@ class generalController extends SysController
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Menu has been updated successfully"));
+        SysAjax::json_ok(SysLocale::t("Menu \"{:name}\" has been updated successfully", [
+            '{:name}' => $post['name'],
+        ]));
     }
 
     public function actionDelete()
@@ -177,18 +182,24 @@ class generalController extends SysController
             throw new E404;
         }
 
+        $name = $item->name;
+
         if (!$item->delete()) {
-            SysMessages::set(_("Menu cannot be deleted for some reasons"), 'danger');
+            SysMessages::set(SysLocale::t("Menu wit id \"{:id}\" cannot be deleted for some reasons", [
+                '{:id}' => $id,
+            ]), 'danger');
             SysRequest::redirect('/menu/general/');
         }
 
-        SysMessages::set(_("Menu has been deleted successfully"), 'success');
+        SysMessages::set(SysLocale::t("Menu \"{:name}\" has been deleted successfully", [
+            '{:name}' => $name,
+        ]), 'success');
         SysRequest::redirect('/menu/general/');
     }
 
     public function actionManage()
     {
-        static::$title = _("Manage menu");
+        static::$title = SysLocale::t("Manage menu");
 
         $view = new SysView();
         $id = SysRequest::get('id');
@@ -214,7 +225,7 @@ class generalController extends SysController
 
     public function actionAdditem()
     {
-        static::$title = _("Add item");
+        static::$title = SysLocale::t("Add item");
 
         $view = new SysView();
         $id = SysRequest::get('id');
@@ -250,24 +261,24 @@ class generalController extends SysController
         $model = Menu::findByPk($id);
 
         if (empty($model)) {
-            SysAjax::json_err(_("Bad Request"));
+            SysAjax::json_err(SysLocale::t("Bad Request"));
         }
 
         $nestedSet = new ExtNestedset($model->machine_name);
 
         if (empty($post['value']) || empty ($post['link'])) {
-            SysAjax::json_err(_("Name and link cannot be empty"));
+            SysAjax::json_err(SysLocale::t("Name and link cannot be empty"));
         }
 
         if ($post['items'] == '-1') {
             //todo check true false
             $nestedSet->createRoot($post['value'], ['link' => $post['link']]);
-            SysAjax::json_ok(_("Menu item has been created successfully"));
+            SysAjax::json_ok(SysLocale::t("Menu item has been created successfully"));
         }
 
         //todo check true false
         $nestedSet->appendChild($post['items'], $post['value'], ['link' => $post['link']]);
-        SysAjax::json_ok(_("Menu item has been created successfully"));
+        SysAjax::json_ok(SysLocale::t("Menu item has been created successfully"));
     }
 
     public function actionDeleteitem()
@@ -289,9 +300,9 @@ class generalController extends SysController
         $nestedSet = new ExtNestedset($model->machine_name);
 
         if (!$nestedSet->deleteNode($id)) {
-            SysMessages::set(_("Menu item cannot be deleted"), 'danger');
+            SysMessages::set(SysLocale::t("Menu item cannot be deleted"), 'danger');
         } else {
-            SysMessages::set(_("Menu item has been deleted successfully"), 'success');
+            SysMessages::set(SysLocale::t("Menu item has been deleted successfully"), 'success');
         }
 
         SysRequest::redirect('/menu/general/manage?id=' . $menuId);
