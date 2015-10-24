@@ -5,6 +5,7 @@ use core\classes\exception\E403;
 use core\classes\exception\E404;
 use core\classes\SysAjax;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
@@ -29,20 +30,20 @@ class collectionController extends SysController
 		//% - замещение. Например Хочу передать виджету никий заголовок для принта
 		return [
 			'index' => [
-				_("pages") => '/page/basic/',
-				_("collections") => '-',
+				SysLocale::t("pages") => '/page/basic/',
+				SysLocale::t("collections") => '-',
 			],
 
 			'create' => [
-				_("pages") => '/page/basic/',
-				_("collections") => '/page/collection/',
-				_("create collection") => '-',
+				SysLocale::t("pages") => '/page/basic/',
+				SysLocale::t("collections") => '/page/collection/',
+				SysLocale::t("create collection") => '-',
 			],
 
 			'update' => [
-				_("pages") => '/page/basic/',
-				_("collections") => '/page/collection/',
-				_("update collection") => '-',
+				SysLocale::t("pages") => '/page/basic/',
+				SysLocale::t("collections") => '/page/collection/',
+				SysLocale::t("update collection") => '-',
 			],
 
 		];
@@ -50,7 +51,7 @@ class collectionController extends SysController
 
 	public function actionIndex()
 	{
-		static::$title = ("Page collections");
+		static::$title = SysLocale::t("Page collections");
 
 		$view = new SysView();
 		$view->display('index');
@@ -58,7 +59,7 @@ class collectionController extends SysController
 
 	public function actionCreate()
 	{
-		static::$title = ("Create collections");
+		static::$title = SysLocale::t("Create collections");
 
 		$model = new PageCollections();
 		$regions = Regions::findAll();
@@ -93,12 +94,14 @@ class collectionController extends SysController
 			SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
 		}
 
-		SysAjax::json_ok(_("Collection has been created successfully"));
+		SysAjax::json_ok(SysLocale::t("Collection \"{:title}\" has been created successfully", [
+			'{:title}' => $post['name'],
+		]));
 	}
 
 	public function actionUpdate()
 	{
-		static::$title = ("Update collection");
+		static::$title = SysLocale::t("Update collection");
 
 		$id = SysRequest::get('id');
 
@@ -135,7 +138,7 @@ class collectionController extends SysController
 		$model = PageCollections::findByPk((int)$post['id']);
 
 		if (empty($model)) {
-			SysAjax::json_err(_("Bad Request"));
+			SysAjax::json_err(SysLocale::t("Bad Request"));
 		}
 
 		$model->name = $post['name'];
@@ -150,7 +153,9 @@ class collectionController extends SysController
 			SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
 		}
 
-		SysAjax::json_ok(_("Collection has been updated successfully"));
+		SysAjax::json_ok(SysLocale::t("Collection \"{:title}\" has been updated successfully", [
+			'{:title}' => $post['name'],
+		]));
 	}
 
 	public function actionDelete()
@@ -167,12 +172,18 @@ class collectionController extends SysController
 			throw new E404;
 		}
 
+		$name = $item->name;
+
 		if (!$item->delete()) {
-			SysMessages::set(_("Collection cannot be deleted"), 'danger');
+			SysMessages::set(SysLocale::t("Collection \"{:title}\" cannot be deleted", [
+				'{:title}' => $name,
+				]), 'danger');
 			SysRequest::redirect('/page/collection/');
 		}
 
-		SysMessages::set(_("Collection has been deleted successfully"), 'success');
+		SysMessages::set(SysLocale::t("Collection \"{:title}\" has been deleted successfully", [
+			'{:title}' => $name,
+		]), 'success');
 		SysRequest::redirect('/page/collection/');
 	}
 }

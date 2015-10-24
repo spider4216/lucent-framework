@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2015-10-22 22:25+0600\n"
-"PO-Revision-Date: 2015-10-23 22:11+0600\n"
+"PO-Revision-Date: 2015-10-24 09:24+0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -18,6 +18,7 @@ msgstr ""
 msgid "'"
 msgstr ""
 
+# Basic Page Start
 msgid "Page \"{:title}\" has been created successfully"
 msgstr "Страница \"{:title}\" была успешно создана"
 
@@ -65,3 +66,45 @@ msgstr "Типы"
 
 msgid "Collections"
 msgstr "Коллекции"
+
+msgid "pages"
+msgstr "страницы"
+
+msgid "create page"
+msgstr "создание страницы"
+
+msgid "edit page"
+msgstr "изменение страницы"
+
+msgid "collections"
+msgstr "коллекции"
+
+msgid "create collection"
+msgstr "создать коллекцию"
+
+msgid "update collection"
+msgstr "обновить коллекцию"
+
+msgid "Page collections"
+msgstr "Коллекции страниц"
+
+msgid "Create collections"
+msgstr "Создание коллекций"
+
+msgid "Collection \"{:title}\" has been created successfully"
+msgstr "Коллекция \"{:title}\" была успешно создана"
+
+msgid "Update collection"
+msgstr "Обновление коллекции"
+
+msgid "Bad Request"
+msgstr "Плохой запрос"
+
+msgid "Collection \"{:title}\" has been updated successfully"
+msgstr "Коллекция \"{:title}\" была успешно создана"
+
+msgid "Collection \"{:title}\" cannot be deleted"
+msgstr "Коллекция \"{:title}\" не может быть удалена"
+
+msgid "Collection \"{:title}\" has been deleted successfully"
+msgstr "Коллекция \"{:title}\" была успешно удалена"

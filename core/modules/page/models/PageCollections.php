@@ -2,6 +2,7 @@
 
 namespace core\modules\page\models;
 
+use core\classes\SysLocale;
 use core\classes\SysModel;
 
 class PageCollections extends SysModel
@@ -11,13 +12,13 @@ class PageCollections extends SysModel
 	protected static function labels()
 	{
 		return [
-			'name' => _("Name"),
-			'description' => _("Description"),
-			'page_type_id' => _("Page type"),
-			'pagination' => _("Pagination"),
-			'region_id' => _("Regions"),
-			'links' => _("Links"),
-			'weight' => _("Weight"),
+			'name' => SysLocale::t("Name"),
+			'description' => SysLocale::t("Description"),
+			'page_type_id' => SysLocale::t("Page type"),
+			'pagination' => SysLocale::t("Pagination"),
+			'region_id' => SysLocale::t("Regions"),
+			'links' => SysLocale::t("Links"),
+			'weight' => SysLocale::t("Weight"),
 		];
 	}
 

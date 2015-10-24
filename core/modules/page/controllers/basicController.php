@@ -31,21 +31,21 @@ class basicController extends SysController{
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                _("pages") => '-',
+                SysLocale::t("pages") => '-',
             ],
 
             'create' => [
-                _("pages") => '/page/basic/',
-                _("create page") => '-',
+                SysLocale::t("pages") => '/page/basic/',
+                SysLocale::t("create page") => '-',
             ],
 
             'update' => [
-                _("pages") => '/page/basic/',
-                _("edit page") => '-',
+                SysLocale::t("pages") => '/page/basic/',
+                SysLocale::t("edit page") => '-',
             ],
 
             'view' => [
-                _("pages") => '/page/basic/',
+                SysLocale::t("pages") => '/page/basic/',
                 '%' => '-',
             ],
         ];

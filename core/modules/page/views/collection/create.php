@@ -1,3 +1,7 @@
+<?php
+use core\classes\SysLocale as locale;
+?>
+
 %system_title%
 
 %system_breadcrumbs%
@@ -7,7 +11,7 @@
 <form action="" method="post">
 	<div class="m-row">
 		<label for="name"><?= $model->getLabel('name'); ?>*</label>
-		<input type="text" name="name" class="form-control title" placeholder="<?= _("Name"); ?>"/>
+		<input type="text" name="name" class="form-control title" placeholder="<?= locale::t("Name"); ?>"/>
 		<br/>
 	</div>
 
@@ -16,7 +20,8 @@
 	<div class="m-row">
 		<label for="description"><?= $model->getLabel('description'); ?></label>
 		<br/>
-            <textarea name="description" id="description" class="form-control" placeholder="<?= _("Description"); ?>"
+            <textarea name="description" id="description" class="form-control"
+					  placeholder="<?= locale::t("Description"); ?>"
 					  rows="8"></textarea>
 	</div>
 
@@ -31,7 +36,7 @@
 					<option value="<?= $region->id; ?>"><?= $region->name; ?></option>
 				<?php endforeach; ?>
 			<?php else: ?>
-				<option value="-1"><?= _("there are not any regions"); ?></option>
+				<option value="-1"><?= locale::t("Not found"); ?></option>
 			<?php endif; ?>
 		</select>
 	</div>
@@ -46,7 +51,7 @@
 					<option value="<?= $type->id ?>"><?= $type->title; ?></option>
 				<?php endforeach; ?>
 			<?php else: ?>
-				<option value="-1"><?= _("Not found"); ?></option>
+				<option value="-1"><?= locale::t("Not found"); ?></option>
 			<?php endif; ?>
 		</select>
 	</div>
@@ -76,6 +81,6 @@
 
 	<div class="m-row">
 		<input type="button" onclick="SysAjaxSave('/page/collection/ajaxcreate', '/page/collection/')"
-			   value="<?= _("Save"); ?>" class="btn btn-primary"/>
+			   value="<?= locale::t("Save"); ?>" class="btn btn-primary"/>
 	</div>
 </form>
