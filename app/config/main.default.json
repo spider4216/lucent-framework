@@ -1,4 +1,5 @@
 {
+  "domain" : "example.com",
   "project_name" : "CMF Lucent",
   "project_system_name" : "lucent",
   "lang" : "en",

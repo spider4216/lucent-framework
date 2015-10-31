@@ -3,5 +3,9 @@
         <testsuite name="money">
             <directory>unit</directory>
         </testsuite>
+
+        <testsuite name="functional">
+            <directory>functional</directory>
+        </testsuite>
     </testsuites>
 </phpunit>

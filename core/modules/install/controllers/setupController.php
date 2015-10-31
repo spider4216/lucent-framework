@@ -89,6 +89,7 @@ class setupController extends SysController
         }
 
         $configData = [
+            'domain' => $_SERVER['HTTP_HOST'],
             'projectName' => $post['projectName'],
             'lang' => $post['lang'],
         ];

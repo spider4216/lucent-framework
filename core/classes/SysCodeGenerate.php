@@ -38,6 +38,7 @@ class SysCodeGenerate
     public static function configMain($data)
     {
         $tpl = [
+            'domain' => $data['domain'],
             'project_name' => $data['projectName'],
             'project_system_name' => 'lucent',
             'lang' => $data['lang'],

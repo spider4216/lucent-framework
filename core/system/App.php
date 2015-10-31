@@ -20,7 +20,6 @@ class App
 {
     //Массив с конфигурационными данными приложения
     public static $config;
-
     //Главный метод класса. Вся инициализация приложения проходит через этот метод.
     public static function run()
     {
@@ -28,10 +27,8 @@ class App
         header('Content-Type: text/html; charset=utf-8');
         //Начинаем новую сессию
         session_start();
-
         //Проверяем установлена ли система
         $install = self::isInstall();
-
         //Если система установлена - "кешируем" конфигурационный файл приложения, который был сгенерирован при установке
         if (false !== $install) {
             $config = file_get_contents(__DIR__ . '/../../app/config/main.json');
@@ -40,7 +37,6 @@ class App
             //Иначе отдаем стандартный файл конфигурации, который нужен для установке системы
             $config = file_get_contents(__DIR__ . '/../../app/config/main.default.json');
             self::$config = json_decode($config, true);
-
             //Если система не установлена и мы не находимся в модуле - установка системы, делаем редирект на установку
             if (SysModule::getCurrentModuleName() != 'install') {
                 SysRequest::redirect('/install/setup/');
@@ -53,7 +49,6 @@ class App
         SysAssets::filesAttach();
         //Аналогично, только для модулей
         SysAssets::moduleFilesAttach();
-
         //Если система установлена, нужно проверить соединение с БД
         if (false !== $install) {
             //Если с соединением возникли проблемы - показываем страницу ошибки
@@ -65,7 +60,6 @@ class App
                 exit();
             }
         }
-
         //Распознаем URL
         SysUrl::semantic_url(static::$config['default_controller'], static::$config['default_action']);
     }
@@ -79,12 +73,9 @@ class App
         $lang =  SysTranslate::getLanguageCode(self::$config['lang']);
         putenv("LC_ALL=" . $lang);
         setlocale(LC_ALL, $lang);
-
         $domain = self::$config['project_system_name'];
-
         bindtextdomain($domain, SysPath::directory('core') . '/locale');
         textdomain($domain);
-
         bind_textdomain_codeset($domain, 'UTF-8');
     }
 
@@ -102,11 +93,15 @@ class App
         $directory = SysPath::directory('app') . '/config/';
         $configName = 'main.json';
         $path = $directory . $configName;
-
         if (!file_exists($path)) {
             return false;
         }
-
         return true;
+    }
+
+    public static function getMainConfig()
+    {
+        $config = file_get_contents(__DIR__ . '/../../app/config/main.json');
+        return json_decode($config, true);
     }
 }
