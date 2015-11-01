@@ -1,6 +1,7 @@
 <?php
 namespace core\modules\users\models;
 
+use core\classes\SysLocale;
 use core\classes\SysModel;
 
 class Users extends SysModel
@@ -17,12 +18,12 @@ class Users extends SysModel
     public static function labels()
     {
         return [
-            'username' => _("Username"),
-            'password' => _("Password"),
-            'password_again' => _("Repeat password again"),
-            'email' => _("E-mail"),
-            'roles' => _("Role"),
-            'hash' => _("Hash"),
+            'username' => SysLocale::t("Username"),
+            'password' => SysLocale::t("Password"),
+            'password_again' => SysLocale::t("Repeat password again"),
+            'email' => SysLocale::t("E-mail"),
+            'roles' => SysLocale::t("Role"),
+            'hash' => SysLocale::t("Hash"),
         ];
     }
 
@@ -45,10 +46,4 @@ class Users extends SysModel
             ['password' => ['required', 'script' => ['vkAuth']]],
         ];
     }
-
-//    public function beforeSave()
-//    {
-//        $this->role_id = 2;
-//        return true;
-//    }
 }

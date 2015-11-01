@@ -5,6 +5,7 @@ namespace core\modules\vkauth\controllers;
 use core\classes\exception\E403;
 use core\classes\SysAjax;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
@@ -29,25 +30,25 @@ class generalController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                _("VK Auth") => '-',
+                SysLocale::t("VK Auth") => '-',
             ],
 
             'settings' => [
-                _("VK Auth") => '-',
-                _("settings") => '-',
+                SysLocale::t("VK Auth") => '-',
+                SysLocale::t("settings") => '-',
             ],
 
             'status' => [
-                _("sign in") => '/users/control/login',
-                _("VK Auth") => '-',
-                _("settings") => '-',
+                SysLocale::t("sign in") => '/users/control/login',
+                SysLocale::t("VK Auth") => '-',
+                SysLocale::t("settings") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = _("VK Auth");
+        static::$title = SysLocale::t("VK Auth");
 
         $view = new SysView();
         $url = CmVkAuth::getUrl();
@@ -58,7 +59,7 @@ class generalController extends SysController
 
     public function actionSettings()
     {
-        static::$title = _("VK Auth settings");
+        static::$title = SysLocale::t("VK Auth settings");
 
         $model = Vkauth::findAll();
         if (empty($model)) {
@@ -105,7 +106,7 @@ class generalController extends SysController
         $code = SysRequest::get('code');
 
         if (!$code) {
-            SysMessages::set(_("code does not exist"), 'error');
+            SysMessages::set(SysLocale::t("code does not exist"), 'error');
             SysRequest::redirect('/vkauth/general/status');
         }
 
@@ -113,7 +114,7 @@ class generalController extends SysController
         $url = 'https://oauth.vk.com/access_token';
 
         if (empty($vkSettings)) {
-            SysMessages::set(_("Settings are empty now. Did you fill them?"), 'error');
+            SysMessages::set(SysLocale::t("Settings are empty now. Did you fill them?"), 'error');
             SysRequest::redirect('/vkauth/general/status');
         } else {
             $vkSettings = $vkSettings[0];
@@ -129,7 +130,7 @@ class generalController extends SysController
         $token = json_decode(file_get_contents($url . '?' . urldecode(http_build_query($params))), true);
 
         if (!isset($token['access_token'])) {
-            SysMessages::set(_("Problem with access token"), 'error');
+            SysMessages::set(SysLocale::t("Problem with access token"), 'error');
             SysRequest::redirect('/vkauth/general/status');
         }
 
@@ -144,7 +145,7 @@ class generalController extends SysController
         $userInfo = json_decode(file_get_contents($urlGet . '?' . urldecode(http_build_query($params))), true);
 
         if (empty($userInfo)) {
-            SysMessages::set(_("problem with getting data from vk using api"), 'error');
+            SysMessages::set(SysLocale::t("problem with getting data from vk using api"), 'error');
             SysRequest::redirect('/vkauth/general/status');
         }
         $response = $userInfo['response'][0];
@@ -154,12 +155,12 @@ class generalController extends SysController
         if (empty($user)) {
 
             if (!CmVkAuth::registerVkUser($response)) {
-                SysMessages::set(_("Registration is not performed"), 'error');
+                SysMessages::set(SysLocale::t("Registration is not performed"), 'error');
                 SysRequest::redirect('/vkauth/general/status');
             }
 
             if (!CmVkAuth::login(CmVkAuth::$newUser, CmVkAuth::$newUser->username)) {
-                SysMessages::set(_("cannot signed in right now"), 'error');
+                SysMessages::set(SysLocale::t("cannot signed in right now"), 'error');
                 SysRequest::redirect('/vkauth/general/');
             }
 
@@ -167,7 +168,7 @@ class generalController extends SysController
         }
 
         if (!CmVkAuth::login($user, $user->username)) {
-            SysMessages::set(_("cannot signed in right now"), 'error');
+            SysMessages::set(SysLocale::t("cannot signed in right now"), 'error');
             SysRequest::redirect('/vkauth/general/status');
         }
 
@@ -178,7 +179,7 @@ class generalController extends SysController
 
     public function actionStatus()
     {
-        static::$title = _("VK Auth status");
+        static::$title = SysLocale::t("VK Auth status");
 
         $view = new SysView();
         $view->display('status');

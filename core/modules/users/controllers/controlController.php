@@ -6,6 +6,7 @@ use core\classes\exception\E404;
 use core\classes\SysAjax;
 use core\classes\SysAuth;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysPassword;
 use core\classes\SysView;
@@ -32,40 +33,40 @@ class ControlController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                _("users") => '-',
+                SysLocale::t("users") => '-',
             ],
 
             'user' => [
-                _("users") => '/users/control/',
+                SysLocale::t("users") => '/users/control/',
                 '%' => '-',
             ],
 
             'register' => [
-                _("users") => '/users/control/',
-                _("registration") => '-',
+                SysLocale::t("users") => '/users/control/',
+                SysLocale::t("registration") => '-',
             ],
 
             'login' => [
-                _("users") => '/users/control/',
-                _("sign in") => '-',
+                SysLocale::t("users") => '/users/control/',
+                SysLocale::t("sign in") => '-',
             ],
 
             'manage' => [
-                _("users") => '/users/control/',
-                _("manage users") => '-',
+                SysLocale::t("users") => '/users/control/',
+                SysLocale::t("manage users") => '-',
             ],
 
             'update' => [
-                _("users") => '/users/control/',
-                _("manage users") => '/users/control/manage',
-                _("edit user") => '-',
+                SysLocale::t("users") => '/users/control/',
+                SysLocale::t("manage users") => '/users/control/manage',
+                SysLocale::t("edit user") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = _("Users system");
+        static::$title = SysLocale::t("Users system");
 
         $view = new SysView();
 
@@ -74,7 +75,7 @@ class ControlController extends SysController
 
     public function actionUser()
     {
-        static::$title = _("Profile");
+        static::$title = SysLocale::t("Profile");
 
         $id = SysRequest::get('id');
 
@@ -99,7 +100,7 @@ class ControlController extends SysController
 
     public function actionRegister()
     {
-        static::$title = _("Registration");
+        static::$title = SysLocale::t("Registration");
 
         $view = new SysView();
         $model = new Users();
@@ -108,7 +109,7 @@ class ControlController extends SysController
         $view->model = $model;
 
         if (SysAuth::is_login()) {
-            SysMessages::set(_("You have already signed up"), 'info');
+            SysMessages::set(SysLocale::t("You have already signed up"), 'info');
         }
 
         $view->display('register');
@@ -137,22 +138,21 @@ class ControlController extends SysController
 
         //todo В случае ошибки транзакцию
         if (!$id) {
-            SysAjax::json_err(_("cannot signed in"));
+            SysAjax::json_err(SysLocale::t("cannot signed in"));
         }
 
-        SysAjax::json_ok(_("User has been created successfully"), ['id' => $id]);
+        SysAjax::json_ok(SysLocale::t("User has been created successfully"), ['id' => $id]);
     }
 
     public function actionLogin()
     {
-        static::$title = _("Sign in");
+        static::$title = SysLocale::t("Sign in");
 
         $view = new SysView();
         $model = new Users();
-        //$url = V
 
         if (SysAuth::is_login()) {
-            SysMessages::set(_("you have already logged in"), 'info');
+            SysMessages::set(SysLocale::t("you have already logged in"), 'info');
         }
 
         $view->model = $model;
@@ -169,10 +169,14 @@ class ControlController extends SysController
         $post = SysRequest::post();
 
         if ($id = SysAuth::login($model, $post['username'], $post['password'])) {
-            SysAjax::json_ok(_("You signed in as") . ' "' . $post['username'] . '"', ['id' => $id]);
+            SysAjax::json_ok(SysLocale::t("You signed in as \"{:username}\"", [
+                '{:username}' => $post['username'],
+            ]), [
+                'id' => $id,
+            ]);
         }
 
-        SysAjax::json_err(_("username or password is not suitable"));
+        SysAjax::json_err(SysLocale::t("Username or password is not suitable"));
     }
 
     public function actionLogout()
@@ -180,13 +184,13 @@ class ControlController extends SysController
         if (SysAuth::logout()) {
             SysRequest::redirect('/');
         } else {
-            SysMessages::set(_("Exit from system is not possible"), 'danger');
+            SysMessages::set(SysLocale::t("Exit from system is not possible"), 'danger');
         }
     }
 
     public function actionManage()
     {
-        static::$title = _("Manage users");
+        static::$title = SysLocale::t("Manage users");
 
         $model = new Users();
 
@@ -198,7 +202,7 @@ class ControlController extends SysController
 
     public function actionUpdate()
     {
-        static::$title = _("Edit user");
+        static::$title = SysLocale::t("Edit user");
 
         $roleList = Roles::findAll();
         $view = new SysView();
@@ -239,11 +243,17 @@ class ControlController extends SysController
         }
 
         if ($model->id == SysAuth::getCurrentUserId()) {
-            SysAjax::json_ok(_("User has been updated successfully. Sign in system again"), ['login' => 'true']);
+            SysAjax::json_ok(SysLocale::t("User \"{:username}\" has been updated successfully. Sign in system again", [
+                '{:username}' => $post['username'],
+            ]), [
+                'login' => 'true',
+            ]);
             SysAuth::logout();
         }
 
-        SysAjax::json_ok(_("User has been updated successfully"));
+        SysAjax::json_ok(SysLocale::t("User \"{:username}\" has been updated successfully", [
+            '{:username}' => $post['username'],
+        ]));
     }
 
     public function actionDelete()
@@ -260,15 +270,21 @@ class ControlController extends SysController
             throw new E404;
         }
 
+        $username = $model->username;
+
         if (SysAuth::getCurrentUserId() == $model->id) {
-            SysMessages::set(_("authorized user can not be removed"), 'danger');
+            SysMessages::set(SysLocale::t("Authorized user can not be removed"), 'danger');
             SysRequest::redirect('/users/control/manage');
         }
 
         if ($model->delete()) {
-            SysMessages::set(_("User has been deleted successfully"), 'success');
+            SysMessages::set(SysLocale::t("User \"{:username}\" has been deleted successfully", [
+                '{:username}' => $username,
+            ]), 'success');
         } else {
-            SysMessages::set(_("user can not be removed"), 'danger');
+            SysMessages::set(SysLocale::t("User \"{:username}\" can not be removed", [
+                '{:username}' => $username,
+            ]), 'danger');
         }
 
         SysRequest::redirect('/users/control/manage');

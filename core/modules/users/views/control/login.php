@@ -2,6 +2,7 @@
 use core\classes\SysMessages;
 use core\classes\SysAuth;
 use core\classes\SysWidget;
+use core\classes\SysLocale as locale;
 ?>
 
 %system_title%
@@ -16,38 +17,38 @@ use core\classes\SysWidget;
     <form action="/users/control/login" method="post">
 
         <div class="m-row">
-            <label for="username"><?php echo $model->getLabel('username'); ?></label>
+            <label for="username"><?= $model->getLabel('username'); ?></label>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
                     <i class="glyphicon glyphicon-user"></i>
                 </span>
                 <input type="text" aria-describedby="basic-addon1"
-                       name="username" class="form-control username" placeholder="Имя пользователя"/>
+                       name="username" class="form-control username" placeholder="<?= locale::t("Username") ?>"/>
             </div>
             <br/>
         </div>
 
         <div class="m-row">
-            <label for="content"><?php echo $model->getLabel('password'); ?></label>
+            <label for="content"><?= $model->getLabel('password'); ?></label>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
                     <i class="glyphicon glyphicon-eye-close"></i>
                 </span>
                 <input type="password" aria-describedby="basic-addon1"
-                       name="password" class="form-control password" placeholder="Пароль"/>
+                       name="password" class="form-control password" placeholder="<?= locale::t("Password") ?>"/>
             </div>
             <br/>
         </div>
 
         <div class="m-row">
             <?php if (false !== \core\modules\vkauth\components\CmVkAuth::getUrl()): ?>
-                <a href="<?= \core\modules\vkauth\components\CmVkAuth::getUrl(); ?>"><?= _("Sign in via VK"); ?></a>
+                <a href="<?= \core\modules\vkauth\components\CmVkAuth::getUrl(); ?>"><?= locale::t("Sign in via VK"); ?></a>
             <?php endif; ?>
-            <p><a href="/users/control/register"><?php echo _("Registration"); ?></a></p>
+            <p><a href="/users/control/register"><?= locale::t("Registration"); ?></a></p>
         </div>
 
         <div class="m-row">
-            <input type="button" onclick="ajaxLogin()" value="<?php echo _("Sign in"); ?>" class="btn btn-primary"/>
+            <input type="button" onclick="ajaxLogin()" value="<?= locale::t("Sign in"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

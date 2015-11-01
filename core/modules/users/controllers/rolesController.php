@@ -5,6 +5,7 @@ use core\classes\exception\E403;
 use core\classes\exception\E404;
 use core\classes\SysAjax;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysView;
 use core\classes\SysRequest;
@@ -29,27 +30,27 @@ class RolesController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                _("users") => '/users/control/',
+                SysLocale::t("users") => '/users/control/',
                 _("manage roles") => '-',
             ],
 
             'create' => [
-                _("users") => '/users/control/',
-                _("manage roles") => '/users/roles/',
-                _("create role") => '-',
+                SysLocale::t("users") => '/users/control/',
+                SysLocale::t("manage roles") => '/users/roles/',
+                SysLocale::t("create role") => '-',
             ],
 
             'update' => [
-                _("users") => '/users/control/',
-                _("manage roles") => '/users/roles/',
-                _("edit role") => '-',
+                SysLocale::t("users") => '/users/control/',
+                SysLocale::t("manage roles") => '/users/roles/',
+                SysLocale::t("edit role") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = _("Manage roles");
+        static::$title = SysLocale::t("Manage roles");
 
         $model = new Roles();
         $view = new SysView();
@@ -61,7 +62,7 @@ class RolesController extends SysController
 
     public function actionCreate()
     {
-        static::$title = _("Create role");
+        static::$title = SysLocale::t("Create role");
 
         $model = new Roles();
         $view = new SysView();
@@ -85,15 +86,16 @@ class RolesController extends SysController
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Role has been created successfully"));
+        SysAjax::json_ok(SysLocale::t("Role \"{:name}\" has been created successfully", [
+            '{:name}' => $post['name'],
+        ]));
     }
 
     public function actionUpdate()
     {
-        static::$title = _("Edit role");
+        static::$title = SysLocale::t("Edit role");
 
         $view = new SysView();
-        $display = new SysDisplay();
         $id = SysRequest::get('id');
 
         if (empty($id)) {
@@ -120,7 +122,9 @@ class RolesController extends SysController
         $model = Roles::findByPk($post['id']);
 
         if (empty($model)) {
-            SysAjax::json_err(_("Role not found"));
+            SysAjax::json_err(SysLocale::t("Role with id \"{:id}\" not found", [
+                '{:id}' => $post['id'],
+            ]));
         }
 
         $model->name = $post['name'];
@@ -129,7 +133,9 @@ class RolesController extends SysController
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Role has been updated successfully"));
+        SysAjax::json_ok(SysLocale::t("Role \"{:name}\" has been updated successfully", [
+            '{:name}' => $post['name'],
+        ]));
     }
 
     public function actionDelete()
@@ -142,13 +148,24 @@ class RolesController extends SysController
 
         $model = Roles::findByPk($id);
 
+        if (empty($model)) {
+            SysAjax::json_err(SysLocale::t("Role with id \"{:id}\" cannot be found", [
+                '{:id}' => $id,
+            ]));
+        }
+
+        $name = $model->name;
+
         if ($model->id == '1' || $model->id == '2') {
-            SysMessages::set(_("System role can not be deleted"), 'danger');
+            SysMessages::set(SysLocale::t("System role can not be deleted"), 'danger');
             SysRequest::redirect('/users/roles/');
         }
 
         if ($model->delete()) {
-            SysMessages::set(_("Role has been deleted successfully"), 'success');
+            SysMessages::set(SysLocale::t("Role \"{:name}\" has been deleted successfully", [
+                '{:name}' => $name,
+            ]), 'success');
+
             SysRequest::redirect('/users/roles/');
         }
     }

@@ -2,6 +2,7 @@
 
 namespace core\modules\regions\models;
 
+use core\classes\SysLocale;
 use core\classes\SysModel;
 use core\modules\blocks\models\Blocks;
 use core\modules\menu\models\Menu;
@@ -15,7 +16,7 @@ class Regions extends SysModel
     protected static function labels()
     {
         return [
-            'name' => _("Name"),
+            'name' => SysLocale::t("Name"),
         ];
     }
 

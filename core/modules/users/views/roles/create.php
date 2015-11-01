@@ -2,6 +2,7 @@
 use core\classes\SysMessages;
 use core\classes\SysAuth;
 use core\classes\SysWidget;
+use core\classes\SysLocale as locale;
 ?>
 
 %system_title%
@@ -15,15 +16,15 @@ use core\classes\SysWidget;
     <form action="/users/roles/create" method="post">
 
         <div class="m-row">
-            <label for="name"><?php echo $model->getLabel('name'); ?></label>
+            <label for="name"><?= $model->getLabel('name'); ?></label>
             <input type="text" name="name" class="form-control name"
-                   placeholder="<?php echo _("Role name"); ?>" value="<?php echo $model->name ?>"/>
+                   placeholder="<?= locale::t("Role name"); ?>" value="<?= $model->name ?>"/>
             <br/>
         </div>
 
         <div class="m-row">
             <input type="button" onclick="SysAjaxSave('/users/roles/ajaxcreate', '/users/roles/')"
-                   value="<?php echo _("Create"); ?>" class="btn btn-primary"/>
+                   value="<?= locale::t("Create"); ?>" class="btn btn-primary"/>
         </div>
 
     </form>

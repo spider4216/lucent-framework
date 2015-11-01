@@ -1,3 +1,7 @@
+<?php
+use core\classes\SysLocale as locale;
+?>
+
 %system_title%
 
 %system_breadcrumbs%
@@ -6,10 +10,10 @@
 
 <ul>
     <li>
-        <a href="<?= $vkAuthUrl; ?>"><?= _("Sign in via VK") ?></a>
+        <a href="<?= $vkAuthUrl; ?>"><?= locale::t("Sign in via VK") ?></a>
     </li>
 
     <li>
-        <a href="/vkauth/general/settings"><?= _("VK settings"); ?></a>
+        <a href="/vkauth/general/settings"><?= locale::t("VK settings"); ?></a>
     </li>
 </ul>

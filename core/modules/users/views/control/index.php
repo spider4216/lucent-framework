@@ -1,5 +1,6 @@
 <?php
 use core\classes\SysWidget;
+use core\classes\SysLocale as locale;
 ?>
 
 %system_title%
@@ -9,15 +10,15 @@ use core\classes\SysWidget;
 <div class="user-system">
     <ul>
         <li>
-            <a href="/users/control/manage"><?php echo _("Manage users"); ?></a>
+            <a href="/users/control/manage"><?= locale::t("Manage users"); ?></a>
         </li>
 
         <li>
-            <a href="/users/roles/"><?php echo _("Manage roles"); ?></a>
+            <a href="/users/roles/"><?= locale::t("Manage roles"); ?></a>
         </li>
 
         <li>
-            <a href="/vkauth/general/"><?php echo _("VK Auth"); ?></a>
+            <a href="/vkauth/general/"><?= locale::t("VK Auth"); ?></a>
         </li>
     </ul>
 </div>

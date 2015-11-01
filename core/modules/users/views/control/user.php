@@ -18,8 +18,8 @@ echo SysWidget::build('WBreadcrumbs', '', [
 
     <div class="m-row">
         <br/>
-        <label for="username"><?php echo $user->getLabel('username'); ?>:</label>
-        <span><?php echo $user->username; ?></span>
+        <label for="username"><?= $user->getLabel('username'); ?>:</label>
+        <span><?= $user->username; ?></span>
     </div>
 
 </div>

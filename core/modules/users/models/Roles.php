@@ -1,6 +1,7 @@
 <?php
 namespace core\modules\users\models;
 
+use core\classes\SysLocale;
 use core\classes\SysModel;
 
 class Roles extends SysModel
@@ -10,7 +11,7 @@ class Roles extends SysModel
     public static function labels()
     {
         return [
-            'name' => _("Role name"),
+            'name' => SysLocale::t("Role name"),
         ];
     }
 

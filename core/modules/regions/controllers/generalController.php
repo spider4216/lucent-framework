@@ -6,6 +6,7 @@ use core\classes\exception\E403;
 use core\classes\exception\E404;
 use core\classes\SysAjax;
 use core\classes\SysController;
+use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
@@ -26,24 +27,24 @@ class generalController extends SysController
         //% - замещение. Например Хочу передать виджету никий заголовок для принта
         return [
             'index' => [
-                _("regions") => '-',
+                SysLocale::t("regions") => '-',
             ],
 
             'create' => [
-                _("regions") => '/regions/general/',
-                _("create") => '-',
+                SysLocale::t("regions") => '/regions/general/',
+                SysLocale::t("create") => '-',
             ],
 
             'update' => [
-                _("regions") => '/regions/general/',
-                _("update") => '-',
+                SysLocale::t("regions") => '/regions/general/',
+                SysLocale::t("update") => '-',
             ],
         ];
     }
 
     public function actionIndex()
     {
-        static::$title = _("Regions");
+        static::$title = SysLocale::t("Regions");
 
         $view = new SysView();
         $view->display('index');
@@ -51,7 +52,7 @@ class generalController extends SysController
 
     public function actionCreate()
     {
-        static::$title = _("Create region");
+        static::$title = SysLocale::t("Create region");
         $model = new Regions();
         $model->setScript('create');
 
@@ -77,12 +78,14 @@ class generalController extends SysController
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Region has been created successfully"));
+        SysAjax::json_ok(SysLocale::t("Region \"{:name}\" has been created successfully", [
+            '{:name}' => $post['name'],
+        ]));
     }
 
     public function actionUpdate()
     {
-        static::$title = _("Update region");
+        static::$title = SysLocale::t("Update region");
 
         $view = new SysView();
         $id = SysRequest::get('id');
@@ -123,7 +126,9 @@ class generalController extends SysController
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
         }
 
-        SysAjax::json_ok(_("Region has been updated successfully"));
+        SysAjax::json_ok(SysLocale::t("Region \"{:name}\" has been updated successfully", [
+            '{:name}' => $post['name'],
+        ]));
     }
 
     public function actionDelete()
@@ -140,10 +145,16 @@ class generalController extends SysController
             throw new E404;
         }
 
+        $name = $model->name;
+
         if ($model->delete()) {
-            SysMessages::set(_("Region has been deleted successfully"), 'success');
+            SysMessages::set(SysLocale::t("Region \"{:name}\" has been deleted successfully", [
+                '{:name}' => $name,
+            ]), 'success');
         } else {
-            SysMessages::set(_("Region can not be deleted"), 'danger');
+            SysMessages::set(SysLocale::t("Region \"{:name}\" can not be deleted", [
+                '{:name}' => $name,
+            ]), 'danger');
         }
 
         SysRequest::redirect('/regions/general/');
