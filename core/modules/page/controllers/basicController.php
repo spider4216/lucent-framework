@@ -86,9 +86,7 @@ class basicController extends SysController{
         $post = SysRequest::post();
         $model = new Page();
 
-        $model->title = $post['title'];
-        $model->content = $post['content'];
-        $model->page_type_id = $post['page_type_id'];
+        $model->load($post);
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
@@ -136,9 +134,7 @@ class basicController extends SysController{
             SysAjax::json_err(_("Bad Request"));
         }
 
-        $model->title = $post['title'];
-        $model->content = $post['content'];
-		$model->page_type_id = $post['page_type_id'];
+        $model->load($post);
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));

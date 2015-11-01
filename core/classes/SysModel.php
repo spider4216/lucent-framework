@@ -559,4 +559,11 @@ abstract class SysModel implements IModel, Iterator
         return $arr;
     }
 
+    public function load($attributes)
+    {
+        foreach ($attributes as $name => $value) {
+            $this->$name = $value;
+        }
+    }
+
 }
