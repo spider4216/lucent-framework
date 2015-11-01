@@ -81,14 +81,7 @@ class collectionController extends SysController
 
 		$post = SysRequest::post();
 		$model = new PageCollections();
-
-		$model->name = $post['name'];
-		$model->description = $post['description'];
-		$model->page_type_id = $post['page_type_id'];
-		$model->pagination = $post['pagination'];
-		$model->region_id = $post['region_id'];
-		$model->links = $post['links'];
-		$model->weight = $post['weight'];
+		$model->load($post);
 
 		if (!$model->save()) {
 			SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
@@ -141,13 +134,7 @@ class collectionController extends SysController
 			SysAjax::json_err(SysLocale::t("Bad Request"));
 		}
 
-		$model->name = $post['name'];
-		$model->description = $post['description'];
-		$model->page_type_id = $post['page_type_id'];
-		$model->pagination = $post['pagination'];
-		$model->region_id = $post['region_id'];
-		$model->links = $post['links'];
-		$model->weight = $post['weight'];
+		$model->load($post);
 
 		if (!$model->save()) {
 			SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));

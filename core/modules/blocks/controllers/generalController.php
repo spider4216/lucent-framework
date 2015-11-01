@@ -116,10 +116,7 @@ class generalController extends SysController
         $post = $_POST;
 
         $model = new Blocks();
-        $model->name = $post['name'];
-        $model->content = $post['content'];
-        $model->weight = $post['weight'];
-        $model->machine_name = $post['machine_name'];
+        $model->load($post);
 
         if ('none' != $post['region_id']) {
             $model->region_id = $post['region_id'];
@@ -177,11 +174,7 @@ class generalController extends SysController
             ]));
         }
 
-        $model->name = $post['name'];
-        $model->content = $post['content'];
-        $model->region_id = $post['region_id'];
-        $model->weight = $post['weight'];
-        $model->machine_name = $post['machine_name'];
+        $model->load($post);
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));

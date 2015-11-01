@@ -75,9 +75,7 @@ class typeController extends SysController
 
 		$post = SysRequest::post();
 		$model = new PageType();
-
-		$model->title = $post['title'];
-		$model->description = $post['description'];
+		$model->load($post);
 
 		if (!$model->save()) {
 			SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
@@ -124,8 +122,7 @@ class typeController extends SysController
 			SysAjax::json_err(_("Bad Request"));
 		}
 
-		$model->title = $post['title'];
-		$model->description = $post['description'];
+		$model->load($post);
 
 		if (!$model->save()) {
 			SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));

@@ -72,7 +72,7 @@ class generalController extends SysController
         $model = new Regions();
         $model->setScript('create');
 
-            $model->name = $post['name'];
+        $model->name = $post['name'];
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));

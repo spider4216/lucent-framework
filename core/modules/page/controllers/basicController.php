@@ -117,7 +117,6 @@ class basicController extends SysController{
 		$view->pageTypes = $pageTypes;
 
         $view->display('update');
-
     }
 
     public function actionAjaxUpdate()

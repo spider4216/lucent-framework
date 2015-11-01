@@ -90,12 +90,7 @@ class generalController extends SysController
         $post = $_POST;
         $model = new Menu();
         $model->setScript('create');
-
-        $model->name = $post['name'];
-        $model->machine_name = $post['machine_name'];
-        $model->description = $post['description'];
-        $model->weight = $post['weight'];
-        $model->region_id = $post['region_id'];
+        $model->load($post);
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
@@ -151,11 +146,7 @@ class generalController extends SysController
         }
 
         $model->setScript('update');
-
-        $model->name = $post['name'];
-        $model->description = $post['description'];
-        $model->weight = $post['weight'];
-        $model->region_id = $post['region_id'];
+        $model->load($post);
 
 
         if (!$model->save()) {
