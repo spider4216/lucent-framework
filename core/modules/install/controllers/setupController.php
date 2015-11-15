@@ -53,7 +53,7 @@ class setupController extends SysController
 
          foreach ($post as $key => $p) {
             if (empty($p)) {
-                if ($key !== 'dbpassword') {
+                if ($key !== 'dbpassword' && $key !== 'dbpassword_tests') {
                     SysAjax::json_err(SysLocale::t("All fields have to be filled"));
                 }
             }
@@ -61,6 +61,11 @@ class setupController extends SysController
 
         if (false === SysDatabase::checkDatabaseConnectionByData($post['dbname'], $post['dbhost'], $post['dbusername'],
                 $post['dbpassword'])) {
+            SysAjax::json_err(SysLocale::t("Problem with database connection"));
+        }
+
+        if (false === SysDatabase::checkDatabaseConnectionByData($post['dbname_tests'], $post['dbhost_tests'],
+                $post['dbusername_tests'], $post['dbpassword_tests'])) {
             SysAjax::json_err(SysLocale::t("Problem with database connection"));
         }
 
@@ -99,15 +104,37 @@ class setupController extends SysController
             SysAjax::json_err(SysLocale::t("directory \"app/config\" is not writable"));
         }
 
+        //tests config
+        $filenameTestsConfig = 'tests.json';
+        $pathTestsConfig = $directoryConfig . $filenameTestsConfig;
+
+        if (file_exists($pathTestsConfig)) {
+            SysAjax::json_err(SysLocale::t("tests config has already exist. Delete file and try it again"));
+        }
+
+        $configTestsData = [
+            'domain' => $post['domain_tests'],
+            'db_name' => $post['dbname_tests'],
+            'db_username' => $post['dbusername_tests'],
+            'db_password' => $post['dbpassword_tests'],
+            'db_host' => $post['dbhost_tests'],
+        ];
+
+        $configTestContent = SysCodeGenerate::dbFileTests($configTestsData);
+
         file_put_contents($path, $databaseContent);
         file_put_contents($pathConfig, $configContent);
+        file_put_contents($pathTestsConfig, $configTestContent);
 
         //migration
         $migrate = new CmdMigrate();
         $migrate::$param = 'init_9181433517326';
 
-
         $result = $migrate->actionRun();
+        SysDatabase::getObj()->changeDbConnection($post['dbname_tests'], $post['dbhost_tests'],
+            $post['dbusername_tests'], $post['dbpassword_tests']);
+        $result2 = $migrate->actionRun();
+        SysDatabase::getObj()->resetDb();
 
         $user = new Users();
         $user->setScript('create');
@@ -120,6 +147,10 @@ class setupController extends SysController
         //rollback
         if (!$user->save()) {
             $result = $migrate->actionDown();
+            SysDatabase::getObj()->changeDbConnection($post['dbname_tests'], $post['dbhost_tests'],
+                $post['dbusername_tests'], $post['dbpassword_tests']);
+            $result2 = $migrate->actionDown();
+            SysDatabase::getObj()->resetDb();
 
             if (!file_exists($path)) {
                 SysAjax::json_err(SysLocale::t("Database file for delete not found"));
@@ -129,12 +160,20 @@ class setupController extends SysController
                 SysAjax::json_err(SysLocale::t("Config file for delete not found"));
             }
 
+            if (!file_exists($pathTestsConfig)) {
+                SysAjax::json_err(SysLocale::t("Tests config file for delete not found"));
+            }
+
             if (!unlink($path)) {
                 SysAjax::json_err(SysLocale::t("Database file cannot be deleted. Rollback has been done successfully"));
             }
 
             if (!unlink($pathConfig)) {
                 SysAjax::json_err(SysLocale::t("Config file cannot be deleted. Rollback has been done successfully"));
+            }
+
+            if (!unlink($pathTestsConfig)) {
+                SysAjax::json_err(SysLocale::t("Tests config file cannot be deleted. Rollback has been done successfully"));
             }
 
             //get validator errors

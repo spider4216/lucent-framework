@@ -167,4 +167,23 @@ class SysDatabase
     {
         $this->pdo->rollBack();
     }
+
+    public function changeDbConnection($db_name, $db_host, $db_username, $db_password)
+    {
+        $dsn = 'mysql:dbname=' . $db_name . ';host=' . $db_host;
+        $this->pdo = new \PDO($dsn, $db_username, $db_password, [
+                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+            ]);
+        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
+    }
+
+    /**
+     * @author farZa
+     * reset db pdo connection by default
+     */
+    public function resetDb()
+    {
+        $className = __CLASS__;
+        return self::$obj = new $className;
+    }
 }

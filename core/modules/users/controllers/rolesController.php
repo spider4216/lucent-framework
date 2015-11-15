@@ -80,7 +80,7 @@ class RolesController extends SysController
         $post = SysRequest::post();
         $model = new Roles();
 
-        $model->name = $post['name'];
+        $model->load($post);
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));
@@ -127,7 +127,7 @@ class RolesController extends SysController
             ]));
         }
 
-        $model->name = $post['name'];
+        $model->load($post);
 
         if (!$model->save()) {
             SysAjax::json_err(SysMessages::getPrettyValidatorMessages($model->getErrors()));

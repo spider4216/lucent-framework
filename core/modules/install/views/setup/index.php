@@ -77,6 +77,38 @@ use core\classes\SysLocale as locale;
         <input type="text" name="dbhost" class="form-control" placeholder="<?= locale::t("localhost"); ?>"/>
     </div>
 
+    <div class="m-row">
+        <div class="page-header">
+            <h1><small><?= locale::t("Database tests connection"); ?></small></h1>
+        </div>
+
+        <label for="domain_tests"><?= locale::t("Domain"); ?></label>
+        <input type="text" name="domain_tests" class="form-control" placeholder="<?= locale::t("http://example.com"); ?>"/>
+        <small><?= locale::t("Protocol must be specified") ?></small>
+
+        <br>
+        <br>
+
+        <label for="dbname_tests"><?= locale::t("Name"); ?></label>
+        <input type="text" name="dbname_tests" class="form-control" placeholder="<?= locale::t("Name"); ?>"/>
+
+        <br/>
+
+        <label for="dbusername_tests"><?= locale::t("Username"); ?></label>
+        <input type="text" name="dbusername_tests" class="form-control" placeholder="<?= locale::t("Username"); ?>"
+               value="<?= (isset($_POST['dbusername'])) ? $_POST['dbusername']: ''; ?>"/>
+
+        <br/>
+
+        <label for="dbpassword_tests"><?= locale::t("Password"); ?></label>
+        <input type="password" name="dbpassword_tests" class="form-control" placeholder="<?= locale::t("Password"); ?>"/>
+
+        <br/>
+
+        <label for="dbhost_tests"><?= locale::t("Host"); ?></label>
+        <input type="text" name="dbhost_tests" class="form-control" placeholder="<?= locale::t("localhost"); ?>"/>
+    </div>
+
     <br/>
     <br/>
 

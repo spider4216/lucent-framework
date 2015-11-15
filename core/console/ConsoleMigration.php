@@ -2,6 +2,7 @@
 
 namespace core\console;
 
+use core\classes\SysDatabase;
 
 class ConsoleMigration {
 
@@ -13,9 +14,10 @@ class ConsoleMigration {
 
     public function __construct()
     {
+        require_once __DIR__ . '/../classes/SysDatabase.php';
         $mainConfig = file_get_contents(__DIR__ . '/../../app/config/main.json');
         $this->config = json_decode($mainConfig, true);
-        $this->database();
+        $this->pdo = SysDatabase::getObj()->pdo;
     }
 
     public function main($migrationName)

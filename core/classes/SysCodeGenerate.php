@@ -56,5 +56,29 @@ class SysCodeGenerate
         return json_encode($tpl);
     }
 
+    /**
+     * @param array $data - Массив с данными для генирации -
+     * ['domain' => '...', 'db_name' => '...', 'db_username' => '...',
+     * 'db_password' => '...', 'db_host' => '...',]
+     *
+     * @return string
+     * Генерирует конфигурационный файл с БД данными для тестов
+     * Возвразает json
+     */
+    public static function dbFileTests($data)
+    {
+        $tpl = [
+            'domain' => $data['domain'],
+            'db' => [
+                'db_name' => $data['db_name'],
+                'db_username' => $data['db_username'],
+                'db_password' => $data['db_password'],
+                'db_host' => $data['db_host'],
+            ],
+        ];
+
+        return json_encode($tpl);
+    }
+
 
 }

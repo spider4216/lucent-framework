@@ -1,6 +1,7 @@
 .idea
 app/config/database.json
 app/config/main.json
+app/config/tests.json
 app/assets/modules
 app/assets/system
 core/vendor
