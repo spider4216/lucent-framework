@@ -463,7 +463,7 @@ return [
             'insert' => [
                 'table' => 'guide',
                 'columns' => [
-                    'name',
+                    'machine_name',
                     'switch',
                 ],
 
@@ -535,7 +535,11 @@ return [
 				'name' => 'guide',
 			]
 		],
+
+        '10' => [
+			'deleteTable' => [
+				'name' => 'vkauth',
+			]
+		],
     ],
 ];
-
-?>

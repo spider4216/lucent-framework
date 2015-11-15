@@ -186,4 +186,28 @@ class SysDatabase
         $className = __CLASS__;
         return self::$obj = new $className;
     }
+
+    public function getTestsConfig()
+    {
+        $path = __DIR__ . '/../../app/config/tests.json';
+
+        if (!file_exists($path)) {
+            return false;
+        }
+
+        $data = file_get_contents($path);
+
+        return json_decode($data, true);
+    }
+
+    public function useDbTestsConnection()
+    {
+        $data = self::getTestsConfig();
+
+        $dsn = 'mysql:dbname=' . $data['db']['db_name'] . ';host=' . $data['db']['db_host'];
+        $this->pdo = new \PDO($dsn, $data['db']['db_username'], $data['db']['db_password'], [
+            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+        ]);
+        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
+    }
 }
