@@ -15,7 +15,7 @@ use core\modules\users\models\Roles;
 use core\modules\users\models\Users;
 use core\extensions\ExtBreadcrumbs;
 
-class ControlController extends SysController
+class controlController extends SysController
 {
     public static function permission()
     {

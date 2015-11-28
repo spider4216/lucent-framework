@@ -12,7 +12,7 @@ use core\classes\SysRequest;
 use core\modules\users\models\Roles;
 use core\classes\SysDisplay;
 
-class RolesController extends SysController
+class rolesController extends SysController
 {
     public static function permission()
     {
