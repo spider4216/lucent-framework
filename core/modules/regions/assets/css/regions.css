@@ -1,0 +1,50 @@
+.region {
+    padding: 20px;
+    position: relative;
+}
+
+.region .setting-region {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: none;
+    z-index: 99999;
+}
+
+.region-hover:hover .setting-region {
+    display: block;
+}
+
+.region-hover:hover .setting-region > div {
+    cursor: pointer;
+}
+
+.region-hover:hover {
+    outline: 2px solid rgba(211, 211, 211, 0.28);
+}
+
+.region-tool-enabled {
+    outline: 2px solid rgba(0, 177, 255, 0.28) !important;
+}
+
+.region-tool-enabled .setting-region{
+    display: block;
+}
+
+.region-tool-ok {
+    position: absolute;
+    top: 2px;
+    left: 35px;
+    cursor: pointer;
+    color: #158600;
+    z-index: 99999;
+}
+
+.region-tool-cancel {
+    position: absolute;
+    top: 2px;
+    left: 55px;
+    cursor: pointer;
+    color: #860400;
+    z-index: 99999;
+}

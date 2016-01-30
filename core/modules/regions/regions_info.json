@@ -2,5 +2,14 @@
   "name" : "regions",
   "description" : "Regions for blocks",
   "version" : "1.0",
-  "core_version" : "1.0"
+  "core_version" : "1.0",
+  "assets" : {
+    "global" : "true",
+    "css" : [
+      "assets/css/regions.css"
+    ],
+    "js" : [
+      "assets/js/regions.js"
+    ]
+  }
 }

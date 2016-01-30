@@ -55,13 +55,51 @@ class SysAssets {
         SysAssets::setAssets('bootstrap/js/bootstrap-tooltip.js', 'system');
         SysAssets::setAssets('bootstrap/js/bootstrap-confirmation.js', 'system');
 
+        SysAssets::setAssets('dad/css/jquery.dad.css', 'system');
+        SysAssets::setAssets('dad/js/jquery.dad.js', 'system');
+
         SysAssets::setAssets('lucent/css/style.css', 'system');
         SysAssets::setAssets('lucent/js/script.js', 'system');
         SysAssets::setAssets('lucent/js/system.js', 'system');
     }
 
+    /**
+     * @author farZa
+     * Метод должен брать все глобальные ассеты
+     * чтобы они подключались независимо от того, нахожусь
+     * ли я в модуле или нет
+     */
+    public static function setGlobalModuleAssets()
+    {
+        $coreModules = $moduleNames = SysModule::getAllModules('system');
+        $appModules = $moduleNames = SysModule::getAllModules('app');
+        $modules = array_merge($coreModules, $appModules);
+
+        foreach ($modules as $module) {
+            if (isset($module['assets']['global'])) {
+
+                if (isset($module['assets']['js'])) {
+                    foreach ($module['assets']['js'] as $jsPath) {
+                        $fileName = basename($jsPath);
+                        $path = strtolower($module['name']) . '/js/' . $fileName;
+                        SysAssets::setAssets($path, 'modules');
+                    }
+                }
+
+                if (isset($module['assets']['css'])) {
+                    foreach ($module['assets']['css'] as $cssPath) {
+                        $fileName = basename($cssPath);
+                        $path = strtolower($module['name']) . '/css/' . $fileName;
+                        SysAssets::setAssets($path, 'modules');
+                    }
+                }
+            }
+        }
+    }
+
     public static function initModuleAssets()
     {
+        self::setGlobalModuleAssets();
         $moduleName = SysModule::getCurrentModuleName();
 
         if (false !== $moduleName) {

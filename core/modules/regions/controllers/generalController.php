@@ -10,6 +10,9 @@ use core\classes\SysLocale;
 use core\classes\SysMessages;
 use core\classes\SysRequest;
 use core\classes\SysView;
+use core\modules\blocks\models\Blocks;
+use core\modules\menu\models\Menu;
+use core\modules\page\models\PageCollections;
 use core\modules\regions\models\Regions;
 
 class generalController extends SysController
@@ -158,5 +161,37 @@ class generalController extends SysController
         }
 
         SysRequest::redirect('/regions/general/');
+    }
+
+    public function actionAjaxBlockSort()
+    {
+        if (!SysAjax::isAjax()) {
+            throw new E403;
+        }
+
+        $model = null;
+
+        foreach ($_POST as $data) {
+            switch ($data['type']) {
+                case 'menu_block' :
+                    $model = new Menu();
+                    break;
+                case 'content_block' :
+                    $model = new Blocks();
+                    break;
+                case 'collection_block' :
+                    $model = new PageCollections();
+                    break;
+            }
+
+            $d = $model->findByPk($data['id']);
+            $d->weight = $data['weight'];
+
+            if (!$d->save()) {
+                throw new \Exception(SysLocale::t('save error in ajax'));
+            }
+        }
+
+        SysAjax::json_ok(SysLocale::t('Blocks was successfully sorted'));
     }
 }
