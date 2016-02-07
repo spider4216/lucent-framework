@@ -164,33 +164,36 @@ class SysAssets {
 
     /**
      * @return array - массив с путями к стилям и скриптам модулей
-     * Сканирует все модули (в данный момент только системные) и "кеширует" все скрипты и стили в массив, затем
+     * Сканирует все модули и "кеширует" все скрипты и стили в массив, затем
      * вовзращает его
      */
     private static function moduleScanAssets()
     {
-        $moduleNames = SysModule::getAllModules();
+        $moduleNamesCores = SysModule::getAllModules('system');
+        $moduleNamesApp = SysModule::getAllModules('app');
+        $moduleNames = array_merge($moduleNamesApp, $moduleNamesCores);
+
         $moduleAssets = [];
         foreach ($moduleNames as $module) {
             if (isset($module['assets'])) {
                 if (isset($module['assets']['js'])) {
                     foreach ($module['assets']['js'] as $moduleJs) {
-                        $moduleAssets[$module['name']]['js'][] = SysPath::directory('core') .
-                            '/modules/' . strtolower($module['name']) . '/' . $moduleJs;
+                        $moduleAssets[$module['name']]['js'][] = SysPath::directory('root') . '/' .
+                            SysModule::getModulePath($module['name']) . '/' . $moduleJs;
                     }
                 }
 
                 if (isset($module['assets']['css'])) {
                     foreach ($module['assets']['css'] as $moduleCss) {
-                        $moduleAssets[$module['name']]['css'][] = SysPath::directory('core') .
-                            '/modules/' . strtolower($module['name']) . '/' . $moduleCss;
+                        $moduleAssets[$module['name']]['css'][] = SysPath::directory('root') . '/' .
+                            SysModule::getModulePath($module['name']) . '/' . $moduleCss;
                     }
                 }
 
                 if (isset($module['assets']['images'])) {
                     foreach ($module['assets']['images'] as $moduleImage) {
-                        $moduleAssets[$module['name']]['images'][] = SysPath::directory('core') .
-                            '/modules/' . strtolower($module['name']) . '/' . $moduleImage;
+                        $moduleAssets[$module['name']]['images'][] = SysPath::directory('root') . '/' .
+                            SysModule::getModulePath($module['name']) . '/' . $moduleImage;
                     }
                 }
             }
