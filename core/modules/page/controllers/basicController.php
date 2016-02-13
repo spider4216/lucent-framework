@@ -12,6 +12,7 @@ use core\classes\SysRequest;
 use core\classes\SysMessages;
 use core\extensions\ExtBreadcrumbs;
 use core\modules\page\models\PageType;
+use core\modules\page_comments\models\PageComments;
 
 class basicController extends SysController{
 
@@ -154,6 +155,7 @@ class basicController extends SysController{
 
         $breadcrumbs = ExtBreadcrumbs::getAll($this, 'view');
         $model = new Page();
+        $comments = PageComments::findAll(['page_id = :page_id', [':page_id' => $id]]);
         $view = new SysView();
 
         $view->model = $model;
@@ -166,6 +168,7 @@ class basicController extends SysController{
         static::$title = $item->title;
 
         $view->item = $item;
+        $view->comments = $comments;
         $view->breadcrumbs = $breadcrumbs;
 
         $view->display('view');

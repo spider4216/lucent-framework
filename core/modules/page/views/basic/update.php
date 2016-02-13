@@ -43,6 +43,16 @@ use core\classes\SysLocale as locale;
 		<br>
 
         <div class="m-row">
+            <label for="allow_comments"><?= $model->getLabel('allow_comments'); ?></label>
+            <select class="form-control" name="allow_comments" id="allow_comments">
+                <option value="1" <?= $model->allow_comments == 1 ? 'selected' : '' ?>><?= locale::t("Yes") ?></option>
+                <option value="0" <?= $model->allow_comments == 0 ? 'selected' : '' ?>><?= locale::t("No") ?></option>
+            </select>
+        </div>
+
+        <br>
+
+        <div class="m-row">
             <input type="hidden" name="id" value="<?= $model->id; ?>"/>
             <input type="button" onclick="SysAjaxSave('/page/basic/ajaxupdate', '/page/basic/')"
                    value="<?= locale::t("Save"); ?>" class="btn btn-primary"/>

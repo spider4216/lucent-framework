@@ -23,6 +23,27 @@ class PageTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->page->validate('title'));
     }
 
+    public function testAllowCommentsRequired()
+    {
+        $allowComments = '';
+
+        $this->page->allow_comments = $allowComments;
+        $this->assertFalse($this->page->validate('allow_comments'));
+    }
+
+    public function testAllowCommentsNumeric()
+    {
+        $allowComments = 'string';
+
+        $this->page->allow_comments = $allowComments;
+        $this->assertFalse($this->page->validate('allow_comments'));
+
+        $allowComments = '1';
+
+        $this->page->allow_comments = $allowComments;
+        $this->assertTrue($this->page->validate('allow_comments'));
+    }
+
     public function testContentValid()
     {
         $content = '';

@@ -14,6 +14,7 @@ class Page extends SysModel
             'title' => SysLocale::t("Title"),
             'content' => SysLocale::t("Content"),
             'page_type_id' => SysLocale::t("Type"),
+            'allow_comments' => SysLocale::t("Allow comments"),
         ];
     }
 
@@ -23,6 +24,7 @@ class Page extends SysModel
             ['title' => ['required']],
             ['content' => ['required']],
             ['page_type_id' => ['required', 'numeric']],
+            ['allow_comments' => ['required', 'numeric']],
         ];
     }
 

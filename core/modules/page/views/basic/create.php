@@ -38,7 +38,17 @@ use core\classes\SysLocale as locale;
 					<option value="-1"><?= locale::t("Not found"); ?></option>
 				<?php endif; ?>
 			</select>
+
+            <br>
 		</div>
+
+        <div class="m-row">
+            <label for="allow_comments"><?= $model->getLabel('allow_comments'); ?></label>
+            <select class="form-control" name="allow_comments" id="allow_comments">
+                <option value="1"><?= locale::t("Yes") ?></option>
+                <option value="0"><?= locale::t("No") ?></option>
+            </select>
+        </div>
 
 		<br>
 

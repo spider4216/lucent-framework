@@ -26,6 +26,7 @@ return [
                     'title' => 'varchar(255)',
                     'content' => 'text',
                     'page_type_id' => 'int',
+                    'allow_comments' => 'int',
                 ],
             ],
         ],
@@ -37,11 +38,13 @@ return [
                     'title',
                     'content',
                     'page_type_id',
+                    'allow_comments',
                 ],
 
                 'values' => [
                     'Welcome to CMF Lucent',
                     'Lucent - Amazing foundation for your projects',
+                    '1',
                     '1',
                 ],
             ],
@@ -54,11 +57,13 @@ return [
                     'title',
                     'content',
                     'page_type_id',
+                    'allow_comments',
                 ],
 
                 'values' => [
                     'CMF Lucent - Plans',
                     'Plans will be appeared soon',
+                    '1',
                     '1',
                 ],
             ],
@@ -71,11 +76,13 @@ return [
                     'title',
                     'content',
                     'page_type_id',
+                    'allow_comments',
                 ],
 
                 'values' => [
                     'CMF Lucent - Features',
                     'Features will be appeared soon',
+                    '1',
                     '1',
                 ],
             ],
@@ -88,6 +95,7 @@ return [
                     'title',
                     'content',
                     'page_type_id',
+                    'allow_comments',
                 ],
 
                 'values' => [
@@ -97,6 +105,7 @@ return [
                     'architectural pattern and has module structure, so everyone can extend and improve that '.
                     'system very easily',
                     '2',
+                    '1',
                 ],
             ],
         ],
@@ -108,6 +117,7 @@ return [
                     'title',
                     'content',
                     'page_type_id',
+                    'allow_comments',
                 ],
 
                 'values' => [
@@ -115,6 +125,7 @@ return [
                     'Visit our <a target="_blank" href="http://github.com/spider4216/lucent-framework">github</a>. ' .
                     'Everyone can contribute CMF Lucent, improve and modify it',
                     '2',
+                    '1',
                 ],
             ],
         ],
@@ -473,6 +484,20 @@ return [
                 ],
             ],
         ],
+
+        '29' => [
+            'createTable' => [
+                'name' => 'page_comments',
+                'primary_key' => 'id',
+                'columns' => [
+                    'id' => 'serial',
+                    'comment' => 'text',
+                    'page_id' => 'int',
+                    'user_id' => 'int',
+                    'date' => 'timestamp',
+                ],
+            ],
+        ],
     ],
 
     'down' => [
@@ -539,6 +564,12 @@ return [
         '10' => [
 			'deleteTable' => [
 				'name' => 'vkauth',
+			]
+		],
+
+        '11' => [
+			'deleteTable' => [
+				'name' => 'page_comments',
 			]
 		],
     ],

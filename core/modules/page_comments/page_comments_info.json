@@ -1,0 +1,12 @@
+{
+  "name" : "page_comments",
+  "description" : "Comments for page",
+  "version" : "1.0",
+  "core_version" : "1.0",
+  "assets" : {
+    "global" : "true",
+    "css" : [
+      "assets/css/page_comments.css"
+    ]
+  }
+}

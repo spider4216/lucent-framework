@@ -31,6 +31,7 @@ class basicControllerTest extends \PHPUnit_Framework_TestCase
             'title' => 'title 1',
             'content' => 'content 1',
             'page_type_id' => '1',
+            'allow_comments' => '1',
         ];
 
         $this->page->load($data);
@@ -53,6 +54,7 @@ class basicControllerTest extends \PHPUnit_Framework_TestCase
             'title' => 'title 1 update',
             'content' => 'content 1 update',
             'page_type_id' => '1',
+            'allow_comments' => '0',
         ];
 
         $page->load($data);

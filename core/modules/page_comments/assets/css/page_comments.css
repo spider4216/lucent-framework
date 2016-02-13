@@ -1,0 +1,6 @@
+.page .comment-list .panel-footer .remove-link {
+    font-size: 9px;
+    color: #0078ac;
+    border-bottom: 1px solid #0078ac;
+    cursor: pointer;
+}
