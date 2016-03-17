@@ -47,4 +47,9 @@ class homeController extends SysController
         $view->display('demo');
     }
 
+    public function actionPullRequest()
+    {
+        echo 'test pull request';
+    }
+
 }
