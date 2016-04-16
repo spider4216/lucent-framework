@@ -6,3 +6,6 @@ PHP 5.6.14; MySQL
 
 ### Install
 Clone all files from repository to server and follow the installation rules
+
+### Requirements to 1.0 version
+https://drive.google.com/file/d/0BwNF-3vP5sLWcTQwVnlLU3g4Y00/view?usp=sharing
