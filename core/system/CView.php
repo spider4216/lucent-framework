@@ -1,12 +1,14 @@
 <?php
 
-namespace system;
+namespace core\system;
+
+use core\system\Lucent;
 
 class CView
 {
 	public static function render($path, $data = [])
 	{
-		$fullPath = __DIR__ . '/../views/' . App::$currentController . '/' . $path . '.php';
+		$fullPath = __DIR__ . '/../../app/views/' . Lucent::$currentController . '/' . $path . '.php';
 
 		if (!file_exists($fullPath)) {
 			throw new \ErrorException('view cannot be found');

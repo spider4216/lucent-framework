@@ -1,14 +1,14 @@
 <?php
-namespace system;
+namespace core\system;
 
-class App
+class Lucent
 {
 	//Default controller
 	public static $defaultController = 'home';
 	//Default action
 	public static $defaultAction = 'index';
 	//Namespace controller
-	public static $defaultNamespace = 'controllers\\';
+	public static $defaultNamespace = 'app\\controllers\\';
 
 	//Current Controller
 	public static $currentController;
@@ -37,6 +37,10 @@ class App
 
 		$controller = self::$defaultNamespace . $controller . 'Controller';
 		$action = 'action' . ucfirst($action);
+
+		$psr4 = new \core\system\Psr4AutoloaderClass();
+		$psr4->register();
+		$psr4->addNamespace('app\\controllers\\', 'app/controllers');
 
 		if (!class_exists($controller)) {
 			throw new \ErrorException('Controller does not exist');

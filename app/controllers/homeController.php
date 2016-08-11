@@ -1,7 +1,8 @@
 <?php
 
-namespace controllers;
-use system\CView;
+namespace app\controllers;
+
+use core\system\CView;
 
 /**
  * Class homeController
@@ -15,6 +16,10 @@ class homeController
 {
 	public function actionIndex()
 	{
+		$psr4 = new \core\system\Psr4AutoloaderClass();
+		$psr4->register();
+		$psr4->addNamespace('core\\system\\', 'core/system');
+
 		CView::render('index');
 	}
 }
