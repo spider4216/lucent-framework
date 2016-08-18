@@ -3,9 +3,16 @@
 namespace core\system;
 
 use core\system\Lucent;
+use app\classes\SystemController;
 
-class CView
+class CView extends SystemController
 {
+
+	/*
+	 * @author Sam
+	 * @throws \ErrorException
+	 * указываем путь до файла и выводим информацию
+	 */
 	public static function render($path, $data = [])
 	{
 		$fullPath = __DIR__ . '/../../app/views/' . Lucent::$currentController . '/' . $path . '.php';
@@ -23,7 +30,12 @@ class CView
 		ob_start();
 		include($fullPath);
 		$content = ob_get_clean();
-
-		echo $content;
+		// echo $content;
+		
+		ob_start();
+		include SystemController::$layout;
+		$cont1 = ob_get_clean();
+		echo $cont1;
+		
 	}
 }
