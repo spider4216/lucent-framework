@@ -5,7 +5,7 @@ namespace core\system;
 use core\system\Lucent;
 use app\classes\SystemController;
 
-class CView extends SystemController
+class CView
 {
 
 	/*

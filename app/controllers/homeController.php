@@ -12,7 +12,7 @@ use core\system\CView;
  * Actions: action<Name> (camelCase)
  * Controllers: <Name>Controller (camelCase)
  */
-class homeController
+class homeController extends SystemController
 {
 	public function actionIndex()
 	{
