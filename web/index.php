@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 // todo base root dir
 
 use core\system\Lucent;
 use core\system\Psr0AutoloaderClass;
+
 
 require_once __DIR__ . '/../core/system/Psr0AutoloaderClass.php';
 require_once __DIR__ . '/../core/system/Psr4AutoloaderClass.php';
