@@ -35,6 +35,6 @@ class CView
 		include SystemController::$layout;
 		$finalContent = ob_get_clean();
 		echo $finalContent;
-		
+
 	}
 }
