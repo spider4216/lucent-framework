@@ -15,12 +15,23 @@ class Lucent
 	//Current Action
 	public static $currentAction;
 
+
+	/*
+	 * @author farZa
+	 * @throws \ErrorException
+	 * Запуск приложения
+	 */
 	public static function run()
 	{
 		header('Content-Type: text/html; charset=utf-8');
 		self::route();
 	}
 
+	/**
+	 * @author farZa
+	 * @throws \ErrorException
+	 * Роутинг приложения
+	 */
 	private static function route()
 	{
 		$url = $_SERVER['REQUEST_URI'];
@@ -54,4 +65,5 @@ class Lucent
 
 		$objController->$action();
 	}
+
 }
