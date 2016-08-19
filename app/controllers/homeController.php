@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use core\system\CView;
-use app\classes\SystemController;
+use core\classes\SystemController;
 
 /**
  * Class homeController

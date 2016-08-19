@@ -3,7 +3,7 @@
 namespace core\system;
 
 use core\system\Lucent;
-use app\classes\SystemController;
+use core\classes\SystemController;
 
 class CView
 {
