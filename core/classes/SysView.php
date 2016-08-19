@@ -23,7 +23,7 @@ class SysView
 	 */
 	public static function render(string $path, array $data = [])
 	{
-		$fullPath = __DIR__ . '/../../app/views/' . Lucent::$currentController . '/' . $path . '.php';
+		$fullPath = __DIR__ . '/../../app/views/' . Lucent::$app->components->info->currentController . '/' . $path . '.php';
 
 		if (!file_exists($fullPath)) {
 			throw new \ErrorException('view cannot be found');

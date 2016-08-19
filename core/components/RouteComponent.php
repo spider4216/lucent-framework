@@ -2,6 +2,7 @@
 
 namespace core\components;
 
+use core\classes\SysComponent;
 use core\classes\SystemController;
 use core\system\Lucent;
 
@@ -13,6 +14,10 @@ class RouteComponent
 
 	public function __construct()
 	{
+		Lucent::$app->components->info->defaultController = 'home';
+		Lucent::$app->components->info->defaultAction = 'index';
+		Lucent::$app->components->info->defaultNamespace = 'app\\controllers\\';
+
 		$this->route();
 	}
 
@@ -29,13 +34,13 @@ class RouteComponent
 		//explode it and get array
 		$pathParts = explode('/', $path);
 
-		$controller = !empty($pathParts[1]) ? $pathParts[1] : Lucent::$defaultController;
-		$action = !empty($pathParts[2]) ? $pathParts[2] : Lucent::$defaultAction;
+		$controller = !empty($pathParts[1]) ? $pathParts[1] : Lucent::$app->components->info->defaultController;
+		$action = !empty($pathParts[2]) ? $pathParts[2] : Lucent::$app->components->info->defaultAction;
 
-		Lucent::$currentController = $controller;
-		Lucent::$currentAction = $action;
+		Lucent::$app->components->info->currentController = $controller;
+		Lucent::$app->components->info->currentAction = $action;
 
-		$controller = Lucent::$defaultNamespace . $controller . 'Controller';
+		$controller = Lucent::$app->components->info->defaultNamespace . $controller . 'Controller';
 		$action = 'action' . ucfirst($action);
 
 		$psr4 = new \core\system\Psr4AutoloaderClass();
