@@ -9,9 +9,9 @@ class CView
 {
 
 	/*
-	 * @author Sam
+	 * @author farZa
 	 * @throws \ErrorException
-	 * указываем путь до файла и выводим информацию
+	 * Рендерим представление
 	 */
 	public static function render($path, $data = [])
 	{
@@ -30,12 +30,11 @@ class CView
 		ob_start();
 		include($fullPath);
 		$content = ob_get_clean();
-		// echo $content;
 		
 		ob_start();
 		include SystemController::$layout;
-		$cont1 = ob_get_clean();
-		echo $cont1;
+		$finalContent = ob_get_clean();
+		echo $finalContent;
 		
 	}
 }

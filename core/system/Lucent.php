@@ -6,21 +6,20 @@ class Lucent
 	//Default controller
 	public static $defaultController = 'home';
 	//Default action
-	public static $defaultAction;
+	public static $defaultAction = 'index';
 	//Namespace controller
 	public static $defaultNamespace = 'app\\controllers\\';
 
-	//приватный статический свойство
 	//Current Controller
 	public static $currentController;
 	//Current Action
 	public static $currentAction;
 
 
-	/**
-	 * @author Sam
+	/*
+	 * @author farZa
 	 * @throws \ErrorException
-	 * публичным статическим методом run запускаем приложение
+	 * Запуск приложения
 	 */
 	public static function run()
 	{
@@ -29,13 +28,12 @@ class Lucent
 	}
 
 	/**
-	 * @author Sam
+	 * @author farZa
 	 * @throws \ErrorException
-	 * приватный статический метод route указывет путь к файлу
+	 * Роутинг приложения
 	 */
 	private static function route()
 	{
-		//адресную строку присвает к переменной
 		$url = $_SERVER['REQUEST_URI'];
 		//path string
 		$path = parse_url($url, PHP_URL_PATH);
@@ -51,9 +49,7 @@ class Lucent
 		$controller = self::$defaultNamespace . $controller . 'Controller';
 		$action = 'action' . ucfirst($action);
 
-		// создаем экземпляр psr4
 		$psr4 = new \core\system\Psr4AutoloaderClass();
-		// получаем доступ к методу класса
 		$psr4->register();
 		$psr4->addNamespace('app\\controllers\\', 'app/controllers');
 
