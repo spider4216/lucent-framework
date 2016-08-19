@@ -7,7 +7,6 @@ namespace core\classes;
  * @package controllers
  * Class SystemController
  */
-
 class SystemController
 {
     /*

@@ -1,11 +1,11 @@
 <?php
 
-namespace core\system;
+namespace core\classes;
 
 use core\system\Lucent;
 use core\classes\SystemController;
 
-class CView
+class SysView
 {
 
 	/*
@@ -30,7 +30,7 @@ class CView
 		ob_start();
 		include($fullPath);
 		$content = ob_get_clean();
-		
+
 		ob_start();
 		include SystemController::$layout;
 		$finalContent = ob_get_clean();

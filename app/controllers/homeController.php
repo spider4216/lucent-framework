@@ -2,8 +2,9 @@
 
 namespace app\controllers;
 
-use core\system\CView;
+use core\classes\SysView;
 use core\classes\SystemController;
+use core\system\Psr4AutoloaderClass;
 
 /**
  * Class homeController
@@ -17,10 +18,10 @@ class homeController extends SystemController
 {
 	public function actionIndex()
 	{
-		$psr4 = new \core\system\Psr4AutoloaderClass();
+		$psr4 = new Psr4AutoloaderClass();
 		$psr4->register();
 		$psr4->addNamespace('core\\system\\', 'core/system');
 
-		CView::render('index');
+		SysView::render('index');
 	}
 }

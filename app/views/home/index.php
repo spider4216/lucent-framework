@@ -1,1 +1,1 @@
-<h2>Welcome to Mild MVC</h2>
+<h2>Welcome to Lucent Framework</h2>
