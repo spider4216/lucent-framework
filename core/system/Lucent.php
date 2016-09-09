@@ -3,6 +3,7 @@ namespace core\system;
 
 use core\classes\SysApp;
 use core\classes\SysComponent;
+use core\components\ConfigComponent;
 use core\components\InfoComponent;
 use core\components\RouteComponent;
 
@@ -38,6 +39,9 @@ class Lucent
 		self::$app->components = new SysComponent();
 		self::$app->components->info = new InfoComponent();
 		self::$app->components->route = new RouteComponent();
+		self::$app->components->config = new ConfigComponent();
+
+		self::$app->components->config->setConfig('main');
 	}
 
 }

@@ -1,0 +1,11 @@
+{
+  "database": {
+    "host": "Host",
+    "dbname": "Database Name",
+    "username": "User name",
+    "password": "Password",
+
+    "DAOGenerator": "Generator Name",
+    "DAObject": "DAO Object Name"
+  }
+}
