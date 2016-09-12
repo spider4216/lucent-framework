@@ -1,6 +1,6 @@
 <?php
 
-namespace DAObjects;
+namespace Packages\PHPDAO\DAObjects;
 
 /**
  * @author farZa

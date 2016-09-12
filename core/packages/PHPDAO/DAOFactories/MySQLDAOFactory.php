@@ -1,10 +1,10 @@
 <?php
 
-namespace DAOFactories;
+namespace Packages\PHPDAO\DAOFactories;
 
-use Classes\DAOFactory;
-use DAObjects\MysqlDAO;
-use Classes\ConnectionsPool;
+use Packages\PHPDAO\DAOFactory;
+use Packages\PHPDAO\DAObjects\MysqlDAO;
+use Packages\PHPDAO\ConnectionsPool;
 
 /**
  * @author farZa

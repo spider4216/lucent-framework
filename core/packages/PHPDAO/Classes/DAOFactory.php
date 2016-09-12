@@ -1,8 +1,8 @@
 <?php
 
-namespace Classes;
+namespace Packages\PHPDAO;
 
-use DAOFactories\MySQLDAOFactory;
+use Packages\PHPDAO\DAOFactories\MySQLDAOFactory;
 
 /**
  * @author farZa

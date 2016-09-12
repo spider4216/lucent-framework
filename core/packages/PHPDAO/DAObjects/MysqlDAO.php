@@ -1,9 +1,9 @@
 <?php
 
-namespace DAObjects;
+namespace Packages\PHPDAO\DAObjects;
 
-use Classes\ConnectionsPool;
-use DAObjects\GeneralDAO;
+use Packages\PHPDAO\ConnectionsPool;
+use Packages\PHPDAO\DAObjects\GeneralDAO;
 
 /**
  * @author farZa
@@ -22,7 +22,7 @@ class MysqlDAO implements GeneralDAO
 	/**
 	 * @author farZa
 	 * @param string $tableName
-	 * @return \DAObjects\GeneralDAO
+	 * @return \Packages\PHPDAO\DAObjects\GeneralDAO
 	 * Table name
 	 */
 	public function table(string $tableName):GeneralDAO
@@ -35,7 +35,7 @@ class MysqlDAO implements GeneralDAO
 	/**
 	 * @author farZa
 	 * @param array $data
-	 * @return \DAObjects\GeneralDAO
+	 * @return \Packages\PHPDAO\DAObjects\GeneralDAO
 	 * Method for insert into table
 	 */
 	public function insert(array $data):GeneralDAO
@@ -48,7 +48,7 @@ class MysqlDAO implements GeneralDAO
 	/**
 	 * @author farZa
 	 * @param array $data
-	 * @return \DAObjects\GeneralDAO
+	 * @return \Packages\PHPDAO\DAObjects\GeneralDAO
 	 * Method for update table
 	 */
 	public function update(array $data):GeneralDAO
@@ -60,7 +60,7 @@ class MysqlDAO implements GeneralDAO
 
 	/**
 	 * @author farZa
-	 * @return \DAObjects\GeneralDAO
+	 * @return \Packages\PHPDAO\DAObjects\GeneralDAO
 	 * Method for delete from table
 	 */
 	public function delete():GeneralDAO
@@ -73,7 +73,7 @@ class MysqlDAO implements GeneralDAO
 	/**
 	 * @author farZa
 	 * @param string $columns
-	 * @return \DAObjects\GeneralDAO
+	 * @return \Packages\PHPDAO\DAObjects\GeneralDAO
 	 * Method for select from table
 	 */
 	public function select(string $columns):GeneralDAO
@@ -87,7 +87,7 @@ class MysqlDAO implements GeneralDAO
 	 * @author farZa
 	 * @param $data
 	 * @param string $sep
-	 * @return \DAObjects\GeneralDAO
+	 * @return \Packages\PHPDAO\DAObjects\GeneralDAO
 	 * Query condition
 	 */
 	public function where($data, $sep = 'AND'):GeneralDAO
@@ -101,7 +101,7 @@ class MysqlDAO implements GeneralDAO
 	/**
 	 * @author farZa
 	 * @param string $table
-	 * @return \DAObjects\GeneralDAO
+	 * @return \Packages\PHPDAO\DAObjects\GeneralDAO
 	 * Alias table()
 	 */
 	public function from(string $table):GeneralDAO
@@ -282,7 +282,7 @@ class MysqlDAO implements GeneralDAO
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute($params);
 
-		return $stmt->fetchAll();
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
 	/**

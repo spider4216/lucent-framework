@@ -1,9 +1,11 @@
 <?php
 namespace core\system;
 
+use Packages\PHPDAO\DAOFactory;
 use core\classes\SysApp;
 use core\classes\SysComponent;
 use core\components\ConfigComponent;
+use core\components\DAOComponent;
 use core\components\InfoComponent;
 use core\components\RouteComponent;
 
@@ -35,13 +37,18 @@ class Lucent
 
 	private static function init()
 	{
+
+
 		self::$app = new SysApp();
 		self::$app->components = new SysComponent();
 		self::$app->components->info = new InfoComponent();
 		self::$app->components->route = new RouteComponent();
 		self::$app->components->config = new ConfigComponent();
+		self::$app->components->dao = new DAOComponent();
 
 		self::$app->components->config->setConfig('main');
+		self::$app->db = self::$app->components->dao->createGenerator(DAOFactory::MYSQL)->getDaoObject('generalDAO');
+
 	}
 
 }
