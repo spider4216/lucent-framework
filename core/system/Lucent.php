@@ -47,6 +47,7 @@ class Lucent
 		self::$app->components->dao = new DAOComponent();
 
 		self::$app->components->config->setConfig('main');
+		// todo Нужно брать генератор и ДАО объект из конфига
 		self::$app->db = self::$app->components->dao->createGenerator(DAOFactory::MYSQL)->getDaoObject('generalDAO');
 
 	}
