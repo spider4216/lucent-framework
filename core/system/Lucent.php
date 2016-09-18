@@ -37,8 +37,6 @@ class Lucent
 
 	private static function init()
 	{
-
-
 		self::$app = new SysApp();
 		self::$app->components = new SysComponent();
 		self::$app->components->info = new InfoComponent();

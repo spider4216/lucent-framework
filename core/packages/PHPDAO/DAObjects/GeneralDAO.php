@@ -20,5 +20,5 @@ interface GeneralDAO
 	public function from(string $table):GeneralDAO;
 	public function execute():bool;
 	public function fetchAll():array;
-	public function fetchRow():array;
+	public function fetchRow();
 }
