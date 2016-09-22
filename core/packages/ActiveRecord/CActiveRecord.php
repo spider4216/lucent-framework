@@ -68,6 +68,17 @@ class CActiveRecord implements IActiveRecord
             ->execute();
     }
 
+    protected function delete()
+    {
+        return Lucent::$app->db
+            ->delete()
+            ->from(static::$table)
+            ->where([
+                'id' => $this->data['id']
+            ])
+            ->execute();
+    }
+
     public function save():bool
     {
         if ($this->id) {
@@ -75,5 +86,10 @@ class CActiveRecord implements IActiveRecord
         }
 
         return $this->insert();
+    }
+
+    public function remove():bool
+    {
+        return $this->delete();
     }
 }
